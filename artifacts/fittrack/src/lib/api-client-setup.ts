@@ -1,14 +1,20 @@
-import { setBaseUrl, setAuthTokenGetter } from "@workspace/api-client-react";
+import {
+  setBaseUrl,
+  setAuthTokenGetter,
+  resolveApiBaseUrl,
+} from "@workspace/api-client-react";
 
-/** Strip trailing slash; empty string means same-origin relative `/api/...` paths. */
-function normalizeApiOrigin(raw: string | undefined): string | null {
-  const trimmed = raw?.trim();
-  if (!trimmed) return null;
-  return trimmed.replace(/\/+$/, "");
+/** Railway / API server origin from Vite env (no trailing slash). */
+export const API_URL = import.meta.env.VITE_API_URL as string | undefined;
+
+const apiBase = resolveApiBaseUrl(API_URL);
+setBaseUrl(apiBase);
+
+if (import.meta.env.PROD && !apiBase) {
+  console.error(
+    "[fittrack] VITE_API_URL is not set. API requests will use relative /api paths on the frontend origin and will fail in production.",
+  );
 }
-
-const apiOrigin = normalizeApiOrigin(import.meta.env.VITE_API_URL);
-setBaseUrl(apiOrigin);
 
 /**
  * Attach Clerk session JWTs to every API request (required by `requireAuth` on the server).
@@ -28,6 +34,7 @@ export function clearApiAuthToken(): void {
   setAuthTokenGetter(null);
 }
 
+/** Resolved API origin used for fetch (e.g. https://….up.railway.app). */
 export function getConfiguredApiOrigin(): string | null {
-  return apiOrigin;
+  return apiBase;
 }

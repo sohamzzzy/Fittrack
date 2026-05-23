@@ -20,7 +20,7 @@ import { useToast } from "@/hooks/use-toast";
 
 function apiErrorMessage(err: unknown): string {
   if (err instanceof Error) return err.message;
-  return "Could not reach the server. Set VITE_API_URL if the API is on another host.";
+  return "Could not reach the server. Set VITE_API_URL to your Railway API origin (https://….up.railway.app).";
 }
 
 function formatDuration(seconds: number) {

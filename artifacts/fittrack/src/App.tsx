@@ -28,7 +28,6 @@ import { publishableKeyFromHost } from "@clerk/react/internal";
 import NotFound from "@/pages/not-found";
 import { Layout } from "@/components/layout";
 import { ApiAuthSetup } from "@/components/api-auth-setup";
-import { getConfiguredApiOrigin } from "@/lib/api-client-setup";
 
 import Dashboard from "@/pages/dashboard";
 import ActiveWorkout from "@/pages/workout-active";
@@ -60,11 +59,6 @@ const clerkPubKey = publishableKeyFromHost(
   window.location.hostname,
   import.meta.env.VITE_CLERK_PUBLISHABLE_KEY,
 );
-
-const clerkProxyUrl = undefined;
-// proxyUrl={clerkProxyUrl}  typeof window !== "undefined" && !getConfiguredApiOrigin()
-//     ? `${window.location.origin}/api/__clerk`
-//     : undefined;
 
 function stripBase(path: string): string {
   return basePath && path.startsWith(basePath)
@@ -190,7 +184,6 @@ function ClerkProviderWithRoutes() {
         clerkPubKey ??
         import.meta.env.VITE_CLERK_PUBLISHABLE_KEY
       }
-      {...(clerkProxyUrl ? { proxyUrl: clerkProxyUrl } : {})}
       signInUrl={`${basePath}/sign-in`}
       signUpUrl={`${basePath}/sign-up`}
       routerPush={(to) => setLocation(stripBase(to))}

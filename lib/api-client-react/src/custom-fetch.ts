@@ -25,8 +25,35 @@ let _authTokenGetter: AuthTokenGetter | null = null;
  * Useful for Expo bundles that need to call a remote API server.
  * Pass `null` to clear the base URL.
  */
+/**
+ * Normalize API origin for OpenAPI paths that already start with `/api`.
+ * Strips trailing slashes and a trailing `/api` segment if present on the base.
+ */
+export function resolveApiBaseUrl(raw: string | undefined | null): string | null {
+  const trimmed = raw?.trim();
+  if (!trimmed) return null;
+
+  let base = trimmed.replace(/\/+$/, "");
+  if (base.endsWith("/api")) {
+    base = base.slice(0, -4);
+  }
+
+  if (!/^https?:\/\//i.test(base)) {
+    throw new Error(
+      `API base URL must be an absolute http(s) URL (got "${raw}"). ` +
+        "Set VITE_API_URL to your API server origin, e.g. https://your-app.up.railway.app",
+    );
+  }
+
+  return base;
+}
+
+export function getApiBaseUrl(): string | null {
+  return _baseUrl;
+}
+
 export function setBaseUrl(url: string | null): void {
-  _baseUrl = url ? url.replace(/\/+$/, "") : null;
+  _baseUrl = url ? resolveApiBaseUrl(url) : null;
 }
 
 /**
@@ -62,11 +89,13 @@ function isUrl(input: RequestInfo | URL): input is URL {
 
 function applyBaseUrl(input: RequestInfo | URL): RequestInfo | URL {
   if (!_baseUrl) return input;
-  const url = resolveUrl(input);
-  // Only prepend to relative paths (starting with /)
-  if (!url.startsWith("/")) return input;
 
-  const absolute = `${_baseUrl}${url}`;
+  const path = resolveUrl(input);
+  // Only resolve app-relative API paths; leave absolute URLs untouched.
+  if (!path.startsWith("/")) return input;
+
+  const absolute = new URL(path, _baseUrl).href;
+
   if (typeof input === "string") return absolute;
   if (isUrl(input)) return new URL(absolute);
   return new Request(absolute, input as Request);
