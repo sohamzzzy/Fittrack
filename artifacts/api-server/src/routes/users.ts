@@ -1,48 +1,80 @@
 import { Router } from "express";
 import { getSingleValue } from "../lib/getSingleValue";
 import { requireAuth, getAuthUser, getOrCreateUser } from "../lib/auth";
-import { db, usersTable, followsTable, workoutsTable, postsTable } from "@workspace/db";
+import { db, usersTable, followsTable, workoutsTable } from "@workspace/db";
 import { eq, and, count, sql } from "drizzle-orm";
+import { UpdateMeBody } from "@workspace/api-zod";
 
 const router = Router();
 
-router.get("/users/me", requireAuth, async (req, res) => {
+async function userWithCounts(user: typeof usersTable.$inferSelect, isFollowing = false) {
+  const [followers] = await db.select({ c: count() }).from(followsTable).where(eq(followsTable.followingId, user.id));
+  const [following] = await db.select({ c: count() }).from(followsTable).where(eq(followsTable.followerId, user.id));
+  return {
+    ...user,
+    followersCount: Number(followers.c),
+    followingCount: Number(following.c),
+    isFollowing,
+  };
+}
+
+const meRouter = Router();
+
+meRouter.get("/", requireAuth, async (req, res) => {
   try {
-    const clerkId = (req as any).clerkId;
+    const clerkId = (req as { clerkId?: string }).clerkId;
+    if (!clerkId) {
+      res.status(401).json({ error: "Unauthorized" });
+      return;
+    }
     const user = await getOrCreateUser(clerkId);
-    const [followers] = await db.select({ c: count() }).from(followsTable).where(eq(followsTable.followingId, user.id));
-    const [following] = await db.select({ c: count() }).from(followsTable).where(eq(followsTable.followerId, user.id));
-    res.json({
-      ...user,
-      followersCount: Number(followers.c),
-      followingCount: Number(following.c),
-      isFollowing: false,
-    });
+    res.json(await userWithCounts(user, false));
   } catch (e) {
     req.log.error(e);
     res.status(500).json({ error: "Internal server error" });
   }
 });
 
-router.patch("/users/me", requireAuth, async (req, res) => {
+meRouter.patch("/", requireAuth, async (req, res) => {
   try {
+    const parsed = UpdateMeBody.safeParse(req.body);
+    if (!parsed.success) {
+      res.status(400).json({ error: "Invalid request body", details: parsed.error.flatten() });
+      return;
+    }
+
+    const { username, displayName, bio, avatarUrl } = parsed.data;
+    const updateData: Partial<typeof usersTable.$inferInsert> = {};
+    if (username !== undefined) updateData.username = username;
+    if (displayName !== undefined) updateData.displayName = displayName;
+    if (bio !== undefined) updateData.bio = bio;
+    if (avatarUrl !== undefined) updateData.avatarUrl = avatarUrl;
+
+    if (Object.keys(updateData).length === 0) {
+      res.status(400).json({ error: "No profile fields to update" });
+      return;
+    }
+
     const user = await getAuthUser(req);
-    const { username, displayName, bio, avatarUrl } = req.body;
     const [updated] = await db
       .update(usersTable)
-      .set({ username, displayName, bio, avatarUrl })
+      .set({ ...updateData, updatedAt: new Date() })
       .where(eq(usersTable.id, user.id))
       .returning();
-    const [followers] = await db.select({ c: count() }).from(followsTable).where(eq(followsTable.followingId, user.id));
-    const [following] = await db.select({ c: count() }).from(followsTable).where(eq(followsTable.followerId, user.id));
-    res.json({ ...updated, followersCount: Number(followers.c), followingCount: Number(following.c), isFollowing: false });
+
+    if (!updated) {
+      res.status(404).json({ error: "User not found" });
+      return;
+    }
+
+    res.json(await userWithCounts(updated, false));
   } catch (e) {
     req.log.error(e);
     res.status(500).json({ error: "Internal server error" });
   }
 });
 
-router.get("/users/me/stats", requireAuth, async (req, res) => {
+meRouter.get("/stats", requireAuth, async (req, res) => {
   try {
     const user = await getAuthUser(req);
     const [wCount] = await db.select({ c: count() }).from(workoutsTable).where(and(eq(workoutsTable.userId, user.id), eq(workoutsTable.isFinished, true)));
@@ -67,6 +99,8 @@ router.get("/users/me/stats", requireAuth, async (req, res) => {
     res.status(500).json({ error: "Internal server error" });
   }
 });
+
+router.use("/users/me", meRouter);
 
 router.get("/users/search", requireAuth, async (req, res) => {
   try {
