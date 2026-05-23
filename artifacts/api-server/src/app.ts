@@ -38,13 +38,15 @@ app.use(
   cors({
     origin: [
       "http://localhost:5173",
-      "https://fitness-hub-fittrack.vercel.app",
+      "https://fittrack-soham.vercel.app",
+      "https://fittrack-fittrack-lp2yjk9eu-sohamzzzys-projects.vercel.app",
     ],
     credentials: true,
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
     allowedHeaders: [
       "Content-Type",
       "Authorization",
+      "X-Clerk-Auth-Token",
       "X-Requested-With",
     ],
   }),
