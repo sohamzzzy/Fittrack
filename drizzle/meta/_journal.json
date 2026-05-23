@@ -8,6 +8,13 @@
       "when": 1778822587501,
       "tag": "0000_silent_the_renegades",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1779000000000,
+      "tag": "0001_exercises_archived_at",
+      "breakpoints": true
     }
   ]
 }

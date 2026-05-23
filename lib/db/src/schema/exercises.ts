@@ -10,7 +10,10 @@ export const exercisesTable = pgTable("exercises", {
   muscleGroups: text("muscle_groups").array().notNull().default([]),
   description: text("description"),
   isCustom: boolean("is_custom").notNull().default(false),
+  /** NULL = global catalog; set = owner's internal users.id (not Clerk id). */
   userId: integer("user_id").references(() => usersTable.id, { onDelete: "set null" }),
+  /** Soft-delete for custom exercises; keeps FK integrity for past workouts. */
+  archivedAt: timestamp("archived_at", { withTimezone: true }),
   createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
 });
 

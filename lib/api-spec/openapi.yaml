@@ -166,6 +166,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Exercise"
+        "400":
+          description: Invalid request body
+        "409":
+          description: Duplicate custom exercise name for this user
 
   /exercises/{exerciseId}:
     get:
@@ -185,6 +189,52 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Exercise"
+        "404":
+          description: Exercise not found or not visible to user
+    patch:
+      operationId: updateExercise
+      tags: [exercises]
+      summary: Update a custom exercise owned by the current user
+      parameters:
+        - name: exerciseId
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ExerciseUpdate"
+      responses:
+        "200":
+          description: Updated exercise
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Exercise"
+        "400":
+          description: Invalid request body
+        "404":
+          description: Not found
+        "409":
+          description: Duplicate custom exercise name for this user
+    delete:
+      operationId: archiveExercise
+      tags: [exercises]
+      summary: Archive (soft-delete) a custom exercise owned by the current user
+      parameters:
+        - name: exerciseId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "204":
+          description: Exercise archived
+        "404":
+          description: Not found
 
   /exercises/{exerciseId}/history:
     get:
@@ -1091,6 +1141,7 @@ components:
       properties:
         name:
           type: string
+          minLength: 1
         category:
           type: string
         muscleGroups:
@@ -1099,6 +1150,21 @@ components:
             type: string
         description:
           type: string
+
+    ExerciseUpdate:
+      type: object
+      properties:
+        name:
+          type: string
+          minLength: 1
+        category:
+          type: string
+        muscleGroups:
+          type: array
+          items:
+            type: string
+        description:
+          type: ["string", "null"]
 
     ExerciseHistoryPoint:
       type: object

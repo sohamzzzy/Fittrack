@@ -4,6 +4,7 @@ import { requireAuth, getAuthUser } from "../lib/auth";
 import { sendServerError } from "../lib/http-error";
 import { db, workoutsTable, workoutExercisesTable, workoutSetsTable, exercisesTable } from "@workspace/db";
 import { eq, and, count, sql } from "drizzle-orm";
+import { exerciseListVisibilityFilter } from "../lib/exercises";
 
 const router = Router();
 
@@ -126,6 +127,7 @@ router.post("/workouts", requireAuth, async (req, res) => {
 
 router.get("/workouts/:workoutId", requireAuth, async (req, res) => {
   try {
+    const user = await getAuthUser(req);
     const workoutIdParam = getSingleValue(req.params.workoutId);
     if (!workoutIdParam) {
       res.status(400).json({ error: "Missing workout id" });
@@ -135,7 +137,7 @@ router.get("/workouts/:workoutId", requireAuth, async (req, res) => {
     const [w] = await db
       .select()
       .from(workoutsTable)
-      .where(eq(workoutsTable.id, workoutId))
+      .where(and(eq(workoutsTable.id, workoutId), eq(workoutsTable.userId, user.id)))
       .limit(1);
     if (!w) { res.status(404).json({ error: "Not found" }); return; }
     res.json(await formatWorkoutDetail(w));
@@ -186,6 +188,7 @@ router.delete("/workouts/:workoutId", requireAuth, async (req, res) => {
 
 router.post("/workouts/:workoutId/exercises", requireAuth, async (req, res) => {
   try {
+    const user = await getAuthUser(req);
     const workoutIdParam = getSingleValue(req.params.workoutId);
     if (!workoutIdParam) {
       res.status(400).json({ error: "Missing workout id" });
@@ -193,12 +196,26 @@ router.post("/workouts/:workoutId/exercises", requireAuth, async (req, res) => {
     }
     const workoutId = parseInt(workoutIdParam);
     const { exerciseId, order, notes } = req.body;
+
+    const [workout] = await db
+      .select()
+      .from(workoutsTable)
+      .where(and(eq(workoutsTable.id, workoutId), eq(workoutsTable.userId, user.id)))
+      .limit(1);
+    if (!workout) {
+      res.status(404).json({ error: "Workout not found" });
+      return;
+    }
+
     const [ex] = await db
       .select()
       .from(exercisesTable)
-      .where(eq(exercisesTable.id, exerciseId))
+      .where(and(eq(exercisesTable.id, exerciseId), exerciseListVisibilityFilter(user.id)))
       .limit(1);
-    if (!ex) { res.status(404).json({ error: "Exercise not found" }); return; }
+    if (!ex) {
+      res.status(404).json({ error: "Exercise not found" });
+      return;
+    }
     const existing = await db.select().from(workoutExercisesTable).where(eq(workoutExercisesTable.workoutId, workoutId));
     const [we] = await db.insert(workoutExercisesTable).values({ workoutId, exerciseId, order: order ?? existing.length, notes }).returning();
     res.status(201).json({ id: we.id, exerciseId: we.exerciseId, exerciseName: ex.name, order: we.order, notes: we.notes, sets: [] });

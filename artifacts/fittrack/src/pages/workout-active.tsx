@@ -4,8 +4,9 @@ import { useAuth } from "@clerk/react";
 import {
   useCreateWorkout, useGetWorkout, useUpdateWorkout, useAddWorkoutExercise,
   useRemoveWorkoutExercise, useAddSet, useUpdateSet, useDeleteSet,
-  useListExercises, getGetWorkoutQueryKey,
+  getGetWorkoutQueryKey,
 } from "@workspace/api-client-react";
+import { ExerciseSearchPicker } from "@/components/exercise-search-picker";
 import { useQueryClient } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -60,8 +61,6 @@ export default function ActiveWorkout() {
       refetchInterval: false,
     },
   });
-  const { data: exercises } = useListExercises({ q: exerciseSearch || undefined });
-
   useEffect(() => {
     const timer = setInterval(() => setElapsed(Math.floor((Date.now() - startTime) / 1000)), 1000);
     return () => clearInterval(timer);
@@ -110,7 +109,23 @@ export default function ActiveWorkout() {
 
   const handleAddExercise = (exerciseId: number) => {
     if (!workoutId) return;
-    addExercise.mutate({ workoutId, data: { exerciseId } }, { onSuccess: () => { invalidate(); setShowExerciseDialog(false); } });
+    addExercise.mutate(
+      { workoutId, data: { exerciseId } },
+      {
+        onSuccess: () => {
+          invalidate();
+          setShowExerciseDialog(false);
+          setExerciseSearch("");
+        },
+        onError: (err) => {
+          toast({
+            variant: "destructive",
+            title: "Could not add exercise",
+            description: apiErrorMessage(err),
+          });
+        },
+      },
+    );
   };
 
   const handleAddSet = (weId: number) => {
@@ -250,18 +265,16 @@ export default function ActiveWorkout() {
         <Plus className="w-4 h-4 mr-2" /> Add Exercise
       </Button>
 
-      <Dialog open={showExerciseDialog} onOpenChange={setShowExerciseDialog}>
+      <Dialog open={showExerciseDialog} onOpenChange={(open) => { setShowExerciseDialog(open); if (!open) setExerciseSearch(""); }}>
         <DialogContent className="bg-card border-card-border max-h-[80vh]">
           <DialogHeader><DialogTitle>Add Exercise</DialogTitle></DialogHeader>
-          <Input placeholder="Search exercises..." value={exerciseSearch} onChange={(e) => setExerciseSearch(e.target.value)} data-testid="input-exercise-search" className="mb-2" />
-          <div className="overflow-y-auto max-h-96 space-y-1">
-            {(Array.isArray(exercises) ? exercises : []).map((ex) => (
-              <button key={ex.id} className="w-full text-left px-3 py-2.5 rounded-lg hover:bg-secondary transition-colors" onClick={() => handleAddExercise(ex.id)} data-testid={`button-exercise-${ex.id}`}>
-                <div className="font-medium text-sm">{ex.name}</div>
-                <div className="text-xs text-muted-foreground">{ex.category} · {ex.muscleGroups?.join(", ")}</div>
-              </button>
-            ))}
-          </div>
+          <ExerciseSearchPicker
+            search={exerciseSearch}
+            onSearchChange={setExerciseSearch}
+            onSelect={(ex) => handleAddExercise(ex.id)}
+            allowCreateFromSearch
+            idPrefix="workout-active"
+          />
         </DialogContent>
       </Dialog>
     </div>

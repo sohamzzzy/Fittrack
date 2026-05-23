@@ -6,8 +6,11 @@
  * OpenAPI spec version: 0.1.0
  */
 
-export interface ExerciseHistoryPoint {
-  date: Date;
-  value: number;
-  workoutId?: number;
+export interface ExerciseUpdate {
+  /** @minLength 1 */
+  name?: string;
+  category?: string;
+  muscleGroups?: string[];
+  /** @nullable */
+  description?: string | null;
 }

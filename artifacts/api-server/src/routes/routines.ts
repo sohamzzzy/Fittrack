@@ -3,6 +3,7 @@ import { getSingleValue } from "../lib/getSingleValue";
 import { requireAuth, getAuthUser } from "../lib/auth";
 import { db, routinesTable, routineExercisesTable, exercisesTable } from "@workspace/db";
 import { eq, and } from "drizzle-orm";
+import { assertExercisesVisibleToUser } from "../lib/exercises";
 
 const router = Router();
 
@@ -43,6 +44,16 @@ router.post("/routines", requireAuth, async (req, res) => {
   try {
     const user = await getAuthUser(req);
     const { name, description, exercises } = req.body;
+    if (exercises?.length) {
+      const check = await assertExercisesVisibleToUser(
+        exercises.map((e: { exerciseId: number }) => e.exerciseId),
+        user.id,
+      );
+      if (!check.ok) {
+        res.status(400).json({ error: `Exercise ${check.missingId} is not available` });
+        return;
+      }
+    }
     const [routine] = await db.insert(routinesTable).values({ userId: user.id, name, description }).returning();
     if (exercises && exercises.length > 0) {
       await db.insert(routineExercisesTable).values(
@@ -58,13 +69,16 @@ router.post("/routines", requireAuth, async (req, res) => {
 
 router.get("/routines/:routineId", requireAuth, async (req, res) => {
   try {
+    const user = await getAuthUser(req);
     const routineIdParam = getSingleValue(req.params.routineId);
     if (!routineIdParam) {
       res.status(400).json({ error: "Missing routine id" });
       return;
     }
     const routineId = parseInt(routineIdParam);
-    const routine = await db.query.routinesTable.findFirst({ where: eq(routinesTable.id, routineId) });
+    const routine = await db.query.routinesTable.findFirst({
+      where: and(eq(routinesTable.id, routineId), eq(routinesTable.userId, user.id)),
+    });
     if (!routine) { res.status(404).json({ error: "Not found" }); return; }
     res.json(await formatRoutine(routine));
   } catch (e) {
@@ -85,6 +99,16 @@ router.patch("/routines/:routineId", requireAuth, async (req, res) => {
     const { name, description, exercises } = req.body;
     const [updated] = await db.update(routinesTable).set({ name, description }).where(and(eq(routinesTable.id, routineId), eq(routinesTable.userId, user.id))).returning();
     if (!updated) { res.status(404).json({ error: "Not found" }); return; }
+    if (exercises?.length) {
+      const check = await assertExercisesVisibleToUser(
+        exercises.map((e: { exerciseId: number }) => e.exerciseId),
+        user.id,
+      );
+      if (!check.ok) {
+        res.status(400).json({ error: `Exercise ${check.missingId} is not available` });
+        return;
+      }
+    }
     if (exercises) {
       await db.delete(routineExercisesTable).where(eq(routineExercisesTable.routineId, routineId));
       if (exercises.length > 0) {

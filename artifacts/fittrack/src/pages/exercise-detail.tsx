@@ -43,6 +43,9 @@ export default function ExerciseDetail() {
           </div>
           <div className="flex gap-2 mt-1">
             <Badge variant="outline" className="text-xs">{exercise.category}</Badge>
+            {exercise.isCustom && (
+              <Badge variant="outline" className="text-xs text-muted-foreground">Custom</Badge>
+            )}
             {exercise.muscleGroups?.map((m) => <Badge key={m} variant="outline" className="text-xs text-muted-foreground">{m}</Badge>)}
           </div>
         </div>
