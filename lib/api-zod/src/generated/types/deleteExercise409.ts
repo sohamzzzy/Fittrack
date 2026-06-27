@@ -6,8 +6,6 @@
  * OpenAPI spec version: 0.1.0
  */
 
-export interface ExerciseHistoryPoint {
-  date: Date;
-  value: number;
-  workoutId?: number;
-}
+export type DeleteExercise409 = {
+  error?: string;
+};

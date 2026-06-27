@@ -15,10 +15,12 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent } from "@/components/ui/card";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { Check, Plus, Trash2 } from "lucide-react";
+import { Check, Plus, Trash2, Dumbbell } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { useInvalidateWorkoutQueries } from "@/hooks/use-workout-cache";
+import { CreateExerciseDialog } from "@/components/exercises/create-exercise-dialog";
+import { Badge } from "@/components/ui/badge";
 
 interface WorkoutEditorProps {
   workoutId: number;
@@ -42,6 +44,7 @@ export function WorkoutEditor({
   const deleteSet = useDeleteSet();
 
   const [showExerciseDialog, setShowExerciseDialog] = useState(false);
+  const [showCreateExerciseDialog, setShowCreateExerciseDialog] = useState(false);
   const [exerciseSearch, setExerciseSearch] = useState("");
   const [notes, setNotes] = useState(workout.notes ?? "");
   const [durationMinutes, setDurationMinutes] = useState(
@@ -258,6 +261,18 @@ export function WorkoutEditor({
             data-testid="input-exercise-search"
             className="mb-2"
           />
+          <Button
+            variant="outline"
+            size="sm"
+            className="w-full mb-2 border-dashed"
+            onClick={() => {
+              setShowExerciseDialog(false);
+              setShowCreateExerciseDialog(true);
+            }}
+            data-testid="button-create-custom-exercise"
+          >
+            <Dumbbell className="w-4 h-4 mr-2" /> Create Custom Exercise
+          </Button>
           <div className="overflow-y-auto max-h-96 space-y-1">
             {(Array.isArray(exercises) ? exercises : []).map((ex) => (
               <button
@@ -266,7 +281,14 @@ export function WorkoutEditor({
                 onClick={() => handleAddExercise(ex.id)}
                 data-testid={`button-exercise-${ex.id}`}
               >
-                <div className="font-medium text-sm">{ex.name}</div>
+                <div className="flex items-center gap-2">
+                  <span className="font-medium text-sm">{ex.name}</span>
+                  {ex.isCustom && (
+                    <Badge variant="outline" className="text-[10px] px-1 py-0 text-muted-foreground">
+                      Custom
+                    </Badge>
+                  )}
+                </div>
                 <div className="text-xs text-muted-foreground">
                   {ex.category} · {ex.muscleGroups?.join(", ")}
                 </div>
@@ -275,6 +297,14 @@ export function WorkoutEditor({
           </div>
         </DialogContent>
       </Dialog>
+
+      <CreateExerciseDialog
+        open={showCreateExerciseDialog}
+        onOpenChange={setShowCreateExerciseDialog}
+        onCreated={(exercise) => {
+          handleAddExercise(exercise.id);
+        }}
+      />
     </div>
   );
 }
