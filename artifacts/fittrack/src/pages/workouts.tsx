@@ -37,7 +37,7 @@ export default function Workouts() {
         <h1 className="text-2xl font-black tracking-tight">Workouts</h1>
         <Link href="/workout">
           <Button size="sm" className="font-bold" data-testid="button-new-workout">
-            <Plus className="w-4 h-4 mr-1" /> New
+            <Plus className="w-4 h-4 mr-1" /> Start
           </Button>
         </Link>
       </div>

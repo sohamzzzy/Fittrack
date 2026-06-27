@@ -84,6 +84,10 @@ export interface RoutineExercise {
   defaultSets?: number | null;
   /** @nullable */
   defaultReps?: number | null;
+  /** @nullable */
+  defaultWeight?: number | null;
+  /** @nullable */
+  restSeconds?: number | null;
 }
 
 export interface Routine {
@@ -101,6 +105,8 @@ export type RoutineInputExercisesItem = {
   order: number;
   defaultSets?: number;
   defaultReps?: number;
+  defaultWeight?: number;
+  restSeconds?: number;
 };
 
 export interface RoutineInput {
@@ -114,6 +120,8 @@ export type RoutineUpdateExercisesItem = {
   order: number;
   defaultSets?: number;
   defaultReps?: number;
+  defaultWeight?: number;
+  restSeconds?: number;
 };
 
 export interface RoutineUpdate {

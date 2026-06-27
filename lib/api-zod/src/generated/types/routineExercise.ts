@@ -15,4 +15,8 @@ export interface RoutineExercise {
   defaultSets?: number | null;
   /** @nullable */
   defaultReps?: number | null;
+  /** @nullable */
+  defaultWeight?: number | null;
+  /** @nullable */
+  restSeconds?: number | null;
 }

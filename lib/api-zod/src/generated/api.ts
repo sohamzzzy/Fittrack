@@ -213,7 +213,9 @@ export const ListRoutinesResponseItem = zod.object({
   "exerciseName": zod.string(),
   "order": zod.number(),
   "defaultSets": zod.number().nullish(),
-  "defaultReps": zod.number().nullish()
+  "defaultReps": zod.number().nullish(),
+  "defaultWeight": zod.number().nullish(),
+  "restSeconds": zod.number().nullish()
 })).optional(),
   "createdAt": zod.coerce.date()
 })
@@ -230,7 +232,9 @@ export const CreateRoutineBody = zod.object({
   "exerciseId": zod.number(),
   "order": zod.number(),
   "defaultSets": zod.number().optional(),
-  "defaultReps": zod.number().optional()
+  "defaultReps": zod.number().optional(),
+  "defaultWeight": zod.number().optional(),
+  "restSeconds": zod.number().optional()
 })).optional()
 })
 
@@ -253,7 +257,9 @@ export const GetRoutineResponse = zod.object({
   "exerciseName": zod.string(),
   "order": zod.number(),
   "defaultSets": zod.number().nullish(),
-  "defaultReps": zod.number().nullish()
+  "defaultReps": zod.number().nullish(),
+  "defaultWeight": zod.number().nullish(),
+  "restSeconds": zod.number().nullish()
 })).optional(),
   "createdAt": zod.coerce.date()
 })
@@ -273,7 +279,9 @@ export const UpdateRoutineBody = zod.object({
   "exerciseId": zod.number(),
   "order": zod.number(),
   "defaultSets": zod.number().optional(),
-  "defaultReps": zod.number().optional()
+  "defaultReps": zod.number().optional(),
+  "defaultWeight": zod.number().optional(),
+  "restSeconds": zod.number().optional()
 })).optional()
 })
 
@@ -288,7 +296,9 @@ export const UpdateRoutineResponse = zod.object({
   "exerciseName": zod.string(),
   "order": zod.number(),
   "defaultSets": zod.number().nullish(),
-  "defaultReps": zod.number().nullish()
+  "defaultReps": zod.number().nullish(),
+  "defaultWeight": zod.number().nullish(),
+  "restSeconds": zod.number().nullish()
 })).optional(),
   "createdAt": zod.coerce.date()
 })

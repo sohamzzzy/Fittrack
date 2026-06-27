@@ -1,82 +1,118 @@
 import { useState } from "react";
-import { Link } from "wouter";
-import {
-  useListRoutines, useCreateRoutine, useDeleteRoutine, useListExercises,
-  getListRoutinesQueryKey
-} from "@workspace/api-client-react";
-import { useQueryClient } from "@tanstack/react-query";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Link, useLocation } from "wouter";
+import { useListRoutines, useDeleteRoutine, type Routine } from "@workspace/api-client-react";
+import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Dumbbell, Plus, Trash2, ChevronRight } from "lucide-react";
+import { Dumbbell, Plus, Trash2, Pencil, Play } from "lucide-react";
 import { motion } from "framer-motion";
 import { useToast } from "@/hooks/use-toast";
+import { RoutineFormDialog } from "@/components/routines/routine-form-dialog";
+import { useInvalidateRoutines } from "@/hooks/use-routine-cache";
 
 export default function Routines() {
+  const [, setLocation] = useLocation();
   const { data: routines, isLoading } = useListRoutines();
-  const createRoutine = useCreateRoutine();
   const deleteRoutine = useDeleteRoutine();
-  const qc = useQueryClient();
+  const invalidate = useInvalidateRoutines();
   const { toast } = useToast();
 
-  const [open, setOpen] = useState(false);
-  const [name, setName] = useState("");
-  const [description, setDescription] = useState("");
+  const [formOpen, setFormOpen] = useState(false);
+  const [editingRoutine, setEditingRoutine] = useState<Routine | null>(null);
 
-  const handleCreate = () => {
-    if (!name.trim()) return;
-    createRoutine.mutate({ data: { name, description } }, {
-      onSuccess: () => {
-        qc.invalidateQueries({ queryKey: getListRoutinesQueryKey() });
-        setOpen(false);
-        setName("");
-        setDescription("");
-        toast({ title: "Routine created" });
-      },
-    });
+  const openCreate = () => {
+    setEditingRoutine(null);
+    setFormOpen(true);
+  };
+
+  const openEdit = (routine: Routine) => {
+    setEditingRoutine(routine);
+    setFormOpen(true);
   };
 
   const handleDelete = (id: number) => {
-    deleteRoutine.mutate({ routineId: id }, {
-      onSuccess: () => qc.invalidateQueries({ queryKey: getListRoutinesQueryKey() }),
-    });
+    deleteRoutine.mutate(
+      { routineId: id },
+      {
+        onSuccess: () => {
+          invalidate(id);
+          toast({ title: "Routine deleted" });
+        },
+      },
+    );
   };
 
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between">
         <h1 className="text-2xl font-black tracking-tight">Routines</h1>
-        <Button size="sm" className="font-bold" onClick={() => setOpen(true)} data-testid="button-create-routine">
+        <Button size="sm" className="font-bold" onClick={openCreate} data-testid="button-create-routine">
           <Plus className="w-4 h-4 mr-1" /> New
         </Button>
       </div>
 
       {isLoading ? (
-        <div className="space-y-3">{[0,1,2].map(i => <Skeleton key={i} className="h-24" />)}</div>
+        <div className="space-y-3">
+          {[0, 1, 2].map((i) => (
+            <Skeleton key={i} className="h-24" />
+          ))}
+        </div>
       ) : routines && routines.length > 0 ? (
         <div className="space-y-3">
           {routines.map((r, i) => (
-            <motion.div key={r.id} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.05 }}>
+            <motion.div
+              key={r.id}
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: i * 0.05 }}
+            >
               <Card className="bg-card border-card-border hover:border-primary/30 transition-colors">
                 <CardContent className="pt-4 pb-3">
-                  <div className="flex items-start justify-between">
+                  <div className="flex items-start justify-between gap-2">
                     <div className="flex-1 min-w-0">
                       <h3 className="font-bold text-base mb-1">{r.name}</h3>
-                      {r.description && <p className="text-xs text-muted-foreground mb-2">{r.description}</p>}
+                      {r.description && (
+                        <p className="text-xs text-muted-foreground mb-2">{r.description}</p>
+                      )}
                       <div className="flex items-center gap-2 text-xs text-muted-foreground">
                         <Dumbbell className="w-3.5 h-3.5" />
-                        <span>{r.exerciseCount} exercises</span>
+                        <span>{r.exerciseCount ?? r.exercises?.length ?? 0} exercises</span>
                       </div>
                       {r.exercises && r.exercises.length > 0 && (
-                        <p className="text-xs text-muted-foreground mt-1 truncate">{r.exercises.map((e) => e.exerciseName).join(", ")}</p>
+                        <p className="text-xs text-muted-foreground mt-1 truncate">
+                          {r.exercises.map((e) => e.exerciseName).join(", ")}
+                        </p>
                       )}
                     </div>
-                    <div className="flex items-center gap-1 ml-2 shrink-0">
-                      <Button variant="ghost" size="icon" className="text-muted-foreground w-7 h-7 hover:text-destructive" onClick={() => handleDelete(r.id)} data-testid={`button-delete-routine-${r.id}`}>
-                        <Trash2 className="w-3.5 h-3.5" />
+                    <div className="flex flex-col gap-1 shrink-0">
+                      <Button
+                        size="sm"
+                        className="font-bold h-8"
+                        onClick={() => setLocation(`/workout?routineId=${r.id}`)}
+                        data-testid={`button-start-routine-${r.id}`}
+                      >
+                        <Play className="w-3.5 h-3.5 mr-1" /> Start
                       </Button>
+                      <div className="flex gap-1 justify-end">
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          className="w-7 h-7 text-muted-foreground"
+                          onClick={() => openEdit(r)}
+                          data-testid={`button-edit-routine-${r.id}`}
+                        >
+                          <Pencil className="w-3.5 h-3.5" />
+                        </Button>
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          className="w-7 h-7 text-muted-foreground hover:text-destructive"
+                          onClick={() => handleDelete(r.id)}
+                          data-testid={`button-delete-routine-${r.id}`}
+                        >
+                          <Trash2 className="w-3.5 h-3.5" />
+                        </Button>
+                      </div>
                     </div>
                   </div>
                 </CardContent>
@@ -92,28 +128,31 @@ export default function Routines() {
             </div>
             <div>
               <h3 className="font-bold text-lg mb-1">No routines yet</h3>
-              <p className="text-sm text-muted-foreground">Create a template to keep your training consistent.</p>
+              <p className="text-sm text-muted-foreground">
+                Create a template with exercises, sets, and reps.
+              </p>
             </div>
-            <Button className="font-bold" onClick={() => setOpen(true)}>Create Routine</Button>
+            <Button className="font-bold" onClick={openCreate}>
+              Create Routine
+            </Button>
           </CardContent>
         </Card>
       )}
 
-      <Dialog open={open} onOpenChange={setOpen}>
-        <DialogContent className="bg-card border-card-border">
-          <DialogHeader><DialogTitle>New Routine</DialogTitle></DialogHeader>
-          <div className="space-y-3">
-            <Input placeholder="Routine name (e.g. Push Day)" value={name} onChange={(e) => setName(e.target.value)} data-testid="input-routine-name" />
-            <Input placeholder="Description (optional)" value={description} onChange={(e) => setDescription(e.target.value)} data-testid="input-routine-description" />
-          </div>
-          <DialogFooter>
-            <Button variant="ghost" onClick={() => setOpen(false)}>Cancel</Button>
-            <Button onClick={handleCreate} disabled={!name.trim() || createRoutine.isPending} className="font-bold" data-testid="button-save-routine">
-              {createRoutine.isPending ? "Creating..." : "Create"}
-            </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
+      <div className="text-center">
+        <Link href="/workout">
+          <Button variant="link" className="text-muted-foreground text-sm">
+            Back to Start Workout
+          </Button>
+        </Link>
+      </div>
+
+      <RoutineFormDialog
+        open={formOpen}
+        onOpenChange={setFormOpen}
+        routine={editingRoutine}
+        onSaved={() => invalidate(editingRoutine?.id)}
+      />
     </div>
   );
 }

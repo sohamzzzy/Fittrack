@@ -1198,6 +1198,10 @@ components:
           type: ["integer", "null"]
         defaultReps:
           type: ["integer", "null"]
+        defaultWeight:
+          type: ["number", "null"]
+        restSeconds:
+          type: ["integer", "null"]
 
     RoutineInput:
       type: object
@@ -1221,6 +1225,10 @@ components:
                 type: integer
               defaultReps:
                 type: integer
+              defaultWeight:
+                type: number
+              restSeconds:
+                type: integer
 
     RoutineUpdate:
       type: object
@@ -1242,6 +1250,10 @@ components:
               defaultSets:
                 type: integer
               defaultReps:
+                type: integer
+              defaultWeight:
+                type: number
+              restSeconds:
                 type: integer
 
     # ─── Workouts ──────────────────────────────────────────────────────────────

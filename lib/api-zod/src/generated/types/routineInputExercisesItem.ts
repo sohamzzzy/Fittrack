@@ -11,4 +11,6 @@ export type RoutineInputExercisesItem = {
   order: number;
   defaultSets?: number;
   defaultReps?: number;
+  defaultWeight?: number;
+  restSeconds?: number;
 };

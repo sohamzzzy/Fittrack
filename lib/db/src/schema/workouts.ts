@@ -20,6 +20,8 @@ export const routineExercisesTable = pgTable("routine_exercises", {
   order: integer("order").notNull().default(0),
   defaultSets: integer("default_sets"),
   defaultReps: integer("default_reps"),
+  defaultWeight: numeric("default_weight", { precision: 8, scale: 2 }),
+  restSeconds: integer("rest_seconds"),
 });
 
 export const workoutsTable = pgTable("workouts", {

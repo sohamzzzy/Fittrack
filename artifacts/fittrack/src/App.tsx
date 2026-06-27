@@ -30,7 +30,7 @@ import { Layout } from "@/components/layout";
 import { ApiAuthSetup } from "@/components/api-auth-setup";
 
 import Dashboard from "@/pages/dashboard";
-import ActiveWorkout from "@/pages/workout-active";
+import WorkoutHub from "@/pages/workout-hub";
 import Workouts from "@/pages/workouts";
 import WorkoutDetail from "@/pages/workout-detail";
 import Routines from "@/pages/routines";
@@ -128,7 +128,7 @@ function AppShell() {
       <Switch>
         <Route path="/dashboard" component={Dashboard} />
 
-        <Route path="/workout" component={ActiveWorkout} />
+        <Route path="/workout" component={WorkoutHub} />
 
         <Route path="/workouts" component={Workouts} />
         <Route path="/workouts/:id" component={WorkoutDetail} />

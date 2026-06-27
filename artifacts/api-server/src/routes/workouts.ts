@@ -2,7 +2,7 @@ import { Router } from "express";
 import { getSingleValue } from "../lib/getSingleValue";
 import { requireAuth, getAuthUser } from "../lib/auth";
 import { sendServerError } from "../lib/http-error";
-import { db, workoutsTable, workoutExercisesTable, workoutSetsTable, exercisesTable } from "@workspace/db";
+import { db, workoutsTable, workoutExercisesTable, workoutSetsTable, exercisesTable, routinesTable, routineExercisesTable } from "@workspace/db";
 import { eq, and, count, sql } from "drizzle-orm";
 
 const router = Router();
@@ -110,6 +110,92 @@ router.post("/workouts", requireAuth, async (req, res) => {
       res.status(400).json({ error: "Workout name is required" });
       return;
     }
+
+    if (routineId != null) {
+      const parsedRoutineId = parseInt(String(routineId), 10);
+      if (!Number.isFinite(parsedRoutineId)) {
+        res.status(400).json({ error: "Invalid routine id" });
+        return;
+      }
+
+      const [routine] = await db
+        .select()
+        .from(routinesTable)
+        .where(and(eq(routinesTable.id, parsedRoutineId), eq(routinesTable.userId, user.id)))
+        .limit(1);
+      if (!routine) {
+        res.status(404).json({ error: "Routine not found" });
+        return;
+      }
+
+      const [activeWorkout] = await db
+        .select({ id: workoutsTable.id })
+        .from(workoutsTable)
+        .where(and(eq(workoutsTable.userId, user.id), eq(workoutsTable.isFinished, false)))
+        .limit(1);
+      if (activeWorkout) {
+        res.status(409).json({ error: "Finish or discard your current active workout before starting a new one." });
+        return;
+      }
+
+      const routineExercises = await db
+        .select()
+        .from(routineExercisesTable)
+        .where(eq(routineExercisesTable.routineId, parsedRoutineId))
+        .orderBy(routineExercisesTable.order);
+
+      const workout = await db.transaction(async (tx) => {
+        const [w] = await tx
+          .insert(workoutsTable)
+          .values({
+            userId: user.id,
+            name: name.trim(),
+            routineId: parsedRoutineId,
+            notes: notes?.trim() || null,
+            startedAt: new Date(),
+          })
+          .returning();
+        if (!w) throw new Error("Failed to create workout");
+
+        for (const re of routineExercises) {
+          const [we] = await tx
+            .insert(workoutExercisesTable)
+            .values({
+              workoutId: w.id,
+              exerciseId: re.exerciseId,
+              order: re.order,
+            })
+            .returning();
+          const setCount = Math.max(re.defaultSets ?? 1, 1);
+          for (let setNumber = 1; setNumber <= setCount; setNumber++) {
+            await tx.insert(workoutSetsTable).values({
+              workoutExerciseId: we.id,
+              setNumber,
+              weight: re.defaultWeight?.toString() ?? null,
+              reps: re.defaultReps ?? null,
+              completed: false,
+              setType: "normal",
+            });
+          }
+        }
+
+        return w;
+      });
+
+      res.status(201).json(await formatWorkoutDetail(workout));
+      return;
+    }
+
+    const [activeWorkout] = await db
+      .select({ id: workoutsTable.id })
+      .from(workoutsTable)
+      .where(and(eq(workoutsTable.userId, user.id), eq(workoutsTable.isFinished, false)))
+      .limit(1);
+    if (activeWorkout) {
+      res.status(409).json({ error: "Finish or discard your current active workout before starting a new one." });
+      return;
+    }
+
     const [w] = await db
       .insert(workoutsTable)
       .values({ userId: user.id, name, routineId, notes, startedAt: new Date() })

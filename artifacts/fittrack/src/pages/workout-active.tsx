@@ -4,10 +4,10 @@ import { useAuth } from "@clerk/react";
 import {
   useCreateWorkout,
   useGetWorkout,
+  useGetRoutine,
   useUpdateWorkout,
-  useListWorkouts,
   getGetWorkoutQueryKey,
-  getListWorkoutsQueryKey,
+  getGetRoutineQueryKey,
 } from "@workspace/api-client-react";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -15,11 +15,7 @@ import { Clock, Weight, Dumbbell } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { WorkoutEditor, computeWorkoutStats } from "@/components/workout/workout-editor";
 import { useInvalidateWorkoutQueries } from "@/hooks/use-workout-cache";
-
-function apiErrorMessage(err: unknown): string {
-  if (err instanceof Error) return err.message;
-  return "Could not reach the server. Set VITE_API_URL to your Railway API origin (https://….up.railway.app).";
-}
+import { apiErrorMessage } from "@/lib/api-errors";
 
 function formatDuration(seconds: number) {
   const h = Math.floor(seconds / 3600);
@@ -32,7 +28,10 @@ function formatDuration(seconds: number) {
 export default function ActiveWorkout() {
   const [, setLocation] = useLocation();
   const search = useSearch();
-  const resumeId = parseInt(new URLSearchParams(search).get("id") ?? "", 10);
+  const params = new URLSearchParams(search);
+  const resumeId = parseInt(params.get("id") ?? "", 10);
+  const routineId = parseInt(params.get("routineId") ?? "", 10);
+  const isNewEmpty = params.get("new") === "1";
 
   const [workoutId, setWorkoutId] = useState<number | null>(
     Number.isFinite(resumeId) && resumeId > 0 ? resumeId : null,
@@ -46,10 +45,11 @@ export default function ActiveWorkout() {
 
   const createWorkout = useCreateWorkout();
   const updateWorkout = useUpdateWorkout();
-  const { data: workoutsList } = useListWorkouts(undefined, {
+
+  const { data: routine, isLoading: routineLoading } = useGetRoutine(routineId, {
     query: {
-      enabled: authLoaded && isSignedIn && workoutId == null,
-      queryKey: getListWorkoutsQueryKey(),
+      enabled: Number.isFinite(routineId) && routineId > 0,
+      queryKey: getGetRoutineQueryKey(routineId),
     },
   });
 
@@ -82,55 +82,89 @@ export default function ActiveWorkout() {
 
   const workoutName = `Workout — ${new Date().toLocaleDateString("en-US", { weekday: "short", month: "short", day: "numeric" })}`;
 
-  const startWorkout = useCallback(() => {
+  const handleCreateSuccess = useCallback(
+    (w: { id?: number }) => {
+      if (typeof w?.id === "number") {
+        setWorkoutId(w.id);
+        invalidate(w.id);
+      } else {
+        startRequestedRef.current = false;
+        toast({
+          variant: "destructive",
+          title: "Could not start workout",
+          description: "The server response did not include a workout id. Try again.",
+        });
+      }
+    },
+    [invalidate, toast],
+  );
+
+  const handleCreateError = useCallback(
+    (err: unknown) => {
+      startRequestedRef.current = false;
+      toast({
+        variant: "destructive",
+        title: "Could not start workout",
+        description: apiErrorMessage(err),
+      });
+    },
+    [toast],
+  );
+
+  const startEmptyWorkout = useCallback(() => {
     createWorkout.mutate(
       { data: { name: workoutName } },
-      {
-        onSuccess: (w) => {
-          if (typeof w?.id === "number") {
-            setWorkoutId(w.id);
-          } else {
-            startRequestedRef.current = false;
-            toast({
-              variant: "destructive",
-              title: "Could not start workout",
-              description: "The server response did not include a workout id. Try again.",
-            });
-          }
-        },
-        onError: (err) => {
-          startRequestedRef.current = false;
-          toast({
-            variant: "destructive",
-            title: "Could not start workout",
-            description: apiErrorMessage(err),
-          });
-        },
-      },
+      { onSuccess: handleCreateSuccess, onError: handleCreateError },
     );
-  }, [createWorkout, toast, workoutName]);
+  }, [createWorkout, workoutName, handleCreateSuccess, handleCreateError]);
+
+  const startRoutineWorkout = useCallback(() => {
+    if (!routine) return;
+    createWorkout.mutate(
+      { data: { name: routine.name, routineId: routine.id } },
+      { onSuccess: handleCreateSuccess, onError: handleCreateError },
+    );
+  }, [createWorkout, routine, handleCreateSuccess, handleCreateError]);
 
   useEffect(() => {
     if (!authLoaded || !isSignedIn || workoutId != null) return;
     if (startRequestedRef.current || createWorkout.isPending) return;
 
-    const activeWorkout = Array.isArray(workoutsList)
-      ? workoutsList.find((w) => !w.isFinished)
-      : undefined;
-
-    if (activeWorkout) {
-      setWorkoutId(activeWorkout.id);
+    if (Number.isFinite(resumeId) && resumeId > 0) {
+      setWorkoutId(resumeId);
       return;
     }
 
-    startRequestedRef.current = true;
-    startWorkout();
-  }, [authLoaded, isSignedIn, workoutId, createWorkout.isPending, workoutsList, startWorkout]);
+    if (Number.isFinite(routineId) && routineId > 0) {
+      if (routineLoading || !routine) return;
+      startRequestedRef.current = true;
+      startRoutineWorkout();
+      return;
+    }
+
+    if (isNewEmpty) {
+      startRequestedRef.current = true;
+      startEmptyWorkout();
+    }
+  }, [
+    authLoaded,
+    isSignedIn,
+    workoutId,
+    createWorkout.isPending,
+    resumeId,
+    routineId,
+    routine,
+    routineLoading,
+    isNewEmpty,
+    startEmptyWorkout,
+    startRoutineWorkout,
+  ]);
 
   const handleFinish = () => {
     if (createWorkout.isError && workoutId == null) {
       startRequestedRef.current = true;
-      startWorkout();
+      if (routine) startRoutineWorkout();
+      else startEmptyWorkout();
       return;
     }
 
@@ -152,8 +186,11 @@ export default function ActiveWorkout() {
           setLocation("/workouts");
         },
         onError: (err) => {
-          const message = err instanceof Error ? err.message : "Could not save. Try again.";
-          toast({ variant: "destructive", title: "Failed to finish workout", description: message });
+          toast({
+            variant: "destructive",
+            title: "Failed to finish workout",
+            description: apiErrorMessage(err),
+          });
         },
         onSettled: () => {
           setFinishing(false);
@@ -163,6 +200,9 @@ export default function ActiveWorkout() {
   };
 
   const { totalSets, totalVol } = workout ? computeWorkoutStats(workout) : { totalSets: 0, totalVol: 0 };
+  const isStarting =
+    createWorkout.isPending ||
+    (Number.isFinite(routineId) && routineId > 0 && routineLoading && workoutId == null);
 
   return (
     <div className="space-y-4">
@@ -189,12 +229,12 @@ export default function ActiveWorkout() {
           disabled={
             finishing ||
             !authLoaded ||
-            createWorkout.isPending ||
+            isStarting ||
             (workoutId == null && !createWorkout.isError)
           }
           data-testid="button-finish-workout"
         >
-          {createWorkout.isPending || (workoutId == null && !createWorkout.isError)
+          {isStarting || (workoutId == null && !createWorkout.isError)
             ? "Starting…"
             : createWorkout.isError && workoutId == null
               ? "Retry"
@@ -204,7 +244,7 @@ export default function ActiveWorkout() {
         </Button>
       </div>
 
-      {!authLoaded || createWorkout.isPending || (workoutId != null && (isLoading || !workout)) ? (
+      {!authLoaded || isStarting || (workoutId != null && (isLoading || !workout)) ? (
         <div className="space-y-4">
           {[0, 1].map((i) => (
             <Skeleton key={i} className="h-40" />
