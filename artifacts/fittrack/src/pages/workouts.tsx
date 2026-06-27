@@ -1,5 +1,10 @@
 import { Link } from "wouter";
-import { useListWorkouts, useDeleteWorkout, getListWorkoutsQueryKey } from "@workspace/api-client-react";
+import {
+  useListWorkouts,
+  useDeleteWorkout,
+  getListWorkoutsQueryKey,
+  getGetWorkoutSummaryQueryKey,
+} from "@workspace/api-client-react";
 import { useQueryClient } from "@tanstack/react-query";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -15,9 +20,15 @@ export default function Workouts() {
   const queryClient = useQueryClient();
 
   const handleDelete = (id: number) => {
-    deleteWorkout.mutate({ workoutId: id }, {
-      onSuccess: () => queryClient.invalidateQueries({ queryKey: getListWorkoutsQueryKey() }),
-    });
+    deleteWorkout.mutate(
+      { workoutId: id },
+      {
+        onSuccess: () => {
+          queryClient.invalidateQueries({ queryKey: getListWorkoutsQueryKey() });
+          queryClient.invalidateQueries({ queryKey: getGetWorkoutSummaryQueryKey() });
+        },
+      },
+    );
   };
 
   return (
@@ -32,45 +43,89 @@ export default function Workouts() {
       </div>
 
       {isLoading ? (
-        <div className="space-y-3">{[0,1,2,3].map(i => <Skeleton key={i} className="h-28" />)}</div>
+        <div className="space-y-3">
+          {[0, 1, 2, 3].map((i) => (
+            <Skeleton key={i} className="h-28" />
+          ))}
+        </div>
       ) : Array.isArray(workouts) && workouts.length > 0 ? (
         <div className="space-y-3">
-          {workouts.map((w, i) => (
-            <motion.div key={w.id} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.05 }}>
-              <Card className="bg-card border-card-border hover:border-primary/30 transition-colors">
-                <CardContent className="pt-4 pb-3">
-                  <Link href={`/workouts/${w.id}`}>
-                    <div className="cursor-pointer" data-testid={`card-workout-${w.id}`}>
-                      <div className="flex items-center justify-between mb-2">
-                        <h3 className="font-bold text-base">{w.name}</h3>
-                        <div className="flex items-center gap-2">
-                          {w.isFinished ? <Badge variant="secondary" className="text-xs font-semibold text-primary border-primary/20 bg-primary/10">Done</Badge> : <Badge variant="secondary" className="text-xs text-amber-400 border-amber-400/20 bg-amber-400/10">Active</Badge>}
-                          <ChevronRight className="w-4 h-4 text-muted-foreground" />
+          {workouts.map((w, i) => {
+            const href = w.isFinished ? `/workouts/${w.id}` : `/workout?id=${w.id}`;
+            return (
+              <motion.div
+                key={w.id}
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: i * 0.05 }}
+              >
+                <Card className="bg-card border-card-border hover:border-primary/30 transition-colors">
+                  <CardContent className="pt-4 pb-3">
+                    <Link href={href}>
+                      <div className="cursor-pointer" data-testid={`card-workout-${w.id}`}>
+                        <div className="flex items-center justify-between mb-2">
+                          <h3 className="font-bold text-base">{w.name}</h3>
+                          <div className="flex items-center gap-2">
+                            {w.isFinished ? (
+                              <Badge
+                                variant="secondary"
+                                className="text-xs font-semibold text-primary border-primary/20 bg-primary/10"
+                              >
+                                Done
+                              </Badge>
+                            ) : (
+                              <Badge
+                                variant="secondary"
+                                className="text-xs text-amber-400 border-amber-400/20 bg-amber-400/10"
+                              >
+                                Active
+                              </Badge>
+                            )}
+                            <ChevronRight className="w-4 h-4 text-muted-foreground" />
+                          </div>
+                        </div>
+                        <p className="text-xs text-muted-foreground mb-3">
+                          {formatDistanceToNow(new Date(w.startedAt), { addSuffix: true })} ·{" "}
+                          {format(new Date(w.startedAt), "MMM d, yyyy")}
+                        </p>
+                        <div className="flex items-center gap-4 text-sm text-muted-foreground">
+                          {w.durationMinutes && (
+                            <span className="flex items-center gap-1">
+                              <Clock className="w-3.5 h-3.5" />
+                              {w.durationMinutes}min
+                            </span>
+                          )}
+                          {w.totalVolume != null && (
+                            <span className="flex items-center gap-1">
+                              <Weight className="w-3.5 h-3.5" />
+                              {Math.round(w.totalVolume as number)}kg
+                            </span>
+                          )}
+                          {w.totalSets != null && (
+                            <span className="flex items-center gap-1">
+                              <Dumbbell className="w-3.5 h-3.5" />
+                              {w.totalSets} sets
+                            </span>
+                          )}
                         </div>
                       </div>
-                      <p className="text-xs text-muted-foreground mb-3">{formatDistanceToNow(new Date(w.startedAt), { addSuffix: true })} · {format(new Date(w.startedAt), "MMM d, yyyy")}</p>
-                      <div className="flex items-center gap-4 text-sm text-muted-foreground">
-                        {w.durationMinutes && (
-                          <span className="flex items-center gap-1"><Clock className="w-3.5 h-3.5" />{w.durationMinutes}min</span>
-                        )}
-                        {w.totalVolume != null && (
-                          <span className="flex items-center gap-1"><Weight className="w-3.5 h-3.5" />{Math.round(w.totalVolume as number)}kg</span>
-                        )}
-                        {w.totalSets != null && (
-                          <span className="flex items-center gap-1"><Dumbbell className="w-3.5 h-3.5" />{w.totalSets} sets</span>
-                        )}
-                      </div>
+                    </Link>
+                    <div className="flex justify-end mt-2">
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        className="text-muted-foreground w-7 h-7 hover:text-destructive"
+                        onClick={() => handleDelete(w.id)}
+                        data-testid={`button-delete-workout-${w.id}`}
+                      >
+                        <Trash2 className="w-3.5 h-3.5" />
+                      </Button>
                     </div>
-                  </Link>
-                  <div className="flex justify-end mt-2">
-                    <Button variant="ghost" size="icon" className="text-muted-foreground w-7 h-7 hover:text-destructive" onClick={() => handleDelete(w.id)} data-testid={`button-delete-workout-${w.id}`}>
-                      <Trash2 className="w-3.5 h-3.5" />
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
-            </motion.div>
-          ))}
+                  </CardContent>
+                </Card>
+              </motion.div>
+            );
+          })}
         </div>
       ) : (
         <Card className="bg-card border-card-border">
