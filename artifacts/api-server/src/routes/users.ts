@@ -1,8 +1,8 @@
 import { Router } from "express";
 import { getSingleValue } from "../lib/getSingleValue";
 import { requireAuth, getAuthUser, getOrCreateUser } from "../lib/auth";
-import { db, usersTable, followsTable, workoutsTable } from "@workspace/db";
-import { eq, and, count, sql } from "drizzle-orm";
+import { db, usersTable, followsTable, blocksTable, mutesTable, workoutsTable, postsTable } from "@workspace/db";
+import { eq, and, count, sql, or, ne, desc } from "drizzle-orm";
 import { UpdateMeBody } from "@workspace/api-zod";
 
 const router = Router();
@@ -16,6 +16,18 @@ async function userWithCounts(user: typeof usersTable.$inferSelect, isFollowing 
     followingCount: Number(following.c),
     isFollowing,
   };
+}
+
+async function relationshipState(viewerId: number, userId: number) {
+  const [follow, mute, block] = await Promise.all([
+    db.query.followsTable.findFirst({ where: and(eq(followsTable.followerId, viewerId), eq(followsTable.followingId, userId)) }),
+    db.query.mutesTable.findFirst({ where: and(eq(mutesTable.muterId, viewerId), eq(mutesTable.mutedId, userId)) }),
+    db.query.blocksTable.findFirst({ where: or(
+      and(eq(blocksTable.blockerId, viewerId), eq(blocksTable.blockedId, userId)),
+      and(eq(blocksTable.blockerId, userId), eq(blocksTable.blockedId, viewerId)),
+    ) }),
+  ]);
+  return { isFollowing: !!follow, isMuted: !!mute, isBlocked: !!block, blockedByMe: block?.blockerId === viewerId };
 }
 
 const meRouter = Router();
@@ -106,14 +118,23 @@ router.get("/users/search", requireAuth, async (req, res) => {
   try {
     const user = await getAuthUser(req);
     const q = getSingleValue(req.query.q) ?? "";
-    const users = await db.select().from(usersTable).where(sql`lower(${usersTable.username}) like lower(${"%" + q + "%"})`).limit(20);
+    const blockedRows = await db.select().from(blocksTable).where(or(eq(blocksTable.blockerId, user.id), eq(blocksTable.blockedId, user.id)));
+    const blockedIds = new Set(blockedRows.map((row) => row.blockerId === user.id ? row.blockedId : row.blockerId));
+    const users = await db.select().from(usersTable).where(and(
+      ne(usersTable.id, user.id),
+      or(
+        sql`lower(${usersTable.username}) like lower(${"%" + q + "%"})`,
+        sql`lower(coalesce(${usersTable.displayName}, '')) like lower(${"%" + q + "%"})`,
+      ),
+    )).limit(20);
     const followingRows = await db.select({ followingId: followsTable.followingId }).from(followsTable).where(eq(followsTable.followerId, user.id));
     const followingIds = new Set(followingRows.map((r) => r.followingId));
     const result = await Promise.all(
-      users.map(async (u) => {
+      users.filter((u) => !blockedIds.has(u.id)).map(async (u) => {
         const [fl] = await db.select({ c: count() }).from(followsTable).where(eq(followsTable.followingId, u.id));
         const [fg] = await db.select({ c: count() }).from(followsTable).where(eq(followsTable.followerId, u.id));
-        return { ...u, followersCount: Number(fl.c), followingCount: Number(fg.c), isFollowing: followingIds.has(u.id) };
+        const mute = await db.query.mutesTable.findFirst({ where: and(eq(mutesTable.muterId, user.id), eq(mutesTable.mutedId, u.id)) });
+        return { ...u, followersCount: Number(fl.c), followingCount: Number(fg.c), isFollowing: followingIds.has(u.id), isMuted: !!mute, isBlocked: false, blockedByMe: false };
       })
     );
     res.json(result);
@@ -134,10 +155,24 @@ router.get("/users/:userId", requireAuth, async (req, res) => {
     const userId = parseInt(userIdParam);
     const user = await db.query.usersTable.findFirst({ where: eq(usersTable.id, userId) });
     if (!user) { res.status(404).json({ error: "Not found" }); return; }
+    const relationship = await relationshipState(me.id, userId);
+    if (relationship.isBlocked) { res.status(404).json({ error: "Not found" }); return; }
     const [fl] = await db.select({ c: count() }).from(followsTable).where(eq(followsTable.followingId, userId));
     const [fg] = await db.select({ c: count() }).from(followsTable).where(eq(followsTable.followerId, userId));
-    const followRow = await db.query.followsTable.findFirst({ where: and(eq(followsTable.followerId, me.id), eq(followsTable.followingId, userId)) });
-    res.json({ ...user, followersCount: Number(fl.c), followingCount: Number(fg.c), isFollowing: !!followRow });
+    const [workoutCount] = await db.select({ c: count() }).from(workoutsTable).where(and(eq(workoutsTable.userId, userId), eq(workoutsTable.isFinished, true)));
+    const recentActivity = await db.select({
+      id: postsTable.id,
+      content: postsTable.content,
+      createdAt: postsTable.createdAt,
+    }).from(postsTable).where(eq(postsTable.userId, userId)).orderBy(desc(postsTable.createdAt)).limit(5);
+    res.json({
+      ...user,
+      followersCount: Number(fl.c),
+      followingCount: Number(fg.c),
+      ...relationship,
+      totalWorkouts: Number(workoutCount.c),
+      recentActivity,
+    });
   } catch (e) {
     req.log.error(e);
     res.status(500).json({ error: "Internal server error" });

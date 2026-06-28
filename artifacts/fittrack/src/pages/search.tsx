@@ -1,13 +1,13 @@
 import { useState } from "react";
 import { Link } from "wouter";
-import { useSearchUsers, useFollowUser, useUnfollowUser, getSearchUsersQueryKey } from "@workspace/api-client-react";
-import { useQueryClient } from "@tanstack/react-query";
+import { useSearchUsers, useFollowUser, useUnfollowUser, customFetch } from "@workspace/api-client-react";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Search as SearchIcon, UserPlus, UserMinus, ChevronRight } from "lucide-react";
+import { Search as SearchIcon, UserPlus, UserMinus, Ban } from "lucide-react";
 import { motion } from "framer-motion";
 import { useDebounce } from "use-debounce";
 
@@ -19,10 +19,35 @@ export default function Search() {
   const followUser = useFollowUser();
   const unfollowUser = useUnfollowUser();
   const qc = useQueryClient();
+  const { data: blockedUsers = [] } = useQuery<Array<{ id: number; username: string; displayName: string | null }>>({
+    queryKey: ["/api/social/blocked"],
+    queryFn: () => customFetch("/api/social/blocked", { responseType: "json" }),
+  });
+  const unblockUser = useMutation({
+    mutationFn: (userId: number) => customFetch(`/api/social/block/${userId}`, { method: "DELETE", responseType: "json" }),
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ["/api/social/blocked"] });
+      qc.invalidateQueries({ queryKey: ["/api/users/search"] });
+    },
+  });
 
   const handleFollowToggle = (userId: number, isFollowing: boolean) => {
     const fn = isFollowing ? unfollowUser : followUser;
-    fn.mutate({ userId }, { onSuccess: () => qc.invalidateQueries({ queryKey: ["/api/users/search"] }) });
+    qc.setQueriesData({ queryKey: ["/api/users/search"] }, (old: any) =>
+      Array.isArray(old) ? old.map((user) => user.id === userId ? {
+        ...user,
+        isFollowing: !isFollowing,
+        followersCount: Math.max(0, (user.followersCount ?? 0) + (isFollowing ? -1 : 1)),
+      } : user) : old
+    );
+    fn.mutate({ userId }, {
+      onSuccess: () => {
+        qc.invalidateQueries({ queryKey: ["/api/users/search"] });
+        qc.invalidateQueries({ queryKey: ["/api/social/feed"] });
+        qc.invalidateQueries({ queryKey: ["/api/users", userId] });
+      },
+      onError: () => qc.invalidateQueries({ queryKey: ["/api/users/search"] }),
+    });
   };
 
   return (
@@ -30,7 +55,7 @@ export default function Search() {
       <h1 className="text-2xl font-black tracking-tight">Discover</h1>
       <div className="relative">
         <SearchIcon className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-        <Input className="pl-9" placeholder="Search by username..." value={q} onChange={(e) => setQ(e.target.value)} data-testid="input-user-search" />
+        <Input className="pl-9" placeholder="Search by username or display name..." value={q} onChange={(e) => setQ(e.target.value)} data-testid="input-user-search" />
       </div>
 
       {isLoading ? (
@@ -71,7 +96,26 @@ export default function Search() {
       ) : (
         <Card className="bg-card border-card-border">
           <CardContent className="py-12 text-center text-muted-foreground">
-            {q ? `No users found for "${q}"` : "Search for users by username"}
+            {q ? `No users found for "${q}"` : "Search by username or display name"}
+          </CardContent>
+        </Card>
+      )}
+
+      {blockedUsers.length > 0 && (
+        <Card className="bg-card border-card-border">
+          <CardContent className="py-4">
+            <h2 className="font-bold flex items-center gap-2 mb-3"><Ban className="w-4 h-4" />Blocked users</h2>
+            <div className="space-y-2">
+              {blockedUsers.map((user) => (
+                <div key={user.id} className="flex items-center justify-between gap-3">
+                  <div className="min-w-0">
+                    <p className="text-sm font-semibold truncate">{user.displayName ?? user.username}</p>
+                    <p className="text-xs text-muted-foreground">@{user.username}</p>
+                  </div>
+                  <Button size="sm" variant="outline" onClick={() => unblockUser.mutate(user.id)} disabled={unblockUser.isPending}>Unblock</Button>
+                </div>
+              ))}
+            </div>
           </CardContent>
         </Card>
       )}

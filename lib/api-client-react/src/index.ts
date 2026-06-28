@@ -6,5 +6,6 @@ export {
   getApiBaseUrl,
   resolveApiBaseUrl,
   ApiError,
+  customFetch,
 } from "./custom-fetch";
 export type { AuthTokenGetter, ErrorType } from "./custom-fetch";

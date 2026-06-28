@@ -1,10 +1,29 @@
 import { Router } from "express";
 import { getSingleValue } from "../lib/getSingleValue";
 import { requireAuth, getAuthUser } from "../lib/auth";
-import { db, postsTable, postLikesTable, postCommentsTable, followsTable, usersTable, workoutsTable } from "@workspace/db";
-import { eq, and, count, inArray, sql } from "drizzle-orm";
+import { db, postsTable, postLikesTable, postCommentsTable, followsTable, blocksTable, mutesTable, usersTable, workoutsTable } from "@workspace/db";
+import { eq, and, count, inArray, sql, or } from "drizzle-orm";
 
 const router = Router();
+
+function parseUserId(value: string | undefined) {
+  const id = Number(value);
+  return Number.isInteger(id) && id > 0 ? id : null;
+}
+
+async function hasBlockBetween(firstId: number, secondId: number) {
+  return !!await db.query.blocksTable.findFirst({ where: or(
+    and(eq(blocksTable.blockerId, firstId), eq(blocksTable.blockedId, secondId)),
+    and(eq(blocksTable.blockerId, secondId), eq(blocksTable.blockedId, firstId)),
+  ) });
+}
+
+async function canAccessPost(viewerId: number, postId: number) {
+  const post = await db.query.postsTable.findFirst({ where: eq(postsTable.id, postId) });
+  if (!post) return null;
+  if (post.userId !== viewerId && await hasBlockBetween(viewerId, post.userId)) return null;
+  return post;
+}
 
 async function formatUser(userId: number, viewerId: number) {
   const u = await db.query.usersTable.findFirst({ where: eq(usersTable.id, userId) });
@@ -44,7 +63,13 @@ router.get("/social/feed", requireAuth, async (req, res) => {
     const limit = parseInt(getSingleValue(req.query.limit) ?? "") || 20;
     const offset = parseInt(getSingleValue(req.query.offset) ?? "") || 0;
     const followingRows = await db.select({ followingId: followsTable.followingId }).from(followsTable).where(eq(followsTable.followerId, me.id));
-    const followingIds = followingRows.map((r) => r.followingId);
+    const mutedRows = await db.select({ mutedId: mutesTable.mutedId }).from(mutesTable).where(eq(mutesTable.muterId, me.id));
+    const blockedRows = await db.select().from(blocksTable).where(or(eq(blocksTable.blockerId, me.id), eq(blocksTable.blockedId, me.id)));
+    const excludedIds = new Set([
+      ...mutedRows.map((r) => r.mutedId),
+      ...blockedRows.map((r) => r.blockerId === me.id ? r.blockedId : r.blockerId),
+    ]);
+    const followingIds = followingRows.map((r) => r.followingId).filter((id) => !excludedIds.has(id));
     const userIds = [me.id, ...followingIds];
     const posts = await db.select().from(postsTable).where(sql`${postsTable.userId} = ANY(ARRAY[${sql.join(userIds.map(id => sql`${id}`), sql`, `)}]::int[])`).orderBy(sql`${postsTable.createdAt} desc`).limit(limit).offset(offset);
     const result = await Promise.all(posts.map((p) => formatPost(p, me.id)));
@@ -78,6 +103,10 @@ router.get("/social/posts/:postId", requireAuth, async (req, res) => {
     const postId = parseInt(postIdParam);
     const post = await db.query.postsTable.findFirst({ where: eq(postsTable.id, postId) });
     if (!post) { res.status(404).json({ error: "Not found" }); return; }
+    if (post.userId !== me.id && (await hasBlockBetween(me.id, post.userId))) {
+      res.status(404).json({ error: "Not found" });
+      return;
+    }
     res.json(await formatPost(post, me.id));
   } catch (e) {
     req.log.error(e);
@@ -111,6 +140,7 @@ router.post("/social/posts/:postId/like", requireAuth, async (req, res) => {
       return;
     }
     const postId = parseInt(postIdParam);
+    if (!await canAccessPost(me.id, postId)) { res.status(404).json({ error: "Not found" }); return; }
     const existing = await db.query.postLikesTable.findFirst({ where: and(eq(postLikesTable.postId, postId), eq(postLikesTable.userId, me.id)) });
     if (!existing) {
       await db.insert(postLikesTable).values({ postId, userId: me.id });
@@ -132,6 +162,7 @@ router.delete("/social/posts/:postId/like", requireAuth, async (req, res) => {
       return;
     }
     const postId = parseInt(postIdParam);
+    if (!await canAccessPost(me.id, postId)) { res.status(404).json({ error: "Not found" }); return; }
     await db.delete(postLikesTable).where(and(eq(postLikesTable.postId, postId), eq(postLikesTable.userId, me.id)));
     const [likes] = await db.select({ c: count() }).from(postLikesTable).where(eq(postLikesTable.postId, postId));
     res.json({ liked: false, likesCount: Number(likes.c) });
@@ -150,6 +181,7 @@ router.get("/social/posts/:postId/comments", requireAuth, async (req, res) => {
       return;
     }
     const postId = parseInt(postIdParam);
+    if (!await canAccessPost(me.id, postId)) { res.status(404).json({ error: "Not found" }); return; }
     const comments = await db.select().from(postCommentsTable).where(eq(postCommentsTable.postId, postId)).orderBy(postCommentsTable.createdAt);
     const result = await Promise.all(comments.map(async (c) => ({
       ...c,
@@ -171,6 +203,7 @@ router.post("/social/posts/:postId/comments", requireAuth, async (req, res) => {
       return;
     }
     const postId = parseInt(postIdParam);
+    if (!await canAccessPost(me.id, postId)) { res.status(404).json({ error: "Not found" }); return; }
     const { content } = req.body;
     const [c] = await db.insert(postCommentsTable).values({ postId, userId: me.id, content }).returning();
     res.status(201).json({ ...c, user: await formatUser(me.id, me.id) });
@@ -205,7 +238,11 @@ router.post("/social/follow/:userId", requireAuth, async (req, res) => {
       res.status(400).json({ error: "Missing user id" });
       return;
     }
-    const targetId = parseInt(targetIdParam);
+    const targetId = parseUserId(targetIdParam);
+    if (!targetId || targetId === me.id) { res.status(400).json({ error: "Invalid follow target" }); return; }
+    const target = await db.query.usersTable.findFirst({ where: eq(usersTable.id, targetId) });
+    if (!target) { res.status(404).json({ error: "User not found" }); return; }
+    if (await hasBlockBetween(me.id, targetId)) { res.status(409).json({ error: "Blocked users cannot be followed" }); return; }
     const existing = await db.query.followsTable.findFirst({ where: and(eq(followsTable.followerId, me.id), eq(followsTable.followingId, targetId)) });
     if (!existing) {
       await db.insert(followsTable).values({ followerId: me.id, followingId: targetId });
@@ -236,6 +273,84 @@ router.delete("/social/follow/:userId", requireAuth, async (req, res) => {
   }
 });
 
+router.post("/social/mute/:userId", requireAuth, async (req, res) => {
+  try {
+    const me = await getAuthUser(req);
+    const targetId = parseUserId(getSingleValue(req.params.userId));
+    if (!targetId || targetId === me.id) { res.status(400).json({ error: "Invalid mute target" }); return; }
+    const target = await db.query.usersTable.findFirst({ where: eq(usersTable.id, targetId) });
+    if (!target) { res.status(404).json({ error: "User not found" }); return; }
+    await db.insert(mutesTable).values({ muterId: me.id, mutedId: targetId }).onConflictDoNothing();
+    res.json({ muted: true });
+  } catch (e) {
+    req.log.error(e);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+router.delete("/social/mute/:userId", requireAuth, async (req, res) => {
+  try {
+    const me = await getAuthUser(req);
+    const targetId = parseUserId(getSingleValue(req.params.userId));
+    if (!targetId) { res.status(400).json({ error: "Invalid mute target" }); return; }
+    await db.delete(mutesTable).where(and(eq(mutesTable.muterId, me.id), eq(mutesTable.mutedId, targetId)));
+    res.json({ muted: false });
+  } catch (e) {
+    req.log.error(e);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+router.post("/social/block/:userId", requireAuth, async (req, res) => {
+  try {
+    const me = await getAuthUser(req);
+    const targetId = parseUserId(getSingleValue(req.params.userId));
+    if (!targetId || targetId === me.id) { res.status(400).json({ error: "Invalid block target" }); return; }
+    const target = await db.query.usersTable.findFirst({ where: eq(usersTable.id, targetId) });
+    if (!target) { res.status(404).json({ error: "User not found" }); return; }
+    await db.transaction(async (tx) => {
+      await tx.insert(blocksTable).values({ blockerId: me.id, blockedId: targetId }).onConflictDoNothing();
+      await tx.delete(followsTable).where(or(
+        and(eq(followsTable.followerId, me.id), eq(followsTable.followingId, targetId)),
+        and(eq(followsTable.followerId, targetId), eq(followsTable.followingId, me.id)),
+      ));
+      await tx.delete(mutesTable).where(and(eq(mutesTable.muterId, me.id), eq(mutesTable.mutedId, targetId)));
+    });
+    res.json({ blocked: true });
+  } catch (e) {
+    req.log.error(e);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+router.get("/social/blocked", requireAuth, async (req, res) => {
+  try {
+    const me = await getAuthUser(req);
+    const rows = await db.select({ blockedId: blocksTable.blockedId }).from(blocksTable).where(eq(blocksTable.blockerId, me.id));
+    const users = await Promise.all(rows.map(async ({ blockedId }) => {
+      const user = await db.query.usersTable.findFirst({ where: eq(usersTable.id, blockedId) });
+      return user ? { id: user.id, username: user.username, displayName: user.displayName, avatarUrl: user.avatarUrl } : null;
+    }));
+    res.json(users.filter(Boolean));
+  } catch (e) {
+    req.log.error(e);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+router.delete("/social/block/:userId", requireAuth, async (req, res) => {
+  try {
+    const me = await getAuthUser(req);
+    const targetId = parseUserId(getSingleValue(req.params.userId));
+    if (!targetId) { res.status(400).json({ error: "Invalid block target" }); return; }
+    await db.delete(blocksTable).where(and(eq(blocksTable.blockerId, me.id), eq(blocksTable.blockedId, targetId)));
+    res.json({ blocked: false });
+  } catch (e) {
+    req.log.error(e);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
 router.get("/social/followers/:userId", requireAuth, async (req, res) => {
   try {
     const me = await getAuthUser(req);
@@ -246,7 +361,7 @@ router.get("/social/followers/:userId", requireAuth, async (req, res) => {
     }
     const userId = parseInt(userIdParam);
     const rows = await db.select({ followerId: followsTable.followerId }).from(followsTable).where(eq(followsTable.followingId, userId));
-    const users = await Promise.all(rows.map((r) => formatUser(r.followerId, me.id)));
+    const users = await Promise.all(rows.map(async (r) => await hasBlockBetween(me.id, r.followerId) ? null : formatUser(r.followerId, me.id)));
     res.json(users.filter(Boolean));
   } catch (e) {
     req.log.error(e);
@@ -264,7 +379,7 @@ router.get("/social/following/:userId", requireAuth, async (req, res) => {
     }
     const userId = parseInt(userIdParam);
     const rows = await db.select({ followingId: followsTable.followingId }).from(followsTable).where(eq(followsTable.followerId, userId));
-    const users = await Promise.all(rows.map((r) => formatUser(r.followingId, me.id)));
+    const users = await Promise.all(rows.map(async (r) => await hasBlockBetween(me.id, r.followingId) ? null : formatUser(r.followingId, me.id)));
     res.json(users.filter(Boolean));
   } catch (e) {
     req.log.error(e);

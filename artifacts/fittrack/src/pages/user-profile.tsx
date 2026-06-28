@@ -1,12 +1,14 @@
-import { useParams, Link } from "wouter";
-import { useGetUserById, useFollowUser, useUnfollowUser, getGetUserByIdQueryKey } from "@workspace/api-client-react";
-import { useQueryClient } from "@tanstack/react-query";
+import { useParams, Link, useLocation } from "wouter";
+import { useGetUserById, useFollowUser, useUnfollowUser, getGetUserByIdQueryKey, customFetch } from "@workspace/api-client-react";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Skeleton } from "@/components/ui/skeleton";
-import { ArrowLeft, UserPlus, UserMinus } from "lucide-react";
+import { ArrowLeft, UserPlus, UserMinus, VolumeX, Volume2, Ban, Dumbbell } from "lucide-react";
 import { motion } from "framer-motion";
+import { formatDistanceToNow } from "date-fns";
+import { useToast } from "@/hooks/use-toast";
 
 export default function UserProfile() {
   const params = useParams<{ id: string }>();
@@ -15,11 +17,52 @@ export default function UserProfile() {
   const followUser = useFollowUser();
   const unfollowUser = useUnfollowUser();
   const qc = useQueryClient();
+  const [, navigate] = useLocation();
+  const { toast } = useToast();
+  const socialUser = user as (typeof user & {
+    isMuted?: boolean;
+    totalWorkouts?: number;
+    recentActivity?: Array<{ id: number; content: string; createdAt: string }>;
+  });
+  const muteUser = useMutation({
+    mutationFn: (muted: boolean) => customFetch(`/api/social/mute/${userId}`, {
+      method: muted ? "DELETE" : "POST",
+      responseType: "json",
+    }),
+    onSuccess: () => {
+      qc.setQueryData(getGetUserByIdQueryKey(userId), (old: any) => old ? { ...old, isMuted: !old.isMuted } : old);
+      qc.invalidateQueries({ queryKey: ["/api/social/feed"] });
+      toast({ title: socialUser?.isMuted ? "User unmuted" : "User muted" });
+    },
+  });
+  const blockUser = useMutation({
+    mutationFn: () => customFetch(`/api/social/block/${userId}`, { method: "POST", responseType: "json" }),
+    onSuccess: () => {
+      qc.removeQueries({ queryKey: getGetUserByIdQueryKey(userId) });
+      qc.invalidateQueries({ queryKey: ["/api/users/search"] });
+      qc.invalidateQueries({ queryKey: ["/api/social/feed"] });
+      navigate("/search");
+      toast({ title: "User blocked" });
+    },
+  });
 
   const handleFollowToggle = () => {
     if (!user) return;
     const fn = user.isFollowing ? unfollowUser : followUser;
-    fn.mutate({ userId }, { onSuccess: () => qc.invalidateQueries({ queryKey: getGetUserByIdQueryKey(userId) }) });
+    const nextFollowing = !user.isFollowing;
+    qc.setQueryData(getGetUserByIdQueryKey(userId), (old: any) => old ? {
+      ...old,
+      isFollowing: nextFollowing,
+      followersCount: Math.max(0, (old.followersCount ?? 0) + (nextFollowing ? 1 : -1)),
+    } : old);
+    fn.mutate({ userId }, {
+      onSuccess: () => {
+        qc.invalidateQueries({ queryKey: getGetUserByIdQueryKey(userId) });
+        qc.invalidateQueries({ queryKey: ["/api/users/search"] });
+        qc.invalidateQueries({ queryKey: ["/api/social/feed"] });
+      },
+      onError: () => qc.invalidateQueries({ queryKey: getGetUserByIdQueryKey(userId) }),
+    });
   };
 
   if (isLoading) return (
@@ -55,16 +98,25 @@ export default function UserProfile() {
                     {user.displayName && <p className="text-sm text-muted-foreground">@{user.username}</p>}
                     {user.bio && <p className="text-sm text-muted-foreground mt-1">{user.bio}</p>}
                   </div>
-                  <Button
-                    size="sm"
-                    variant={user.isFollowing ? "outline" : "default"}
-                    className="font-bold shrink-0"
-                    onClick={handleFollowToggle}
-                    disabled={followUser.isPending || unfollowUser.isPending}
-                    data-testid="button-follow-toggle"
-                  >
-                    {user.isFollowing ? (<><UserMinus className="w-3.5 h-3.5 mr-1" />Unfollow</>) : (<><UserPlus className="w-3.5 h-3.5 mr-1" />Follow</>)}
-                  </Button>
+                  <div className="flex flex-wrap justify-end gap-2">
+                    <Button
+                      size="sm"
+                      variant={user.isFollowing ? "outline" : "default"}
+                      className="font-bold shrink-0"
+                      onClick={handleFollowToggle}
+                      disabled={followUser.isPending || unfollowUser.isPending}
+                      data-testid="button-follow-toggle"
+                    >
+                      {user.isFollowing ? (<><UserMinus className="w-3.5 h-3.5 mr-1" />Unfollow</>) : (<><UserPlus className="w-3.5 h-3.5 mr-1" />Follow</>)}
+                    </Button>
+                    <Button size="sm" variant="outline" onClick={() => muteUser.mutate(!!socialUser?.isMuted)} disabled={muteUser.isPending}>
+                      {socialUser?.isMuted ? <Volume2 className="w-3.5 h-3.5 mr-1" /> : <VolumeX className="w-3.5 h-3.5 mr-1" />}
+                      {socialUser?.isMuted ? "Unmute" : "Mute"}
+                    </Button>
+                    <Button size="sm" variant="destructive" onClick={() => window.confirm("Block this user? Both follow relationships will be removed.") && blockUser.mutate()} disabled={blockUser.isPending}>
+                      <Ban className="w-3.5 h-3.5 mr-1" />Block
+                    </Button>
+                  </div>
                 </div>
                 <div className="flex gap-5 mt-3">
                   <div className="text-center">
@@ -81,6 +133,31 @@ export default function UserProfile() {
           </CardContent>
         </Card>
       </motion.div>
+
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+        <Card className="bg-card border-card-border sm:col-span-1">
+          <CardContent className="py-5 text-center">
+            <Dumbbell className="w-5 h-5 text-primary mx-auto mb-2" />
+            <div className="text-2xl font-black">{socialUser?.totalWorkouts ?? 0}</div>
+            <div className="text-xs text-muted-foreground">Public workouts</div>
+          </CardContent>
+        </Card>
+        <Card className="bg-card border-card-border sm:col-span-2">
+          <CardContent className="py-5">
+            <h3 className="font-bold mb-3">Recent activity</h3>
+            {socialUser?.recentActivity?.length ? (
+              <div className="space-y-3">
+                {socialUser.recentActivity.map((activity) => (
+                  <div key={activity.id} className="border-b border-border last:border-0 pb-3 last:pb-0">
+                    <p className="text-sm">{activity.content}</p>
+                    <p className="text-xs text-muted-foreground mt-1">{formatDistanceToNow(new Date(activity.createdAt), { addSuffix: true })}</p>
+                  </div>
+                ))}
+              </div>
+            ) : <p className="text-sm text-muted-foreground">No public activity yet.</p>}
+          </CardContent>
+        </Card>
+      </div>
     </div>
   );
 }

@@ -8,6 +8,13 @@
       "when": 1778822587501,
       "tag": "0000_silent_the_renegades",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1782700000000,
+      "tag": "0002_social_controls",
+      "breakpoints": true
     }
   ]
 }

@@ -1005,6 +1005,77 @@ paths:
                 items:
                   $ref: "#/components/schemas/User"
 
+  /social/mute/{userId}:
+    post:
+      operationId: muteUser
+      tags: [social]
+      summary: Mute a user's posts in the current user's feed
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: User muted
+    delete:
+      operationId: unmuteUser
+      tags: [social]
+      summary: Unmute a user
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: User unmuted
+
+  /social/block/{userId}:
+    post:
+      operationId: blockUser
+      tags: [social]
+      summary: Block a user and remove mutual follow relationships
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: User blocked
+    delete:
+      operationId: unblockUser
+      tags: [social]
+      summary: Unblock a user
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: User unblocked
+
+  /social/blocked:
+    get:
+      operationId: listBlockedUsers
+      tags: [social]
+      summary: List users blocked by the current user
+      responses:
+        "200":
+          description: Blocked users
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/User"
+
   /social/following/{userId}:
     get:
       operationId: listFollowing
@@ -1058,6 +1129,27 @@ components:
           type: integer
         isFollowing:
           type: boolean
+        isMuted:
+          type: boolean
+        isBlocked:
+          type: boolean
+        blockedByMe:
+          type: boolean
+        totalWorkouts:
+          type: integer
+        recentActivity:
+          type: array
+          items:
+            type: object
+            required: [id, content, createdAt]
+            properties:
+              id:
+                type: integer
+              content:
+                type: string
+              createdAt:
+                type: string
+                format: date-time
         createdAt:
           type: string
           format: date-time
