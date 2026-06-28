@@ -11,6 +11,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
     { href: "/workouts", label: "Workout", icon: Dumbbell },
     { href: "/nutrition", label: "Nutrition", icon: Utensils },
     { href: "/feed", label: "Feed", icon: Activity },
+    { href: "/search", label: "Discover", icon: Search },
     { href: "/profile", label: "Profile", icon: UserCircle },
   ];
 
@@ -19,6 +20,11 @@ export function Layout({ children }: { children: React.ReactNode }) {
       {/* Mobile Top Bar (Optional, can be hidden on desktop) */}
       <header className="md:hidden sticky top-0 z-40 bg-background/80 backdrop-blur-md border-b border-border p-4 flex items-center justify-between">
         <h1 className="text-xl font-bold italic tracking-tight text-primary">FITTRACK</h1>
+        <Link href="/search" aria-label="Search for users">
+          <div className="p-2 rounded-full text-muted-foreground hover:bg-white/5 hover:text-foreground">
+            <Search className="w-5 h-5" />
+          </div>
+        </Link>
       </header>
 
       {/* Desktop Sidebar */}
