@@ -4,6 +4,8 @@ import { Dumbbell, Utensils, LayoutDashboard, Search, UserCircle, Activity, Bell
 import { cn } from "@/lib/utils";
 import { useLiveUnreadCount } from "@/hooks/use-live-notifications";
 import { ThemeToggle } from "@/components/theme-toggle";
+import { useGetMe } from "@workspace/api-client-react";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 function NotificationBell() {
   const { data } = useLiveUnreadCount();
@@ -18,6 +20,21 @@ function NotificationBell() {
           </span>
         )}
       </div>
+    </Link>
+  );
+}
+
+function ProfileAvatarShortcut() {
+  const { data: me } = useGetMe();
+  if (!me) return null;
+  return (
+    <Link href="/profile" aria-label="Go to Profile" className="block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-full">
+      <Avatar className="w-8 h-8 md:w-9 md:h-9 hover:scale-105 hover:shadow-md hover:shadow-primary/20 transition-all cursor-pointer">
+        <AvatarImage src={me.avatarUrl ?? undefined} />
+        <AvatarFallback className="bg-primary text-primary-foreground text-sm font-bold">
+          {(me.username ?? "U")[0].toUpperCase()}
+        </AvatarFallback>
+      </Avatar>
     </Link>
   );
 }
@@ -49,6 +66,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
               <Search className="w-5 h-5" />
             </div>
           </Link>
+          <ProfileAvatarShortcut />
         </div>
       </header>
 
@@ -91,6 +109,9 @@ export function Layout({ children }: { children: React.ReactNode }) {
 
       {/* Main Content Area */}
       <main className="flex-1 pb-20 md:pb-0 relative min-h-[100dvh]">
+        <div className="hidden md:block absolute top-6 right-8 z-30">
+          <ProfileAvatarShortcut />
+        </div>
         <div className="max-w-4xl mx-auto w-full h-full p-4 md:p-8">
           {children}
         </div>

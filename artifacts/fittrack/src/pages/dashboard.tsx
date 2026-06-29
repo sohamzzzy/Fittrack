@@ -1,9 +1,8 @@
 import { Link } from "wouter";
-import { useGetWorkoutSummary, useGetNutritionSummary, useGetSocialFeed, useGetMe } from "@workspace/api-client-react";
+import { useGetWorkoutSummary, useGetNutritionSummary, useGetSocialFeed } from "@workspace/api-client-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Dumbbell, Flame, Heart, Clock, TrendingUp, Plus, ChevronRight } from "lucide-react";
 import { motion } from "framer-motion";
 import { format } from "date-fns";
@@ -34,7 +33,6 @@ export default function Dashboard() {
   const { data: workout, isLoading: wLoading } = useGetWorkoutSummary();
   const { data: nutrition, isLoading: nLoading } = useGetNutritionSummary({ date: today });
   const { data: feed, isLoading: fLoading } = useGetSocialFeed({ limit: 3, offset: 0 });
-  const { data: me } = useGetMe();
 
   const calLeft = nutrition ? Math.max(0, (nutrition.goalCalories ?? 2000) - nutrition.totalCalories) : 0;
   const calPct = nutrition && nutrition.goalCalories ? Math.min(nutrition.totalCalories / nutrition.goalCalories, 1) : 0;
@@ -49,12 +47,6 @@ export default function Dashboard() {
           <h1 className="text-2xl font-black tracking-tight">Dashboard</h1>
           <p className="text-sm text-muted-foreground">{format(new Date(), "EEEE, MMMM d")}</p>
         </div>
-        {me && (
-          <Avatar className="w-9 h-9">
-            <AvatarImage src={me.avatarUrl ?? undefined} />
-            <AvatarFallback className="bg-primary text-primary-foreground text-sm font-bold">{(me.username ?? "U")[0].toUpperCase()}</AvatarFallback>
-          </Avatar>
-        )}
       </div>
 
       {/* Calories Card */}
