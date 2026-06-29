@@ -414,6 +414,7 @@ export interface NutritionGoals {
   protein: number;
   carbs: number;
   fats: number;
+  waterMl: number;
 }
 
 export interface NutritionGoalsInput {
@@ -421,6 +422,30 @@ export interface NutritionGoalsInput {
   protein: number;
   carbs: number;
   fats: number;
+  waterMl: number;
+}
+
+export interface WaterEntry {
+  id: number;
+  amountMl: number;
+  date: string;
+  loggedAt: string;
+}
+
+export interface WaterSummary {
+  date: string;
+  entries: WaterEntry[];
+  totalMl: number;
+  goalMl: number;
+}
+
+export interface WaterEntryInput {
+  amountMl: number;
+  date: string;
+}
+
+export interface WaterEntryUpdate {
+  amountMl: number;
 }
 
 export interface Post {
@@ -500,5 +525,9 @@ date: string;
 export type GetSocialFeedParams = {
 limit?: number;
 offset?: number;
+};
+
+export type GetWaterIntakeParams = {
+date: string;
 };
 

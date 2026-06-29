@@ -11,4 +11,5 @@ export interface NutritionGoalsInput {
   protein: number;
   carbs: number;
   fats: number;
+  waterMl: number;
 }

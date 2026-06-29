@@ -6,11 +6,9 @@
  * OpenAPI spec version: 0.1.0
  */
 
-export interface NutritionGoals {
+export interface WaterEntry {
   id: number;
-  calories: number;
-  protein: number;
-  carbs: number;
-  fats: number;
-  waterMl: number;
+  amountMl: number;
+  date: Date;
+  loggedAt: Date;
 }

@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { getSingleValue } from "../lib/getSingleValue";
 import { requireAuth, getAuthUser } from "../lib/auth";
-import { db, foodItemsTable, foodLogsTable, nutritionGoalsTable } from "@workspace/db";
+import { db, foodItemsTable, foodLogsTable, nutritionGoalsTable, waterIntakeTable } from "@workspace/db";
 import { eq, and, or, isNull, count, sql } from "drizzle-orm";
 
 const router = Router();
@@ -268,17 +268,87 @@ router.get("/nutrition/goals", requireAuth, async (req, res) => {
 router.put("/nutrition/goals", requireAuth, async (req, res) => {
   try {
     const user = await getAuthUser(req);
-    const { calories, protein, carbs, fats } = req.body;
+    const { calories, protein, carbs, fats, waterMl } = req.body;
     const existing = await db.query.nutritionGoalsTable.findFirst({ where: eq(nutritionGoalsTable.userId, user.id) });
     let goals;
     if (existing) {
-      const [updated] = await db.update(nutritionGoalsTable).set({ calories: calories.toString(), protein: protein.toString(), carbs: carbs.toString(), fats: fats.toString() }).where(eq(nutritionGoalsTable.userId, user.id)).returning();
+      const [updated] = await db.update(nutritionGoalsTable).set({ calories: calories.toString(), protein: protein.toString(), carbs: carbs.toString(), fats: fats.toString(), waterMl }).where(eq(nutritionGoalsTable.userId, user.id)).returning();
       goals = updated;
     } else {
-      const [created] = await db.insert(nutritionGoalsTable).values({ userId: user.id, calories: calories.toString(), protein: protein.toString(), carbs: carbs.toString(), fats: fats.toString() }).returning();
+      const [created] = await db.insert(nutritionGoalsTable).values({ userId: user.id, calories: calories.toString(), protein: protein.toString(), carbs: carbs.toString(), fats: fats.toString(), waterMl }).returning();
       goals = created;
     }
     res.json({ ...goals, calories: parseFloat(goals.calories), protein: parseFloat(goals.protein), carbs: parseFloat(goals.carbs), fats: parseFloat(goals.fats) });
+  } catch (e) {
+    req.log.error(e);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+router.get("/nutrition/water", requireAuth, async (req, res) => {
+  try {
+    const user = await getAuthUser(req);
+    const date = getSingleValue(req.query.date);
+    if (!date) {
+      res.status(400).json({ error: "Missing date" });
+      return;
+    }
+    const entries = await db.select().from(waterIntakeTable).where(and(eq(waterIntakeTable.userId, user.id), eq(waterIntakeTable.date, date))).orderBy(waterIntakeTable.loggedAt);
+    let goals = await db.query.nutritionGoalsTable.findFirst({ where: eq(nutritionGoalsTable.userId, user.id) });
+    if (!goals) {
+      const [created] = await db.insert(nutritionGoalsTable).values({ userId: user.id }).returning();
+      goals = created;
+    }
+    const totalMl = entries.reduce((sum, e) => sum + e.amountMl, 0);
+    res.json({ date, entries, totalMl, goalMl: goals.waterMl });
+  } catch (e) {
+    req.log.error(e);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+router.post("/nutrition/water", requireAuth, async (req, res) => {
+  try {
+    const user = await getAuthUser(req);
+    const { amountMl, date } = req.body;
+    const [entry] = await db.insert(waterIntakeTable).values({ userId: user.id, amountMl, date }).returning();
+    res.status(201).json(entry);
+  } catch (e) {
+    req.log.error(e);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+router.patch("/nutrition/water/:entryId", requireAuth, async (req, res) => {
+  try {
+    const user = await getAuthUser(req);
+    const entryIdParam = getSingleValue(req.params.entryId);
+    if (!entryIdParam) {
+      res.status(400).json({ error: "Missing entry id" });
+      return;
+    }
+    const entryId = parseInt(entryIdParam);
+    const { amountMl } = req.body;
+    const [entry] = await db.update(waterIntakeTable).set({ amountMl }).where(and(eq(waterIntakeTable.id, entryId), eq(waterIntakeTable.userId, user.id))).returning();
+    if (!entry) { res.status(404).json({ error: "Not found" }); return; }
+    res.json(entry);
+  } catch (e) {
+    req.log.error(e);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+router.delete("/nutrition/water/:entryId", requireAuth, async (req, res) => {
+  try {
+    const user = await getAuthUser(req);
+    const entryIdParam = getSingleValue(req.params.entryId);
+    if (!entryIdParam) {
+      res.status(400).json({ error: "Missing entry id" });
+      return;
+    }
+    const entryId = parseInt(entryIdParam);
+    await db.delete(waterIntakeTable).where(and(eq(waterIntakeTable.id, entryId), eq(waterIntakeTable.userId, user.id)));
+    res.status(204).send();
   } catch (e) {
     req.log.error(e);
     res.status(500).json({ error: "Internal server error" });

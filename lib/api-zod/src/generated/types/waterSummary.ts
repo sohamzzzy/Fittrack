@@ -5,12 +5,11 @@
  * FitTrack API — fitness tracking, nutrition logging, and social features
  * OpenAPI spec version: 0.1.0
  */
+import type { WaterEntry } from './waterEntry';
 
-export interface NutritionGoals {
-  id: number;
-  calories: number;
-  protein: number;
-  carbs: number;
-  fats: number;
-  waterMl: number;
+export interface WaterSummary {
+  date: Date;
+  entries: WaterEntry[];
+  totalMl: number;
+  goalMl: number;
 }

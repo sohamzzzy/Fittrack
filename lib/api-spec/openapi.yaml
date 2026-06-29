@@ -1097,6 +1097,81 @@ paths:
                 items:
                   $ref: "#/components/schemas/User"
 
+  /nutrition/water:
+    get:
+      operationId: getWaterIntake
+      tags: [nutrition]
+      summary: Get user water intake for a specific date
+      parameters:
+        - name: date
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date
+      responses:
+        "200":
+          description: Water intake summary
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/WaterSummary"
+    post:
+      operationId: addWaterEntry
+      tags: [nutrition]
+      summary: Log water intake
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/WaterEntryInput"
+      responses:
+        "201":
+          description: Added entry
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/WaterEntry"
+
+  /nutrition/water/{entryId}:
+    patch:
+      operationId: updateWaterEntry
+      tags: [nutrition]
+      summary: Update a water entry
+      parameters:
+        - name: entryId
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/WaterEntryUpdate"
+      responses:
+        "200":
+          description: Updated entry
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/WaterEntry"
+    delete:
+      operationId: deleteWaterEntry
+      tags: [nutrition]
+      summary: Delete a water entry
+      parameters:
+        - name: entryId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "204":
+          description: Entry deleted
+
 components:
   schemas:
     HealthStatus:
@@ -1714,7 +1789,7 @@ components:
 
     NutritionGoals:
       type: object
-      required: [id, calories, protein, carbs, fats]
+      required: [id, calories, protein, carbs, fats, waterMl]
       properties:
         id:
           type: integer
@@ -1726,10 +1801,12 @@ components:
           type: number
         fats:
           type: number
+        waterMl:
+          type: integer
 
     NutritionGoalsInput:
       type: object
-      required: [calories, protein, carbs, fats]
+      required: [calories, protein, carbs, fats, waterMl]
       properties:
         calories:
           type: number
@@ -1739,6 +1816,56 @@ components:
           type: number
         fats:
           type: number
+        waterMl:
+          type: integer
+
+    WaterEntry:
+      type: object
+      required: [id, amountMl, date, loggedAt]
+      properties:
+        id:
+          type: integer
+        amountMl:
+          type: integer
+        date:
+          type: string
+          format: date
+        loggedAt:
+          type: string
+          format: date-time
+
+    WaterSummary:
+      type: object
+      required: [date, entries, totalMl, goalMl]
+      properties:
+        date:
+          type: string
+          format: date
+        entries:
+          type: array
+          items:
+            $ref: "#/components/schemas/WaterEntry"
+        totalMl:
+          type: integer
+        goalMl:
+          type: integer
+
+    WaterEntryInput:
+      type: object
+      required: [amountMl, date]
+      properties:
+        amountMl:
+          type: integer
+        date:
+          type: string
+          format: date
+
+    WaterEntryUpdate:
+      type: object
+      required: [amountMl]
+      properties:
+        amountMl:
+          type: integer
 
     # ─── Social ────────────────────────────────────────────────────────────────
     Post:

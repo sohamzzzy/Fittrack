@@ -12,6 +12,7 @@ import { Badge } from "@/components/ui/badge";
 import { Plus, Flame, Trash2, Settings, TrendingUp } from "lucide-react";
 import { motion } from "framer-motion";
 import { format } from "date-fns";
+import { WaterIntake } from "@/components/nutrition/water-intake";
 
 const MEAL_TYPES = ["breakfast", "lunch", "dinner", "snack"] as const;
 const MEAL_LABELS: Record<string, string> = { breakfast: "Breakfast", lunch: "Lunch", dinner: "Dinner", snack: "Snacks" };
@@ -78,6 +79,11 @@ export default function Nutrition() {
           </Link>
         </div>
       </div>
+
+      {/* Water Intake Dashboard */}
+      <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}>
+        <WaterIntake date={today} />
+      </motion.div>
 
       {/* Calories + Macro Rings */}
       <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}>

@@ -39,7 +39,16 @@ export const nutritionGoalsTable = pgTable("nutrition_goals", {
   protein: numeric("protein", { precision: 8, scale: 2 }).notNull().default("150"),
   carbs: numeric("carbs", { precision: 8, scale: 2 }).notNull().default("200"),
   fats: numeric("fats", { precision: 8, scale: 2 }).notNull().default("65"),
+  waterMl: integer("water_ml").notNull().default(3000),
   updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow().$onUpdate(() => new Date()),
+});
+
+export const waterIntakeTable = pgTable("water_intake", {
+  id: serial("id").primaryKey(),
+  userId: integer("user_id").notNull().references(() => usersTable.id, { onDelete: "cascade" }),
+  amountMl: integer("amount_ml").notNull(),
+  date: date("date").notNull(),
+  loggedAt: timestamp("logged_at", { withTimezone: true }).notNull().defaultNow(),
 });
 
 export const insertFoodItemSchema = createInsertSchema(foodItemsTable).omit({ id: true, createdAt: true });
@@ -49,3 +58,4 @@ export type InsertFoodItem = z.infer<typeof insertFoodItemSchema>;
 export type FoodItem = typeof foodItemsTable.$inferSelect;
 export type FoodLog = typeof foodLogsTable.$inferSelect;
 export type NutritionGoals = typeof nutritionGoalsTable.$inferSelect;
+export type WaterIntake = typeof waterIntakeTable.$inferSelect;

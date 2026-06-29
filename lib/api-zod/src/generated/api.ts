@@ -822,7 +822,8 @@ export const GetNutritionGoalsResponse = zod.object({
   "calories": zod.number(),
   "protein": zod.number(),
   "carbs": zod.number(),
-  "fats": zod.number()
+  "fats": zod.number(),
+  "waterMl": zod.number()
 })
 
 
@@ -833,7 +834,8 @@ export const SetNutritionGoalsBody = zod.object({
   "calories": zod.number(),
   "protein": zod.number(),
   "carbs": zod.number(),
-  "fats": zod.number()
+  "fats": zod.number(),
+  "waterMl": zod.number()
 })
 
 export const SetNutritionGoalsResponse = zod.object({
@@ -841,7 +843,8 @@ export const SetNutritionGoalsResponse = zod.object({
   "calories": zod.number(),
   "protein": zod.number(),
   "carbs": zod.number(),
-  "fats": zod.number()
+  "fats": zod.number(),
+  "waterMl": zod.number()
 })
 
 
@@ -1199,5 +1202,61 @@ export const ListFollowingResponseItem = zod.object({
   "createdAt": zod.coerce.date()
 })
 export const ListFollowingResponse = zod.array(ListFollowingResponseItem)
+
+
+/**
+ * @summary Get user water intake for a specific date
+ */
+export const GetWaterIntakeQueryParams = zod.object({
+  "date": zod.date()
+})
+
+export const GetWaterIntakeResponse = zod.object({
+  "date": zod.coerce.date(),
+  "entries": zod.array(zod.object({
+  "id": zod.number(),
+  "amountMl": zod.number(),
+  "date": zod.coerce.date(),
+  "loggedAt": zod.coerce.date()
+})),
+  "totalMl": zod.number(),
+  "goalMl": zod.number()
+})
+
+
+/**
+ * @summary Log water intake
+ */
+export const AddWaterEntryBody = zod.object({
+  "amountMl": zod.number(),
+  "date": zod.coerce.date()
+})
+
+
+/**
+ * @summary Update a water entry
+ */
+export const UpdateWaterEntryParams = zod.object({
+  "entryId": zod.coerce.number()
+})
+
+export const UpdateWaterEntryBody = zod.object({
+  "amountMl": zod.number()
+})
+
+export const UpdateWaterEntryResponse = zod.object({
+  "id": zod.number(),
+  "amountMl": zod.number(),
+  "date": zod.coerce.date(),
+  "loggedAt": zod.coerce.date()
+})
+
+
+/**
+ * @summary Delete a water entry
+ */
+export const DeleteWaterEntryParams = zod.object({
+  "entryId": zod.coerce.number()
+})
 
 

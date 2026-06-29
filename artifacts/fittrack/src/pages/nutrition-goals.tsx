@@ -5,7 +5,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { ArrowLeft, Flame, Target } from "lucide-react";
+import { ArrowLeft, Flame, Target, Droplet } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
 export default function NutritionGoals() {
@@ -19,6 +19,7 @@ export default function NutritionGoals() {
   const [protein, setProtein] = useState("");
   const [carbs, setCarbs] = useState("");
   const [fats, setFats] = useState("");
+  const [waterMl, setWaterMl] = useState("");
 
   useEffect(() => {
     if (goals) {
@@ -26,6 +27,7 @@ export default function NutritionGoals() {
       setProtein(String(Math.round(goals.protein as number)));
       setCarbs(String(Math.round(goals.carbs as number)));
       setFats(String(Math.round(goals.fats as number)));
+      setWaterMl(String(Math.round((goals.waterMl as number) ?? 3000)));
     }
   }, [goals]);
 
@@ -35,7 +37,7 @@ export default function NutritionGoals() {
   const totalCals = proteinCals + carbsCals + fatsCals;
 
   const handleSave = () => {
-    setGoals.mutate({ data: { calories: parseFloat(calories), protein: parseFloat(protein), carbs: parseFloat(carbs), fats: parseFloat(fats) } }, {
+    setGoals.mutate({ data: { calories: parseFloat(calories), protein: parseFloat(protein), carbs: parseFloat(carbs), fats: parseFloat(fats), waterMl: parseInt(waterMl) } }, {
       onSuccess: () => {
         qc.invalidateQueries({ queryKey: getGetNutritionGoalsQueryKey() });
         toast({ title: "Goals saved" });
@@ -63,6 +65,10 @@ export default function NutritionGoals() {
           <div>
             <label className="text-sm font-semibold mb-1.5 flex items-center gap-2"><Flame className="w-4 h-4 text-primary" />Calories (kcal)</label>
             <Input type="number" value={calories} onChange={(e) => setCalories(e.target.value)} className="text-lg font-bold" placeholder="2000" data-testid="input-goal-calories" />
+          </div>
+          <div>
+            <label className="text-sm font-semibold mb-1.5 flex items-center gap-2"><Droplet className="w-4 h-4 text-blue-500 fill-blue-500" />Water (mL)</label>
+            <Input type="number" value={waterMl} onChange={(e) => setWaterMl(e.target.value)} className="text-lg font-bold" placeholder="3000" data-testid="input-goal-water" />
           </div>
           <div className="grid grid-cols-3 gap-3">
             <div>
