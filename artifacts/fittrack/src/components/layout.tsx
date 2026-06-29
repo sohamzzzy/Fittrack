@@ -38,7 +38,9 @@ export function Layout({ children }: { children: React.ReactNode }) {
     <div className="min-h-screen bg-background text-foreground flex flex-col md:flex-row">
       {/* Mobile Top Bar */}
       <header className="md:hidden sticky top-0 z-40 bg-background/80 backdrop-blur-md border-b border-border p-4 flex items-center justify-between">
-        <h1 className="text-xl font-bold italic tracking-tight text-primary">FITTRACK</h1>
+        <Link href="/dashboard" aria-label="Go to Home" className="hover:opacity-80 hover:scale-[0.98] transition-all cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-ring rounded">
+          <h1 className="text-xl font-bold italic tracking-tight text-primary">FITTRACK</h1>
+        </Link>
         <div className="flex items-center gap-1">
           <ThemeToggle />
           <NotificationBell />
@@ -53,7 +55,9 @@ export function Layout({ children }: { children: React.ReactNode }) {
       {/* Desktop Sidebar */}
       <aside className="hidden md:flex flex-col w-64 border-r border-border bg-card/50 h-screen sticky top-0 p-4">
         <div className="mb-8 px-4 flex items-center justify-between">
-          <h1 className="text-2xl font-black italic tracking-tighter text-primary">FITTRACK</h1>
+          <Link href="/dashboard" aria-label="Go to Home" className="hover:opacity-80 hover:scale-[0.98] transition-all cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-ring rounded">
+            <h1 className="text-2xl font-black italic tracking-tighter text-primary">FITTRACK</h1>
+          </Link>
           <div className="flex items-center gap-1">
             <ThemeToggle />
             <NotificationBell />
