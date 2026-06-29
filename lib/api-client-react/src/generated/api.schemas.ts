@@ -9,6 +9,12 @@ export interface HealthStatus {
   status: string;
 }
 
+export type UserRecentActivityItem = {
+  id: number;
+  content: string;
+  createdAt: string;
+};
+
 export interface User {
   id: number;
   clerkId: string;
@@ -22,6 +28,11 @@ export interface User {
   followersCount?: number;
   followingCount?: number;
   isFollowing?: boolean;
+  isMuted?: boolean;
+  isBlocked?: boolean;
+  blockedByMe?: boolean;
+  totalWorkouts?: number;
+  recentActivity?: UserRecentActivityItem[];
   createdAt: string;
 }
 
@@ -187,6 +198,7 @@ export interface WorkoutExercise {
 
 export interface WorkoutDetail {
   id: number;
+  userId: number;
   name: string;
   /** @nullable */
   notes?: string | null;

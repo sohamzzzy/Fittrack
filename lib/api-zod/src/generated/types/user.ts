@@ -5,6 +5,7 @@
  * FitTrack API — fitness tracking, nutrition logging, and social features
  * OpenAPI spec version: 0.1.0
  */
+import type { UserRecentActivityItem } from './userRecentActivityItem';
 
 export interface User {
   id: number;
@@ -19,5 +20,10 @@ export interface User {
   followersCount?: number;
   followingCount?: number;
   isFollowing?: boolean;
+  isMuted?: boolean;
+  isBlocked?: boolean;
+  blockedByMe?: boolean;
+  totalWorkouts?: number;
+  recentActivity?: UserRecentActivityItem[];
   createdAt: Date;
 }

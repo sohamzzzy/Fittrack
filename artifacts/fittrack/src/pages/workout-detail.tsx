@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useParams, Link } from "wouter";
-import { useGetWorkout, getGetWorkoutQueryKey } from "@workspace/api-client-react";
+import { useGetWorkout, getGetWorkoutQueryKey, useGetMe } from "@workspace/api-client-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Button } from "@/components/ui/button";
@@ -13,6 +13,7 @@ export default function WorkoutDetail() {
   const params = useParams<{ id: string }>();
   const workoutId = parseInt(params.id);
   const [editing, setEditing] = useState(false);
+  const { data: me } = useGetMe();
 
   const { data: workout, isLoading } = useGetWorkout(workoutId, {
     query: { enabled: !!workoutId, queryKey: getGetWorkoutQueryKey(workoutId) },
@@ -52,23 +53,25 @@ export default function WorkoutDetail() {
             </p>
           </div>
         </div>
-        <Button
-          variant={editing ? "secondary" : "outline"}
-          size="sm"
-          className="shrink-0 font-semibold"
-          onClick={() => setEditing((v) => !v)}
-          data-testid="button-toggle-edit"
-        >
-          {editing ? (
-            <>
-              <X className="w-4 h-4 mr-1" /> Done
-            </>
-          ) : (
-            <>
-              <Pencil className="w-4 h-4 mr-1" /> Edit
-            </>
-          )}
-        </Button>
+        {me?.id === workout.userId && (
+          <Button
+            variant={editing ? "secondary" : "outline"}
+            size="sm"
+            className="shrink-0 font-semibold"
+            onClick={() => setEditing((v) => !v)}
+            data-testid="button-toggle-edit"
+          >
+            {editing ? (
+              <>
+                <X className="w-4 h-4 mr-1" /> Done
+              </>
+            ) : (
+              <>
+                <Pencil className="w-4 h-4 mr-1" /> Edit
+              </>
+            )}
+          </Button>
+        )}
       </div>
 
       {editing ? (

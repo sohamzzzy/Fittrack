@@ -29,6 +29,15 @@ export const GetMeResponse = zod.object({
   "followersCount": zod.number().optional(),
   "followingCount": zod.number().optional(),
   "isFollowing": zod.boolean().optional(),
+  "isMuted": zod.boolean().optional(),
+  "isBlocked": zod.boolean().optional(),
+  "blockedByMe": zod.boolean().optional(),
+  "totalWorkouts": zod.number().optional(),
+  "recentActivity": zod.array(zod.object({
+  "id": zod.number(),
+  "content": zod.string(),
+  "createdAt": zod.coerce.date()
+})).optional(),
   "createdAt": zod.coerce.date()
 })
 
@@ -53,6 +62,15 @@ export const UpdateMeResponse = zod.object({
   "followersCount": zod.number().optional(),
   "followingCount": zod.number().optional(),
   "isFollowing": zod.boolean().optional(),
+  "isMuted": zod.boolean().optional(),
+  "isBlocked": zod.boolean().optional(),
+  "blockedByMe": zod.boolean().optional(),
+  "totalWorkouts": zod.number().optional(),
+  "recentActivity": zod.array(zod.object({
+  "id": zod.number(),
+  "content": zod.string(),
+  "createdAt": zod.coerce.date()
+})).optional(),
   "createdAt": zod.coerce.date()
 })
 
@@ -88,6 +106,15 @@ export const GetUserByIdResponse = zod.object({
   "followersCount": zod.number().optional(),
   "followingCount": zod.number().optional(),
   "isFollowing": zod.boolean().optional(),
+  "isMuted": zod.boolean().optional(),
+  "isBlocked": zod.boolean().optional(),
+  "blockedByMe": zod.boolean().optional(),
+  "totalWorkouts": zod.number().optional(),
+  "recentActivity": zod.array(zod.object({
+  "id": zod.number(),
+  "content": zod.string(),
+  "createdAt": zod.coerce.date()
+})).optional(),
   "createdAt": zod.coerce.date()
 })
 
@@ -109,6 +136,15 @@ export const SearchUsersResponseItem = zod.object({
   "followersCount": zod.number().optional(),
   "followingCount": zod.number().optional(),
   "isFollowing": zod.boolean().optional(),
+  "isMuted": zod.boolean().optional(),
+  "isBlocked": zod.boolean().optional(),
+  "blockedByMe": zod.boolean().optional(),
+  "totalWorkouts": zod.number().optional(),
+  "recentActivity": zod.array(zod.object({
+  "id": zod.number(),
+  "content": zod.string(),
+  "createdAt": zod.coerce.date()
+})).optional(),
   "createdAt": zod.coerce.date()
 })
 export const SearchUsersResponse = zod.array(SearchUsersResponseItem)
@@ -355,6 +391,7 @@ export const GetWorkoutParams = zod.object({
 
 export const GetWorkoutResponse = zod.object({
   "id": zod.number(),
+  "userId": zod.number(),
   "name": zod.string(),
   "notes": zod.string().nullish(),
   "startedAt": zod.coerce.date(),
@@ -829,6 +866,15 @@ export const GetSocialFeedResponseItem = zod.object({
   "followersCount": zod.number().optional(),
   "followingCount": zod.number().optional(),
   "isFollowing": zod.boolean().optional(),
+  "isMuted": zod.boolean().optional(),
+  "isBlocked": zod.boolean().optional(),
+  "blockedByMe": zod.boolean().optional(),
+  "totalWorkouts": zod.number().optional(),
+  "recentActivity": zod.array(zod.object({
+  "id": zod.number(),
+  "content": zod.string(),
+  "createdAt": zod.coerce.date()
+})).optional(),
   "createdAt": zod.coerce.date()
 }).optional(),
   "content": zod.string(),
@@ -883,6 +929,15 @@ export const GetPostResponse = zod.object({
   "followersCount": zod.number().optional(),
   "followingCount": zod.number().optional(),
   "isFollowing": zod.boolean().optional(),
+  "isMuted": zod.boolean().optional(),
+  "isBlocked": zod.boolean().optional(),
+  "blockedByMe": zod.boolean().optional(),
+  "totalWorkouts": zod.number().optional(),
+  "recentActivity": zod.array(zod.object({
+  "id": zod.number(),
+  "content": zod.string(),
+  "createdAt": zod.coerce.date()
+})).optional(),
   "createdAt": zod.coerce.date()
 }).optional(),
   "content": zod.string(),
@@ -962,6 +1017,15 @@ export const ListCommentsResponseItem = zod.object({
   "followersCount": zod.number().optional(),
   "followingCount": zod.number().optional(),
   "isFollowing": zod.boolean().optional(),
+  "isMuted": zod.boolean().optional(),
+  "isBlocked": zod.boolean().optional(),
+  "blockedByMe": zod.boolean().optional(),
+  "totalWorkouts": zod.number().optional(),
+  "recentActivity": zod.array(zod.object({
+  "id": zod.number(),
+  "content": zod.string(),
+  "createdAt": zod.coerce.date()
+})).optional(),
   "createdAt": zod.coerce.date()
 }).optional(),
   "content": zod.string(),
@@ -1033,9 +1097,77 @@ export const ListFollowersResponseItem = zod.object({
   "followersCount": zod.number().optional(),
   "followingCount": zod.number().optional(),
   "isFollowing": zod.boolean().optional(),
+  "isMuted": zod.boolean().optional(),
+  "isBlocked": zod.boolean().optional(),
+  "blockedByMe": zod.boolean().optional(),
+  "totalWorkouts": zod.number().optional(),
+  "recentActivity": zod.array(zod.object({
+  "id": zod.number(),
+  "content": zod.string(),
+  "createdAt": zod.coerce.date()
+})).optional(),
   "createdAt": zod.coerce.date()
 })
 export const ListFollowersResponse = zod.array(ListFollowersResponseItem)
+
+
+/**
+ * @summary Mute a user's posts in the current user's feed
+ */
+export const MuteUserParams = zod.object({
+  "userId": zod.coerce.number()
+})
+
+
+/**
+ * @summary Unmute a user
+ */
+export const UnmuteUserParams = zod.object({
+  "userId": zod.coerce.number()
+})
+
+
+/**
+ * @summary Block a user and remove mutual follow relationships
+ */
+export const BlockUserParams = zod.object({
+  "userId": zod.coerce.number()
+})
+
+
+/**
+ * @summary Unblock a user
+ */
+export const UnblockUserParams = zod.object({
+  "userId": zod.coerce.number()
+})
+
+
+/**
+ * @summary List users blocked by the current user
+ */
+export const ListBlockedUsersResponseItem = zod.object({
+  "id": zod.number(),
+  "clerkId": zod.string(),
+  "username": zod.string(),
+  "displayName": zod.string().nullish(),
+  "bio": zod.string().nullish(),
+  "avatarUrl": zod.string().nullish(),
+  "followersCount": zod.number().optional(),
+  "followingCount": zod.number().optional(),
+  "isFollowing": zod.boolean().optional(),
+  "isMuted": zod.boolean().optional(),
+  "isBlocked": zod.boolean().optional(),
+  "blockedByMe": zod.boolean().optional(),
+  "totalWorkouts": zod.number().optional(),
+  "recentActivity": zod.array(zod.object({
+  "id": zod.number(),
+  "content": zod.string(),
+  "createdAt": zod.coerce.date()
+})).optional(),
+  "createdAt": zod.coerce.date()
+})
+export const ListBlockedUsersResponse = zod.array(ListBlockedUsersResponseItem)
 
 
 /**
@@ -1055,6 +1187,15 @@ export const ListFollowingResponseItem = zod.object({
   "followersCount": zod.number().optional(),
   "followingCount": zod.number().optional(),
   "isFollowing": zod.boolean().optional(),
+  "isMuted": zod.boolean().optional(),
+  "isBlocked": zod.boolean().optional(),
+  "blockedByMe": zod.boolean().optional(),
+  "totalWorkouts": zod.number().optional(),
+  "recentActivity": zod.array(zod.object({
+  "id": zod.number(),
+  "content": zod.string(),
+  "createdAt": zod.coerce.date()
+})).optional(),
   "createdAt": zod.coerce.date()
 })
 export const ListFollowingResponse = zod.array(ListFollowingResponseItem)

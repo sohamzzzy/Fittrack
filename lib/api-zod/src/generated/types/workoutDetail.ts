@@ -9,6 +9,7 @@ import type { WorkoutExercise } from './workoutExercise';
 
 export interface WorkoutDetail {
   id: number;
+  userId: number;
   name: string;
   /** @nullable */
   notes?: string | null;

@@ -48,6 +48,7 @@ export * from './setInputSetType';
 export * from './setUpdate';
 export * from './setUpdateSetType';
 export * from './user';
+export * from './userRecentActivityItem';
 export * from './userStats';
 export * from './userUpdate';
 export * from './workout';

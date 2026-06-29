@@ -1380,9 +1380,11 @@ components:
 
     WorkoutDetail:
       type: object
-      required: [id, name, startedAt, exercises, createdAt]
+      required: [id, userId, name, startedAt, exercises, createdAt]
       properties:
         id:
+          type: integer
+        userId:
           type: integer
         name:
           type: string

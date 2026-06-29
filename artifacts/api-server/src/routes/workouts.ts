@@ -235,6 +235,7 @@ router.post("/workouts", requireAuth, async (req, res) => {
 
 router.get("/workouts/:workoutId", requireAuth, async (req, res) => {
   try {
+    const user = await getAuthUser(req);
     const workoutIdParam = getSingleValue(req.params.workoutId);
     if (!workoutIdParam) {
       res.status(400).json({ error: "Missing workout id" });
@@ -247,6 +248,7 @@ router.get("/workouts/:workoutId", requireAuth, async (req, res) => {
       .where(eq(workoutsTable.id, workoutId))
       .limit(1);
     if (!w) { res.status(404).json({ error: "Not found" }); return; }
+    if (w.userId !== user.id && !w.isPublic) { res.status(404).json({ error: "Not found" }); return; }
     res.json(await formatWorkoutDetail(w));
   } catch (e) {
     sendServerError(req, res, e);
@@ -262,6 +264,10 @@ router.patch("/workouts/:workoutId", requireAuth, async (req, res) => {
       return;
     }
     const workoutId = parseInt(workoutIdParam);
+    const [w] = await db.select().from(workoutsTable).where(eq(workoutsTable.id, workoutId)).limit(1);
+    if (!w) { res.status(404).json({ error: "Not found" }); return; }
+    if (w.userId !== user.id) { res.status(403).json({ error: "Forbidden" }); return; }
+
     const { name, notes, isFinished, finishedAt, isPublic } = req.body;
     const updateData: any = {};
     if (name !== undefined) updateData.name = name;
@@ -270,7 +276,7 @@ router.patch("/workouts/:workoutId", requireAuth, async (req, res) => {
     if (isPublic !== undefined) updateData.isPublic = isPublic;
     if (finishedAt !== undefined) updateData.finishedAt = new Date(finishedAt);
     else if (isFinished) updateData.finishedAt = new Date();
-    const [updated] = await db.update(workoutsTable).set(updateData).where(and(eq(workoutsTable.id, workoutId), eq(workoutsTable.userId, user.id))).returning();
+    const [updated] = await db.update(workoutsTable).set(updateData).where(eq(workoutsTable.id, workoutId)).returning();
     if (!updated) { res.status(404).json({ error: "Not found" }); return; }
     res.json(formatWorkoutSummary(updated));
   } catch (e) {
@@ -287,7 +293,11 @@ router.delete("/workouts/:workoutId", requireAuth, async (req, res) => {
       return;
     }
     const workoutId = parseInt(workoutIdParam);
-    await db.delete(workoutsTable).where(and(eq(workoutsTable.id, workoutId), eq(workoutsTable.userId, user.id)));
+    const [w] = await db.select().from(workoutsTable).where(eq(workoutsTable.id, workoutId)).limit(1);
+    if (!w) { res.status(404).json({ error: "Not found" }); return; }
+    if (w.userId !== user.id) { res.status(403).json({ error: "Forbidden" }); return; }
+
+    await db.delete(workoutsTable).where(eq(workoutsTable.id, workoutId));
     res.status(204).send();
   } catch (e) {
     sendServerError(req, res, e);
@@ -296,12 +306,16 @@ router.delete("/workouts/:workoutId", requireAuth, async (req, res) => {
 
 router.post("/workouts/:workoutId/exercises", requireAuth, async (req, res) => {
   try {
+    const user = await getAuthUser(req);
     const workoutIdParam = getSingleValue(req.params.workoutId);
     if (!workoutIdParam) {
       res.status(400).json({ error: "Missing workout id" });
       return;
     }
     const workoutId = parseInt(workoutIdParam);
+    const [w] = await db.select().from(workoutsTable).where(eq(workoutsTable.id, workoutId)).limit(1);
+    if (!w) { res.status(404).json({ error: "Workout not found" }); return; }
+    if (w.userId !== user.id) { res.status(403).json({ error: "Forbidden" }); return; }
     const { exerciseId, order, notes } = req.body;
     const [ex] = await db
       .select()
@@ -319,6 +333,14 @@ router.post("/workouts/:workoutId/exercises", requireAuth, async (req, res) => {
 
 router.delete("/workouts/:workoutId/exercises/:workoutExerciseId", requireAuth, async (req, res) => {
   try {
+    const user = await getAuthUser(req);
+    const workoutIdParam = getSingleValue(req.params.workoutId);
+    if (!workoutIdParam) { res.status(400).json({ error: "Missing workout id" }); return; }
+    const workoutId = parseInt(workoutIdParam);
+    const [w] = await db.select().from(workoutsTable).where(eq(workoutsTable.id, workoutId)).limit(1);
+    if (!w) { res.status(404).json({ error: "Workout not found" }); return; }
+    if (w.userId !== user.id) { res.status(403).json({ error: "Forbidden" }); return; }
+
     const workoutExerciseIdParam = getSingleValue(req.params.workoutExerciseId);
     if (!workoutExerciseIdParam) {
       res.status(400).json({ error: "Missing workout exercise id" });
@@ -334,6 +356,14 @@ router.delete("/workouts/:workoutId/exercises/:workoutExerciseId", requireAuth, 
 
 router.post("/workouts/:workoutId/exercises/:workoutExerciseId/sets", requireAuth, async (req, res) => {
   try {
+    const user = await getAuthUser(req);
+    const workoutIdParam = getSingleValue(req.params.workoutId);
+    if (!workoutIdParam) { res.status(400).json({ error: "Missing workout id" }); return; }
+    const workoutId = parseInt(workoutIdParam);
+    const [w] = await db.select().from(workoutsTable).where(eq(workoutsTable.id, workoutId)).limit(1);
+    if (!w) { res.status(404).json({ error: "Workout not found" }); return; }
+    if (w.userId !== user.id) { res.status(403).json({ error: "Forbidden" }); return; }
+
     const workoutExerciseIdParam = getSingleValue(req.params.workoutExerciseId);
     if (!workoutExerciseIdParam) {
       res.status(400).json({ error: "Missing workout exercise id" });
@@ -350,6 +380,14 @@ router.post("/workouts/:workoutId/exercises/:workoutExerciseId/sets", requireAut
 
 router.patch("/workouts/:workoutId/exercises/:workoutExerciseId/sets/:setId", requireAuth, async (req, res) => {
   try {
+    const user = await getAuthUser(req);
+    const workoutIdParam = getSingleValue(req.params.workoutId);
+    if (!workoutIdParam) { res.status(400).json({ error: "Missing workout id" }); return; }
+    const workoutId = parseInt(workoutIdParam);
+    const [w] = await db.select().from(workoutsTable).where(eq(workoutsTable.id, workoutId)).limit(1);
+    if (!w) { res.status(404).json({ error: "Workout not found" }); return; }
+    if (w.userId !== user.id) { res.status(403).json({ error: "Forbidden" }); return; }
+
     const setIdParam = getSingleValue(req.params.setId);
     if (!setIdParam) {
       res.status(400).json({ error: "Missing set id" });
@@ -371,6 +409,14 @@ router.patch("/workouts/:workoutId/exercises/:workoutExerciseId/sets/:setId", re
 
 router.delete("/workouts/:workoutId/exercises/:workoutExerciseId/sets/:setId", requireAuth, async (req, res) => {
   try {
+    const user = await getAuthUser(req);
+    const workoutIdParam = getSingleValue(req.params.workoutId);
+    if (!workoutIdParam) { res.status(400).json({ error: "Missing workout id" }); return; }
+    const workoutId = parseInt(workoutIdParam);
+    const [w] = await db.select().from(workoutsTable).where(eq(workoutsTable.id, workoutId)).limit(1);
+    if (!w) { res.status(404).json({ error: "Workout not found" }); return; }
+    if (w.userId !== user.id) { res.status(403).json({ error: "Forbidden" }); return; }
+
     const setIdParam = getSingleValue(req.params.setId);
     if (!setIdParam) {
       res.status(400).json({ error: "Missing set id" });
