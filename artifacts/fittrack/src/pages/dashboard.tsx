@@ -3,6 +3,7 @@ import { useGetWorkoutSummary, useGetNutritionSummary, useGetSocialFeed } from "
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Dumbbell, Flame, Heart, Clock, TrendingUp, Plus, ChevronRight } from "lucide-react";
 import { motion } from "framer-motion";
 import { format } from "date-fns";
