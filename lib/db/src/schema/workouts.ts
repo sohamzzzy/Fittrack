@@ -33,6 +33,7 @@ export const workoutsTable = pgTable("workouts", {
   startedAt: timestamp("started_at", { withTimezone: true }).notNull().defaultNow(),
   finishedAt: timestamp("finished_at", { withTimezone: true }),
   isFinished: boolean("is_finished").notNull().default(false),
+  isPublic: boolean("is_public").notNull().default(false),
   createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
 });
 

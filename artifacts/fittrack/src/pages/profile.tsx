@@ -2,7 +2,7 @@ import { useGetMe, useGetMyStats, useListWorkouts, useUpdateMe, getGetMeQueryKey
 import { useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { Link } from "wouter";
-import { useClerk } from "@clerk/react";
+import { useAuth } from "@clerk/react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -20,7 +20,7 @@ export default function Profile() {
   const { data: workouts } = useListWorkouts();
   const updateMe = useUpdateMe();
   const qc = useQueryClient();
-  const { signOut } = useClerk();
+  const { signOut, getToken } = useAuth();
   const { toast } = useToast();
   const [editOpen, setEditOpen] = useState(false);
   const [displayName, setDisplayName] = useState("");
@@ -65,10 +65,43 @@ export default function Profile() {
         <Card className="bg-card border-card-border">
           <CardContent className="pt-6 pb-6">
             <div className="flex items-center gap-4">
-              <Avatar className="w-16 h-16">
-                <AvatarImage src={me?.avatarUrl ?? undefined} />
-                <AvatarFallback className="bg-primary/20 text-primary text-2xl font-black">{(me?.username ?? "U")[0].toUpperCase()}</AvatarFallback>
-              </Avatar>
+              <div className="relative group cursor-pointer" onClick={() => {
+                const input = document.createElement('input');
+                input.type = 'file';
+                input.accept = 'image/*';
+                input.onchange = async (e) => {
+                  const file = (e.target as HTMLInputElement).files?.[0];
+                  if (!file) return;
+                  const formData = new FormData();
+                  formData.append('avatar', file);
+                  try {
+                    const res = await fetch('/api/users/me/avatar', {
+                      method: 'POST',
+                      body: formData,
+                      headers: {
+                        'Authorization': `Bearer ${await getToken()}`
+                      }
+                    });
+                    if (res.ok) {
+                      qc.invalidateQueries({ queryKey: getGetMeQueryKey() });
+                      toast({ title: "Profile picture updated" });
+                    } else {
+                      toast({ title: "Upload failed", variant: "destructive" });
+                    }
+                  } catch (e) {
+                    toast({ title: "Upload error", variant: "destructive" });
+                  }
+                };
+                input.click();
+              }}>
+                <Avatar className="w-16 h-16 group-hover:opacity-80 transition-opacity">
+                  <AvatarImage src={me?.avatarUrl ?? undefined} />
+                  <AvatarFallback className="bg-primary/20 text-primary text-2xl font-black">{(me?.username ?? "U")[0].toUpperCase()}</AvatarFallback>
+                </Avatar>
+                <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-black/40 rounded-full">
+                  <Pencil className="w-5 h-5 text-white" />
+                </div>
+              </div>
               <div className="flex-1 min-w-0">
                 <h2 className="text-xl font-black">{me?.displayName ?? me?.username}</h2>
                 {me?.displayName && <p className="text-sm text-muted-foreground">@{me.username}</p>}
@@ -76,18 +109,18 @@ export default function Profile() {
               </div>
             </div>
             <div className="flex gap-6 mt-4">
-              <div className="text-center">
+              <Link href={`/profile/${me?.id}/followers`} className="text-center hover:opacity-80 transition-opacity cursor-pointer block">
                 <div className="text-xl font-black">{stats?.totalFollowers ?? 0}</div>
                 <div className="text-xs text-muted-foreground">Followers</div>
-              </div>
-              <div className="text-center">
+              </Link>
+              <Link href={`/profile/${me?.id}/following`} className="text-center hover:opacity-80 transition-opacity cursor-pointer block">
                 <div className="text-xl font-black">{stats?.totalFollowing ?? 0}</div>
                 <div className="text-xs text-muted-foreground">Following</div>
-              </div>
-              <div className="text-center">
+              </Link>
+              <Link href={`/profile/${me?.id}/workouts`} className="text-center hover:opacity-80 transition-opacity cursor-pointer block">
                 <div className="text-xl font-black">{stats?.totalWorkouts ?? 0}</div>
                 <div className="text-xs text-muted-foreground">Workouts</div>
-              </div>
+              </Link>
             </div>
           </CardContent>
         </Card>
@@ -95,19 +128,21 @@ export default function Profile() {
 
       <div className="grid grid-cols-2 gap-3">
         {[
-          { icon: Dumbbell, label: "Workouts", value: stats?.totalWorkouts ?? 0, sub: "all time", color: "text-primary" },
+          { icon: Dumbbell, label: "Workouts", value: stats?.totalWorkouts ?? 0, sub: "all time", color: "text-primary", href: `/profile/${me?.id}/workouts` },
           { icon: Zap, label: "This Week", value: stats?.thisWeekWorkouts ?? 0, sub: "sessions", color: "text-amber-400" },
           { icon: TrendingUp, label: "Streak", value: stats?.currentStreak ?? 0, sub: "days", color: "text-green-400" },
-          { icon: Users, label: "Followers", value: stats?.totalFollowers ?? 0, sub: "people", color: "text-blue-400" },
+          { icon: Users, label: "Followers", value: stats?.totalFollowers ?? 0, sub: "people", color: "text-blue-400", href: `/profile/${me?.id}/followers` },
         ].map((item, i) => (
           <motion.div key={item.label} initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: i * 0.08 }}>
-            <Card className="bg-card border-card-border">
-              <CardContent className="pt-4 pb-4 flex flex-col items-center text-center">
-                <item.icon className={`w-5 h-5 ${item.color} mb-2`} />
-                <div className="text-2xl font-black">{item.value}</div>
-                <div className="text-xs text-muted-foreground">{item.label}</div>
-              </CardContent>
-            </Card>
+            <Link href={item.href ?? "#"}>
+              <Card className={`bg-card border-card-border ${item.href ? 'hover:border-primary/50 cursor-pointer transition-colors' : ''}`}>
+                <CardContent className="pt-4 pb-4 flex flex-col items-center text-center">
+                  <item.icon className={`w-5 h-5 ${item.color} mb-2`} />
+                  <div className="text-2xl font-black">{item.value}</div>
+                  <div className="text-xs text-muted-foreground">{item.label}</div>
+                </CardContent>
+              </Card>
+            </Link>
           </motion.div>
         ))}
       </div>

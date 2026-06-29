@@ -2,6 +2,7 @@ import express, { type Express } from "express";
 import cors from "cors";
 import pinoHttp from "pino-http";
 import { clerkMiddleware } from "@clerk/express";
+import path from "path";
 
 import router from "./routes";
 import { logger } from "./lib/logger";
@@ -63,6 +64,8 @@ app.get("/", (_, res) => {
     message: "API running",
   });
 });
+
+app.use("/uploads", express.static(path.join(process.cwd(), "uploads")));
 
 app.use("/api", router);
 

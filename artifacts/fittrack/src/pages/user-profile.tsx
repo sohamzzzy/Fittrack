@@ -119,14 +119,14 @@ export default function UserProfile() {
                   </div>
                 </div>
                 <div className="flex gap-5 mt-3">
-                  <div className="text-center">
+                  <Link href={`/profile/${user.id}/followers`} className="text-center hover:opacity-80 transition-opacity cursor-pointer block">
                     <div className="font-black">{user.followersCount ?? 0}</div>
                     <div className="text-xs text-muted-foreground">Followers</div>
-                  </div>
-                  <div className="text-center">
+                  </Link>
+                  <Link href={`/profile/${user.id}/following`} className="text-center hover:opacity-80 transition-opacity cursor-pointer block">
                     <div className="font-black">{user.followingCount ?? 0}</div>
                     <div className="text-xs text-muted-foreground">Following</div>
-                  </div>
+                  </Link>
                 </div>
               </div>
             </div>
@@ -135,13 +135,15 @@ export default function UserProfile() {
       </motion.div>
 
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-        <Card className="bg-card border-card-border sm:col-span-1">
-          <CardContent className="py-5 text-center">
-            <Dumbbell className="w-5 h-5 text-primary mx-auto mb-2" />
-            <div className="text-2xl font-black">{socialUser?.totalWorkouts ?? 0}</div>
-            <div className="text-xs text-muted-foreground">Public workouts</div>
-          </CardContent>
-        </Card>
+        <Link href={`/profile/${user.id}/workouts`} className="sm:col-span-1 block">
+          <Card className="bg-card border-card-border hover:border-primary/50 cursor-pointer transition-colors h-full">
+            <CardContent className="py-5 text-center h-full flex flex-col justify-center">
+              <Dumbbell className="w-5 h-5 text-primary mx-auto mb-2" />
+              <div className="text-2xl font-black">{socialUser?.totalWorkouts ?? 0}</div>
+              <div className="text-xs text-muted-foreground">Public workouts</div>
+            </CardContent>
+          </Card>
+        </Link>
         <Card className="bg-card border-card-border sm:col-span-2">
           <CardContent className="py-5">
             <h3 className="font-bold mb-3">Recent activity</h3>

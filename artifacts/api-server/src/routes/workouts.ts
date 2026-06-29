@@ -102,6 +102,29 @@ router.get("/workouts", requireAuth, async (req, res) => {
   }
 });
 
+router.get("/workouts/user/:userId", requireAuth, async (req, res) => {
+  try {
+    const me = await getAuthUser(req);
+    const userIdParam = getSingleValue(req.params.userId);
+    if (!userIdParam) {
+      res.status(400).json({ error: "Missing user id" });
+      return;
+    }
+    const userId = parseInt(userIdParam);
+    const limit = parseInt(getSingleValue(req.query.limit) ?? "") || 20;
+    const offset = parseInt(getSingleValue(req.query.offset) ?? "") || 0;
+    
+    const condition = userId === me.id
+      ? and(eq(workoutsTable.userId, userId), eq(workoutsTable.isFinished, true))
+      : and(eq(workoutsTable.userId, userId), eq(workoutsTable.isFinished, true), eq(workoutsTable.isPublic, true));
+
+    const workouts = await db.select().from(workoutsTable).where(condition).orderBy(sql`${workoutsTable.startedAt} desc`).limit(limit).offset(offset);
+    res.json(workouts.map(formatWorkoutSummary));
+  } catch (e) {
+    sendServerError(req, res, e);
+  }
+});
+
 router.post("/workouts", requireAuth, async (req, res) => {
   try {
     const user = await getAuthUser(req);
@@ -239,11 +262,12 @@ router.patch("/workouts/:workoutId", requireAuth, async (req, res) => {
       return;
     }
     const workoutId = parseInt(workoutIdParam);
-    const { name, notes, isFinished, finishedAt } = req.body;
+    const { name, notes, isFinished, finishedAt, isPublic } = req.body;
     const updateData: any = {};
     if (name !== undefined) updateData.name = name;
     if (notes !== undefined) updateData.notes = notes;
     if (isFinished !== undefined) updateData.isFinished = isFinished;
+    if (isPublic !== undefined) updateData.isPublic = isPublic;
     if (finishedAt !== undefined) updateData.finishedAt = new Date(finishedAt);
     else if (isFinished) updateData.finishedAt = new Date();
     const [updated] = await db.update(workoutsTable).set(updateData).where(and(eq(workoutsTable.id, workoutId), eq(workoutsTable.userId, user.id))).returning();

@@ -4,6 +4,36 @@ import { requireAuth, getAuthUser, getOrCreateUser } from "../lib/auth";
 import { db, usersTable, followsTable, blocksTable, mutesTable, workoutsTable, postsTable } from "@workspace/db";
 import { eq, and, count, sql, or, ne, desc } from "drizzle-orm";
 import { UpdateMeBody } from "@workspace/api-zod";
+import multer from "multer";
+import path from "path";
+import fs from "fs";
+
+const uploadDir = path.join(process.cwd(), "uploads");
+if (!fs.existsSync(uploadDir)) {
+  fs.mkdirSync(uploadDir, { recursive: true });
+}
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, uploadDir);
+  },
+  filename: function (req, file, cb) {
+    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+    cb(null, 'avatar-' + uniqueSuffix + path.extname(file.originalname));
+  }
+});
+
+const upload = multer({ 
+  storage: storage,
+  limits: { fileSize: 5 * 1024 * 1024 }, // 5MB
+  fileFilter: (req, file, cb) => {
+    if (file.mimetype.startsWith('image/')) {
+      cb(null, true);
+    } else {
+      cb(new Error('Not an image! Please upload an image.'));
+    }
+  }
+});
 
 const router = Router();
 
@@ -74,21 +104,30 @@ meRouter.patch("/", requireAuth, async (req, res) => {
     }
 
     const user = await getAuthUser(req);
-    const [updated] = await db
-      .update(usersTable)
-      .set({ ...updateData, updatedAt: new Date() })
-      .where(eq(usersTable.id, user.id))
-      .returning();
-
+    const [updated] = await db.update(usersTable).set(updateData).where(eq(usersTable.id, user.id)).returning();
     if (!updated) {
       res.status(404).json({ error: "User not found" });
       return;
     }
-
-    res.json(await userWithCounts(updated, false));
+    res.json(updated);
   } catch (e) {
     req.log.error(e);
     res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+meRouter.post("/avatar", upload.single("avatar"), async (req, res) => {
+  try {
+    const user = await getAuthUser(req);
+    if (!req.file) {
+      res.status(400).json({ error: "No image file provided" });
+      return;
+    }
+    const avatarUrl = `/uploads/${req.file.filename}`;
+    const [updated] = await db.update(usersTable).set({ avatarUrl }).where(eq(usersTable.id, user.id)).returning();
+    res.json({ avatarUrl: updated.avatarUrl });
+  } catch (e) {
+    res.status(500).json({ error: (e as Error).message });
   }
 });
 

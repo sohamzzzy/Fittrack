@@ -42,6 +42,9 @@ import NutritionGoals from "@/pages/nutrition-goals";
 import Feed from "@/pages/feed";
 import Profile from "@/pages/profile";
 import UserProfile from "@/pages/user-profile";
+import UserFollowers from "@/pages/followers";
+import UserFollowing from "@/pages/following";
+import UserWorkouts from "@/pages/user-workouts";
 import Search from "@/pages/search";
 
 const queryClient = new QueryClient({
@@ -146,6 +149,9 @@ function AppShell() {
 
         <Route path="/profile" component={Profile} />
         <Route path="/profile/:id" component={UserProfile} />
+        <Route path="/profile/:id/followers" component={UserFollowers} />
+        <Route path="/profile/:id/following" component={UserFollowing} />
+        <Route path="/profile/:id/workouts" component={UserWorkouts} />
 
         <Route path="/search" component={Search} />
 
