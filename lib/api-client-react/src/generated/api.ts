@@ -23,6 +23,7 @@ import type {
   Comment,
   CommentInput,
   DeleteExercise409,
+  DeleteFoodItem400,
   Exercise,
   ExerciseHistoryResult,
   ExerciseInput,
@@ -2407,6 +2408,76 @@ export const useUpdateFoodItem = <TError = ErrorType<unknown>,
         TContext
       > => {
       return useMutation(getUpdateFoodItemMutationOptions(options));
+    }
+
+export const getDeleteFoodItemUrl = (foodItemId: number,) => {
+
+
+
+
+  return `/api/nutrition/foods/${foodItemId}`
+}
+
+/**
+ * @summary Delete a custom food item
+ */
+export const deleteFoodItem = async (foodItemId: number, options?: RequestInit): Promise<void> => {
+
+  return customFetch<void>(getDeleteFoodItemUrl(foodItemId),
+  {
+    ...options,
+    method: 'DELETE'
+
+
+  }
+);}
+
+
+
+
+export const getDeleteFoodItemMutationOptions = <TError = ErrorType<DeleteFoodItem400 | void>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteFoodItem>>, TError,{foodItemId: number}, TContext>, request?: SecondParameter<typeof customFetch>}
+): UseMutationOptions<Awaited<ReturnType<typeof deleteFoodItem>>, TError,{foodItemId: number}, TContext> => {
+
+const mutationKey = ['deleteFoodItem'];
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
+
+
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof deleteFoodItem>>, {foodItemId: number}> = (props) => {
+          const {foodItemId} = props ?? {};
+
+          return  deleteFoodItem(foodItemId,requestOptions)
+        }
+
+
+
+
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type DeleteFoodItemMutationResult = NonNullable<Awaited<ReturnType<typeof deleteFoodItem>>>
+
+    export type DeleteFoodItemMutationError = ErrorType<DeleteFoodItem400 | void>
+
+    /**
+ * @summary Delete a custom food item
+ */
+export const useDeleteFoodItem = <TError = ErrorType<DeleteFoodItem400 | void>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteFoodItem>>, TError,{foodItemId: number}, TContext>, request?: SecondParameter<typeof customFetch>}
+ ): UseMutationResult<
+        Awaited<ReturnType<typeof deleteFoodItem>>,
+        TError,
+        {foodItemId: number},
+        TContext
+      > => {
+      return useMutation(getDeleteFoodItemMutationOptions(options));
     }
 
 export const getListFoodLogsUrl = (params: ListFoodLogsParams,) => {

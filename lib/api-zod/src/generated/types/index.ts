@@ -9,6 +9,7 @@
 export * from './comment';
 export * from './commentInput';
 export * from './deleteExercise409';
+export * from './deleteFoodItem400';
 export * from './exercise';
 export * from './exerciseHistoryPoint';
 export * from './exerciseHistoryResult';

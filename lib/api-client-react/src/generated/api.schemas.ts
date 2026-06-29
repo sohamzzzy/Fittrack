@@ -566,6 +566,10 @@ q?: string;
 recentOnly?: boolean;
 };
 
+export type DeleteFoodItem400 = {
+  error?: string;
+};
+
 export type ListFoodLogsParams = {
 date: string;
 };

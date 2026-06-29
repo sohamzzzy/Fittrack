@@ -649,6 +649,30 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/FoodItem"
+    delete:
+      operationId: deleteFoodItem
+      tags: [nutrition]
+      summary: Delete a custom food item
+      parameters:
+        - name: foodItemId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "204":
+          description: Successfully deleted
+        "400":
+          description: Cannot delete referenced food item
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+        "403":
+          description: Unauthorized to delete this food item
 
   /nutrition/logs:
     get:

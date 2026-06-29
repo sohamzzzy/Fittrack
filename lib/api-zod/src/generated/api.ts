@@ -661,6 +661,14 @@ export const UpdateFoodItemResponse = zod.object({
 
 
 /**
+ * @summary Delete a custom food item
+ */
+export const DeleteFoodItemParams = zod.object({
+  "foodItemId": zod.coerce.number()
+})
+
+
+/**
  * @summary List food logs for a date
  */
 export const ListFoodLogsQueryParams = zod.object({

@@ -137,6 +137,50 @@ router.patch("/nutrition/foods/:foodItemId", requireAuth, async (req, res) => {
   }
 });
 
+router.delete("/nutrition/foods/:foodItemId", requireAuth, async (req, res) => {
+  try {
+    const user = await getAuthUser(req);
+    const foodItemIdParam = getSingleValue(req.params.foodItemId);
+    if (!foodItemIdParam) {
+      res.status(400).json({ error: "Missing food item id" });
+      return;
+    }
+    const foodItemId = parseInt(foodItemIdParam);
+    
+    const f = await db.query.foodItemsTable.findFirst({ where: eq(foodItemsTable.id, foodItemId) });
+    if (!f) {
+      res.status(404).json({ error: "Not found" });
+      return;
+    }
+    
+    if (!f.isCustom) {
+      res.status(403).json({ error: "Cannot delete default foods" });
+      return;
+    }
+    
+    if (f.userId !== user.id) {
+      res.status(403).json({ error: "Unauthorized to delete this food item" });
+      return;
+    }
+    
+    const usageCount = await db
+      .select({ c: count() })
+      .from(foodLogsTable)
+      .where(eq(foodLogsTable.foodItemId, foodItemId));
+      
+    if (usageCount[0] && usageCount[0].c > 0) {
+      res.status(400).json({ error: "Cannot delete a food item that is referenced in your historical nutrition logs." });
+      return;
+    }
+    
+    await db.delete(foodItemsTable).where(eq(foodItemsTable.id, foodItemId));
+    res.status(204).end();
+  } catch (e) {
+    req.log.error(e);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
 router.get("/nutrition/logs", requireAuth, async (req, res) => {
   try {
     const user = await getAuthUser(req);

@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useLocation, useSearch } from "wouter";
 import {
-  useListFoodItems, useCreateFoodItem, useLogFood,
+  useListFoodItems, useCreateFoodItem, useLogFood, useDeleteFoodItem,
   getGetNutritionSummaryQueryKey, getListFoodItemsQueryKey
 } from "@workspace/api-client-react";
 import { useQueryClient } from "@tanstack/react-query";
@@ -11,7 +11,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Skeleton } from "@/components/ui/skeleton";
-import { ArrowLeft, Plus, Search } from "lucide-react";
+import { ArrowLeft, Plus, Search, Trash2 } from "lucide-react";
 import { format } from "date-fns";
 import { useToast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
@@ -40,6 +40,22 @@ export default function NutritionLog() {
   const { data: foods, isLoading } = useListFoodItems({ q: q || undefined, recentOnly: !q ? true : undefined });
   const logFood = useLogFood();
   const createFoodItem = useCreateFoodItem();
+  const deleteFoodItem = useDeleteFoodItem();
+
+  const handleDeleteFood = (foodId: number) => {
+    if (window.confirm("Are you sure you want to delete this custom food?")) {
+      deleteFoodItem.mutate({ foodItemId: foodId }, {
+        onSuccess: () => {
+          qc.invalidateQueries({ queryKey: getListFoodItemsQueryKey() });
+          toast({ title: "Food deleted" });
+        },
+        onError: (err: any) => {
+          const msg = err?.response?.data?.error || "Failed to delete food.";
+          toast({ title: "Cannot delete", description: msg, variant: "destructive" });
+        }
+      });
+    }
+  };
 
   const handleLog = (foodId: number) => {
     logFood.mutate({ data: { foodItemId: foodId, mealType: selectedMeal, quantity: parseFloat(qty) || 1, date: today } }, {
@@ -111,9 +127,16 @@ export default function NutritionLog() {
                     </p>
                   </div>
                   {selectedFood === food.id ? (
-                    <Button size="sm" className="font-bold shrink-0 ml-3" onClick={(e) => { e.stopPropagation(); handleLog(food.id); }} disabled={logFood.isPending} data-testid={`button-log-food-${food.id}`}>
-                      Log
-                    </Button>
+                    <div className="flex items-center gap-2 ml-3">
+                      {food.isCustom && (
+                        <Button size="icon" variant="ghost" className="w-8 h-8 text-muted-foreground hover:text-destructive shrink-0" onClick={(e) => { e.stopPropagation(); handleDeleteFood(food.id); }} disabled={deleteFoodItem.isPending}>
+                          <Trash2 className="w-4 h-4" />
+                        </Button>
+                      )}
+                      <Button size="sm" className="font-bold shrink-0" onClick={(e) => { e.stopPropagation(); handleLog(food.id); }} disabled={logFood.isPending} data-testid={`button-log-food-${food.id}`}>
+                        Log
+                      </Button>
+                    </div>
                   ) : (
                     <Plus className="w-4 h-4 text-muted-foreground shrink-0 ml-3" />
                   )}
