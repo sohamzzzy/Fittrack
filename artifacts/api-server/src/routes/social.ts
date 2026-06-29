@@ -18,10 +18,15 @@ function parseUserId(value: string | undefined) {
 }
 
 async function hasBlockBetween(firstId: number, secondId: number) {
-  return !!await db.query.blocksTable.findFirst({ where: or(
-    and(eq(blocksTable.blockerId, firstId), eq(blocksTable.blockedId, secondId)),
-    and(eq(blocksTable.blockerId, secondId), eq(blocksTable.blockedId, firstId)),
-  ) });
+  try {
+    return !!await db.query.blocksTable.findFirst({ where: or(
+      and(eq(blocksTable.blockerId, firstId), eq(blocksTable.blockedId, secondId)),
+      and(eq(blocksTable.blockerId, secondId), eq(blocksTable.blockedId, firstId)),
+    ) });
+  } catch (error) {
+    if (!isMissingTableError(error)) throw error;
+    return false;
+  }
 }
 
 async function canAccessPost(viewerId: number, postId: number) {
@@ -289,6 +294,10 @@ router.post("/social/mute/:userId", requireAuth, async (req, res) => {
     await db.insert(mutesTable).values({ muterId: me.id, mutedId: targetId }).onConflictDoNothing();
     res.json({ muted: true });
   } catch (e) {
+    if (isMissingTableError(e)) {
+      res.json({ muted: true });
+      return;
+    }
     req.log.error(e);
     res.status(500).json({ error: "Internal server error" });
   }
@@ -302,6 +311,10 @@ router.delete("/social/mute/:userId", requireAuth, async (req, res) => {
     await db.delete(mutesTable).where(and(eq(mutesTable.muterId, me.id), eq(mutesTable.mutedId, targetId)));
     res.json({ muted: false });
   } catch (e) {
+    if (isMissingTableError(e)) {
+      res.json({ muted: false });
+      return;
+    }
     req.log.error(e);
     res.status(500).json({ error: "Internal server error" });
   }
@@ -324,6 +337,10 @@ router.post("/social/block/:userId", requireAuth, async (req, res) => {
     });
     res.json({ blocked: true });
   } catch (e) {
+    if (isMissingTableError(e)) {
+      res.json({ blocked: true });
+      return;
+    }
     req.log.error(e);
     res.status(500).json({ error: "Internal server error" });
   }
@@ -356,6 +373,10 @@ router.delete("/social/block/:userId", requireAuth, async (req, res) => {
     await db.delete(blocksTable).where(and(eq(blocksTable.blockerId, me.id), eq(blocksTable.blockedId, targetId)));
     res.json({ blocked: false });
   } catch (e) {
+    if (isMissingTableError(e)) {
+      res.json({ blocked: false });
+      return;
+    }
     req.log.error(e);
     res.status(500).json({ error: "Internal server error" });
   }

@@ -26,12 +26,12 @@ async function userWithCounts(user: typeof usersTable.$inferSelect, isFollowing 
 
 async function relationshipState(viewerId: number, userId: number) {
   const [follow, mute, block] = await Promise.all([
-    db.query.followsTable.findFirst({ where: and(eq(followsTable.followerId, viewerId), eq(followsTable.followingId, userId)) }),
-    db.query.mutesTable.findFirst({ where: and(eq(mutesTable.muterId, viewerId), eq(mutesTable.mutedId, userId)) }),
+    db.query.followsTable.findFirst({ where: and(eq(followsTable.followerId, viewerId), eq(followsTable.followingId, userId)) }).catch(e => { if (isMissingTableError(e)) return null; throw e; }),
+    db.query.mutesTable.findFirst({ where: and(eq(mutesTable.muterId, viewerId), eq(mutesTable.mutedId, userId)) }).catch(e => { if (isMissingTableError(e)) return null; throw e; }),
     db.query.blocksTable.findFirst({ where: or(
       and(eq(blocksTable.blockerId, viewerId), eq(blocksTable.blockedId, userId)),
       and(eq(blocksTable.blockerId, userId), eq(blocksTable.blockedId, viewerId)),
-    ) }),
+    ) }).catch(e => { if (isMissingTableError(e)) return null; throw e; }),
   ]);
   return { isFollowing: !!follow, isMuted: !!mute, isBlocked: !!block, blockedByMe: block?.blockerId === viewerId };
 }
