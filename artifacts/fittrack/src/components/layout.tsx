@@ -2,11 +2,11 @@ import React from "react";
 import { Link, useLocation } from "wouter";
 import { Dumbbell, Utensils, LayoutDashboard, Search, UserCircle, Activity, Bell } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { useGetUnreadCount } from "@workspace/api-client-react";
+import { useLiveUnreadCount } from "@/hooks/use-live-notifications";
 import { ThemeToggle } from "@/components/theme-toggle";
 
 function NotificationBell() {
-  const { data } = useGetUnreadCount();
+  const { data } = useLiveUnreadCount();
   const count = data?.count ?? 0;
   return (
     <Link href="/notifications" aria-label="Notifications">

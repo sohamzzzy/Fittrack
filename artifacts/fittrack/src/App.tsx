@@ -29,6 +29,7 @@ import NotFound from "@/pages/not-found";
 import { Layout } from "@/components/layout";
 import { ApiAuthSetup } from "@/components/api-auth-setup";
 import { ThemeProvider } from "@/components/theme-provider";
+import { useNotificationOptimisticUpdates } from "@/hooks/use-live-notifications";
 
 import Dashboard from "@/pages/dashboard";
 import WorkoutHub from "@/pages/workout-hub";
@@ -185,6 +186,11 @@ function ProtectedShell() {
   );
 }
 
+function GlobalHooksSetup() {
+  useNotificationOptimisticUpdates();
+  return null;
+}
+
 function ClerkProviderWithRoutes() {
   const [, setLocation] = useLocation();
 
@@ -222,6 +228,7 @@ function ClerkProviderWithRoutes() {
     >
       <QueryClientProvider client={queryClient}>
         <ApiAuthSetup>
+          <GlobalHooksSetup />
           <ThemeProvider>
             <TooltipProvider>
               <Switch>

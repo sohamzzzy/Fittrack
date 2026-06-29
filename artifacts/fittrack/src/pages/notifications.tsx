@@ -3,14 +3,13 @@ import { motion, AnimatePresence } from "framer-motion";
 import { formatDistanceToNow } from "date-fns";
 import { Bell, Check, CheckCheck, Trash2, X, Heart, MessageCircle, UserPlus, AlertCircle } from "lucide-react";
 import {
-  useGetNotifications,
   useMarkNotificationRead,
   useMarkAllNotificationsRead,
   useDeleteNotification,
   useClearNotifications,
-  useGetUnreadCount,
 } from "@workspace/api-client-react";
 import type { AppNotification, NotificationType } from "@workspace/api-client-react";
+import { useLiveNotifications, useLiveUnreadCount } from "@/hooks/use-live-notifications";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -42,12 +41,12 @@ function getNotificationHref(n: AppNotification): string {
 
 export default function Notifications() {
   const [, navigate] = useLocation();
-  const { data: notifications, isLoading } = useGetNotifications();
+  const { data: notifications, isLoading } = useLiveNotifications();
   const markRead = useMarkNotificationRead();
   const markAllRead = useMarkAllNotificationsRead();
   const deleteOne = useDeleteNotification();
   const clearAll = useClearNotifications();
-  const { data: unreadData } = useGetUnreadCount();
+  const { data: unreadData } = useLiveUnreadCount();
 
   const unreadCount = unreadData?.count ?? 0;
 
