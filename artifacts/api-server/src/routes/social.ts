@@ -6,6 +6,12 @@ import { eq, and, count, inArray, sql, or } from "drizzle-orm";
 
 const router = Router();
 
+function isMissingTableError(error: unknown): boolean {
+  if (typeof error !== "object" || error === null) return false;
+  if ("code" in error && error.code === "42P01") return true;
+  return "cause" in error && isMissingTableError(error.cause);
+}
+
 function parseUserId(value: string | undefined) {
   const id = Number(value);
   return Number.isInteger(id) && id > 0 ? id : null;
@@ -333,6 +339,10 @@ router.get("/social/blocked", requireAuth, async (req, res) => {
     }));
     res.json(users.filter(Boolean));
   } catch (e) {
+    if (isMissingTableError(e)) {
+      res.json([]);
+      return;
+    }
     req.log.error(e);
     res.status(500).json({ error: "Internal server error" });
   }

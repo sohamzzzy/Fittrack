@@ -7,6 +7,12 @@ import { UpdateMeBody } from "@workspace/api-zod";
 
 const router = Router();
 
+function isMissingTableError(error: unknown): boolean {
+  if (typeof error !== "object" || error === null) return false;
+  if ("code" in error && error.code === "42P01") return true;
+  return "cause" in error && isMissingTableError(error.cause);
+}
+
 async function userWithCounts(user: typeof usersTable.$inferSelect, isFollowing = false) {
   const [followers] = await db.select({ c: count() }).from(followsTable).where(eq(followsTable.followingId, user.id));
   const [following] = await db.select({ c: count() }).from(followsTable).where(eq(followsTable.followerId, user.id));
@@ -117,14 +123,23 @@ router.use("/users/me", meRouter);
 router.get("/users/search", requireAuth, async (req, res) => {
   try {
     const user = await getAuthUser(req);
-    const q = getSingleValue(req.query.q) ?? "";
-    const blockedRows = await db.select().from(blocksTable).where(or(eq(blocksTable.blockerId, user.id), eq(blocksTable.blockedId, user.id)));
+    const q = (getSingleValue(req.query.q) ?? "").trim();
+    if (!q) {
+      res.json([]);
+      return;
+    }
+    let blockedRows: Array<typeof blocksTable.$inferSelect> = [];
+    try {
+      blockedRows = await db.select().from(blocksTable).where(or(eq(blocksTable.blockerId, user.id), eq(blocksTable.blockedId, user.id)));
+    } catch (error) {
+      if (!isMissingTableError(error)) throw error;
+    }
     const blockedIds = new Set(blockedRows.map((row) => row.blockerId === user.id ? row.blockedId : row.blockerId));
     const users = await db.select().from(usersTable).where(and(
       ne(usersTable.id, user.id),
       or(
-        sql`lower(${usersTable.username}) like lower(${"%" + q + "%"})`,
-        sql`lower(coalesce(${usersTable.displayName}, '')) like lower(${"%" + q + "%"})`,
+        sql`lower(btrim(${usersTable.username})) like lower(${"%" + q + "%"})`,
+        sql`lower(btrim(coalesce(${usersTable.displayName}, ''))) like lower(${"%" + q + "%"})`,
       ),
     )).limit(20);
     const followingRows = await db.select({ followingId: followsTable.followingId }).from(followsTable).where(eq(followsTable.followerId, user.id));
@@ -133,7 +148,12 @@ router.get("/users/search", requireAuth, async (req, res) => {
       users.filter((u) => !blockedIds.has(u.id)).map(async (u) => {
         const [fl] = await db.select({ c: count() }).from(followsTable).where(eq(followsTable.followingId, u.id));
         const [fg] = await db.select({ c: count() }).from(followsTable).where(eq(followsTable.followerId, u.id));
-        const mute = await db.query.mutesTable.findFirst({ where: and(eq(mutesTable.muterId, user.id), eq(mutesTable.mutedId, u.id)) });
+        let mute: typeof mutesTable.$inferSelect | undefined;
+        try {
+          mute = await db.query.mutesTable.findFirst({ where: and(eq(mutesTable.muterId, user.id), eq(mutesTable.mutedId, u.id)) });
+        } catch (error) {
+          if (!isMissingTableError(error)) throw error;
+        }
         return { ...u, followersCount: Number(fl.c), followingCount: Number(fg.c), isFollowing: followingIds.has(u.id), isMuted: !!mute, isBlocked: false, blockedByMe: false };
       })
     );

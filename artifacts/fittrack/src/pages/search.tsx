@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "wouter";
-import { useSearchUsers, useFollowUser, useUnfollowUser, customFetch } from "@workspace/api-client-react";
+import { useSearchUsers, useFollowUser, useUnfollowUser, getSearchUsersQueryKey, customFetch } from "@workspace/api-client-react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -14,8 +14,11 @@ import { useDebounce } from "use-debounce";
 export default function Search() {
   const [q, setQ] = useState("");
   const [debouncedQ] = useDebounce(q, 300);
-  const searchQ: string | undefined = debouncedQ || undefined;
-  const { data: users, isLoading } = useSearchUsers({ q: searchQ as string }, { query: { enabled: true, queryKey: ["/api/users/search", searchQ] } });
+  const searchQ = debouncedQ.trim();
+  const { data: users = [], isLoading, isError } = useSearchUsers(
+    { q: searchQ },
+    { query: { enabled: searchQ.length > 0, queryKey: getSearchUsersQueryKey({ q: searchQ }) } },
+  );
   const followUser = useFollowUser();
   const unfollowUser = useUnfollowUser();
   const qc = useQueryClient();
@@ -58,9 +61,15 @@ export default function Search() {
         <Input className="pl-9" placeholder="Search by username or display name..." value={q} onChange={(e) => setQ(e.target.value)} data-testid="input-user-search" />
       </div>
 
-      {isLoading ? (
+      {isError ? (
+        <Card className="bg-card border-destructive/50">
+          <CardContent className="py-8 text-center text-destructive">
+            Search is temporarily unavailable. Please try again.
+          </CardContent>
+        </Card>
+      ) : isLoading ? (
         <div className="space-y-2">{[0,1,2].map(i => <Skeleton key={i} className="h-16" />)}</div>
-      ) : users && users.length > 0 ? (
+      ) : users.length > 0 ? (
         <div className="space-y-2">
           {users.map((u, i) => (
             <motion.div key={u.id} initial={{ opacity: 0, x: -8 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: i * 0.04 }}>
