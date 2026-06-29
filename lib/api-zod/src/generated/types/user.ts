@@ -6,6 +6,7 @@
  * OpenAPI spec version: 0.1.0
  */
 import type { UserRecentActivityItem } from './userRecentActivityItem';
+import type { UserTheme } from './userTheme';
 
 export interface User {
   id: number;
@@ -13,6 +14,7 @@ export interface User {
   username: string;
   /** @nullable */
   displayName?: string | null;
+  theme?: UserTheme;
   /** @nullable */
   bio?: string | null;
   /** @nullable */

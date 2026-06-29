@@ -28,6 +28,7 @@ import { publishableKeyFromHost } from "@clerk/react/internal";
 import NotFound from "@/pages/not-found";
 import { Layout } from "@/components/layout";
 import { ApiAuthSetup } from "@/components/api-auth-setup";
+import { ThemeProvider } from "@/components/theme-provider";
 
 import Dashboard from "@/pages/dashboard";
 import WorkoutHub from "@/pages/workout-hub";
@@ -201,14 +202,14 @@ function ClerkProviderWithRoutes() {
       }
       appearance={{
         variables: {
-          colorPrimary: "hsl(15 100% 55%)",
-          colorBackground: "hsl(220, 10%, 6%)",
-          colorNeutral: "hsl(220, 10%, 16%)",
-          colorInputForeground: "hsl(220, 10%, 98%)",
-          colorInput: "hsl(220, 10%, 16%)",
-          colorForeground: "hsl(220, 10%, 98%)",
-          colorMutedForeground: "hsl(220, 10%, 60%)",
-          fontFamily: "Geist, Inter, sans-serif",
+          colorPrimary: "hsl(var(--primary))",
+          colorBackground: "hsl(var(--background))",
+          colorNeutral: "hsl(var(--muted))",
+          colorInputForeground: "hsl(var(--foreground))",
+          colorInput: "hsl(var(--input))",
+          colorForeground: "hsl(var(--foreground))",
+          colorMutedForeground: "hsl(var(--muted-foreground))",
+          fontFamily: "var(--font-sans)",
         },
 
         elements: {
@@ -221,28 +222,30 @@ function ClerkProviderWithRoutes() {
     >
       <QueryClientProvider client={queryClient}>
         <ApiAuthSetup>
-        <TooltipProvider>
-          <Switch>
-            <Route path="/" component={HomeRedirect} />
+          <ThemeProvider>
+            <TooltipProvider>
+              <Switch>
+                <Route path="/" component={HomeRedirect} />
 
-            <Route
-              path="/sign-in/*?"
-              component={SignInPage}
-            />
+                <Route
+                  path="/sign-in/*?"
+                  component={SignInPage}
+                />
 
-            <Route
-              path="/sign-up/*?"
-              component={SignUpPage}
-            />
+                <Route
+                  path="/sign-up/*?"
+                  component={SignUpPage}
+                />
 
-            <Route
-              path="*"
-              component={ProtectedShell}
-            />
-          </Switch>
+                <Route
+                  path="*"
+                  component={ProtectedShell}
+                />
+              </Switch>
 
-          <Toaster />
-        </TooltipProvider>
+              <Toaster />
+            </TooltipProvider>
+          </ThemeProvider>
         </ApiAuthSetup>
       </QueryClientProvider>
     </ClerkProvider>

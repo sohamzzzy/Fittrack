@@ -9,6 +9,15 @@ export interface HealthStatus {
   status: string;
 }
 
+export type UserTheme = typeof UserTheme[keyof typeof UserTheme];
+
+
+export const UserTheme = {
+  light: 'light',
+  dark: 'dark',
+  system: 'system',
+} as const;
+
 export type UserRecentActivityItem = {
   id: number;
   content: string;
@@ -21,6 +30,7 @@ export interface User {
   username: string;
   /** @nullable */
   displayName?: string | null;
+  theme?: UserTheme;
   /** @nullable */
   bio?: string | null;
   /** @nullable */
@@ -36,9 +46,19 @@ export interface User {
   createdAt: string;
 }
 
+export type UserUpdateTheme = typeof UserUpdateTheme[keyof typeof UserUpdateTheme];
+
+
+export const UserUpdateTheme = {
+  light: 'light',
+  dark: 'dark',
+  system: 'system',
+} as const;
+
 export interface UserUpdate {
   username?: string;
   displayName?: string;
+  theme?: UserUpdateTheme;
   bio?: string;
   avatarUrl?: string;
 }

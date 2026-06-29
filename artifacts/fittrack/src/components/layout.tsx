@@ -3,6 +3,7 @@ import { Link, useLocation } from "wouter";
 import { Dumbbell, Utensils, LayoutDashboard, Search, UserCircle, Activity, Bell } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useGetUnreadCount } from "@workspace/api-client-react";
+import { ThemeToggle } from "@/components/theme-toggle";
 
 function NotificationBell() {
   const { data } = useGetUnreadCount();
@@ -34,11 +35,12 @@ export function Layout({ children }: { children: React.ReactNode }) {
   ];
 
   return (
-    <div className="min-h-screen bg-background text-foreground flex flex-col md:flex-row dark">
+    <div className="min-h-screen bg-background text-foreground flex flex-col md:flex-row">
       {/* Mobile Top Bar */}
       <header className="md:hidden sticky top-0 z-40 bg-background/80 backdrop-blur-md border-b border-border p-4 flex items-center justify-between">
         <h1 className="text-xl font-bold italic tracking-tight text-primary">FITTRACK</h1>
         <div className="flex items-center gap-1">
+          <ThemeToggle />
           <NotificationBell />
           <Link href="/search" aria-label="Search for users">
             <div className="p-2 rounded-full text-muted-foreground hover:bg-white/5 hover:text-foreground">
@@ -52,7 +54,10 @@ export function Layout({ children }: { children: React.ReactNode }) {
       <aside className="hidden md:flex flex-col w-64 border-r border-border bg-card/50 h-screen sticky top-0 p-4">
         <div className="mb-8 px-4 flex items-center justify-between">
           <h1 className="text-2xl font-black italic tracking-tighter text-primary">FITTRACK</h1>
-          <NotificationBell />
+          <div className="flex items-center gap-1">
+            <ThemeToggle />
+            <NotificationBell />
+          </div>
         </div>
         <nav className="flex-1 space-y-2">
           {navItems.map((item) => {

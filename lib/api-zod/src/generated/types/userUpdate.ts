@@ -5,10 +5,12 @@
  * FitTrack API — fitness tracking, nutrition logging, and social features
  * OpenAPI spec version: 0.1.0
  */
+import type { UserUpdateTheme } from './userUpdateTheme';
 
 export interface UserUpdate {
   username?: string;
   displayName?: string;
+  theme?: UserUpdateTheme;
   bio?: string;
   avatarUrl?: string;
 }

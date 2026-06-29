@@ -91,12 +91,13 @@ meRouter.patch("/", requireAuth, async (req, res) => {
       return;
     }
 
-    const { username, displayName, bio, avatarUrl } = parsed.data;
+    const { username, displayName, bio, avatarUrl, theme } = parsed.data;
     const updateData: Partial<typeof usersTable.$inferInsert> = {};
     if (username !== undefined) updateData.username = username;
     if (displayName !== undefined) updateData.displayName = displayName;
     if (bio !== undefined) updateData.bio = bio;
     if (avatarUrl !== undefined) updateData.avatarUrl = avatarUrl;
+    if (theme !== undefined) updateData.theme = theme;
 
     if (Object.keys(updateData).length === 0) {
       res.status(400).json({ error: "No profile fields to update" });
