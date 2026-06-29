@@ -3,6 +3,8 @@ import { getSingleValue } from "../lib/getSingleValue";
 import { requireAuth, getAuthUser } from "../lib/auth";
 import { db, postsTable, postLikesTable, postCommentsTable, followsTable, blocksTable, mutesTable, usersTable, workoutsTable } from "@workspace/db";
 import { eq, and, count, inArray, sql, or } from "drizzle-orm";
+import { createNotification } from "./notifications";
+
 
 const router = Router();
 
@@ -155,7 +157,20 @@ router.post("/social/posts/:postId/like", requireAuth, async (req, res) => {
     const existing = await db.query.postLikesTable.findFirst({ where: and(eq(postLikesTable.postId, postId), eq(postLikesTable.userId, me.id)) });
     if (!existing) {
       await db.insert(postLikesTable).values({ postId, userId: me.id });
+      const post = await db.query.postsTable.findFirst({ where: eq(postsTable.id, postId) });
+      if (post && post.userId !== me.id) {
+        const actor = await db.query.usersTable.findFirst({ where: eq(usersTable.id, me.id) });
+        await createNotification({
+          recipientId: post.userId,
+          actorId: me.id,
+          type: "post_liked",
+          entityId: postId,
+          entityType: "post",
+          message: `${actor?.displayName ?? actor?.username ?? "Someone"} liked your post`,
+        });
+      }
     }
+
     const [likes] = await db.select({ c: count() }).from(postLikesTable).where(eq(postLikesTable.postId, postId));
     res.json({ liked: true, likesCount: Number(likes.c) });
   } catch (e) {
@@ -217,7 +232,20 @@ router.post("/social/posts/:postId/comments", requireAuth, async (req, res) => {
     if (!await canAccessPost(me.id, postId)) { res.status(404).json({ error: "Not found" }); return; }
     const { content } = req.body;
     const [c] = await db.insert(postCommentsTable).values({ postId, userId: me.id, content }).returning();
+    const post = await db.query.postsTable.findFirst({ where: eq(postsTable.id, postId) });
+    if (post && post.userId !== me.id) {
+      const actor = await db.query.usersTable.findFirst({ where: eq(usersTable.id, me.id) });
+      await createNotification({
+        recipientId: post.userId,
+        actorId: me.id,
+        type: "post_commented",
+        entityId: postId,
+        entityType: "post",
+        message: `${actor?.displayName ?? actor?.username ?? "Someone"} commented on your post`,
+      });
+    }
     res.status(201).json({ ...c, user: await formatUser(me.id, me.id) });
+
   } catch (e) {
     req.log.error(e);
     res.status(500).json({ error: "Internal server error" });
@@ -257,7 +285,17 @@ router.post("/social/follow/:userId", requireAuth, async (req, res) => {
     const existing = await db.query.followsTable.findFirst({ where: and(eq(followsTable.followerId, me.id), eq(followsTable.followingId, targetId)) });
     if (!existing) {
       await db.insert(followsTable).values({ followerId: me.id, followingId: targetId });
+      const actor = await db.query.usersTable.findFirst({ where: eq(usersTable.id, me.id) });
+      await createNotification({
+        recipientId: targetId,
+        actorId: me.id,
+        type: "new_follower",
+        entityId: me.id,
+        entityType: "user",
+        message: `${actor?.displayName ?? actor?.username ?? "Someone"} started following you`,
+      });
     }
+
     const [fl] = await db.select({ c: count() }).from(followsTable).where(eq(followsTable.followingId, targetId));
     res.json({ following: true, followersCount: Number(fl.c) });
   } catch (e) {

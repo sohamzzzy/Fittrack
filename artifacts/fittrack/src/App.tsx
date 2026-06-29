@@ -46,6 +46,7 @@ import UserFollowers from "@/pages/followers";
 import UserFollowing from "@/pages/following";
 import UserWorkouts from "@/pages/user-workouts";
 import Search from "@/pages/search";
+import Notifications from "@/pages/notifications";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -154,6 +155,8 @@ function AppShell() {
         <Route path="/profile/:id/workouts" component={UserWorkouts} />
 
         <Route path="/search" component={Search} />
+
+        <Route path="/notifications" component={Notifications} />
 
         <Route component={NotFound} />
       </Switch>

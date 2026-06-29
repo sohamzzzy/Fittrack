@@ -1,4 +1,4 @@
-import { pgTable, text, serial, timestamp, integer } from "drizzle-orm/pg-core";
+import { pgTable, text, serial, timestamp, integer, boolean } from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod/v4";
 import { usersTable } from "./users";
@@ -34,3 +34,34 @@ export type InsertPost = z.infer<typeof insertPostSchema>;
 export type Post = typeof postsTable.$inferSelect;
 export type PostLike = typeof postLikesTable.$inferSelect;
 export type PostComment = typeof postCommentsTable.$inferSelect;
+
+// ---------------------------------------------------------------------------
+// Notifications
+// ---------------------------------------------------------------------------
+
+export const NOTIFICATION_TYPES = [
+  "new_follower",
+  "post_liked",
+  "post_commented",
+  "mention",
+  "routine_shared",
+  "system",
+] as const;
+
+export type NotificationType = typeof NOTIFICATION_TYPES[number];
+
+export const notificationsTable = pgTable("notifications", {
+  id: serial("id").primaryKey(),
+  recipientId: integer("recipient_id").notNull().references(() => usersTable.id, { onDelete: "cascade" }),
+  actorId: integer("actor_id").references(() => usersTable.id, { onDelete: "set null" }),
+  type: text("type").notNull().$type<NotificationType>(),
+  entityId: integer("entity_id"),
+  entityType: text("entity_type"),
+  message: text("message").notNull(),
+  isRead: boolean("is_read").notNull().default(false),
+  createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+});
+
+export const insertNotificationSchema = createInsertSchema(notificationsTable).omit({ id: true, createdAt: true });
+export type InsertNotification = z.infer<typeof insertNotificationSchema>;
+export type Notification = typeof notificationsTable.$inferSelect;

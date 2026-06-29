@@ -1,7 +1,25 @@
 import React from "react";
 import { Link, useLocation } from "wouter";
-import { Dumbbell, Utensils, LayoutDashboard, Search, UserCircle, Activity } from "lucide-react";
+import { Dumbbell, Utensils, LayoutDashboard, Search, UserCircle, Activity, Bell } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useGetUnreadCount } from "@workspace/api-client-react";
+
+function NotificationBell() {
+  const { data } = useGetUnreadCount();
+  const count = data?.count ?? 0;
+  return (
+    <Link href="/notifications" aria-label="Notifications">
+      <div className="relative p-2 rounded-full text-muted-foreground hover:bg-white/5 hover:text-foreground transition-colors">
+        <Bell className="w-5 h-5" />
+        {count > 0 && (
+          <span className="absolute -top-0.5 -right-0.5 flex items-center justify-center min-w-[18px] h-[18px] px-1 text-[10px] font-bold rounded-full bg-primary text-primary-foreground shadow-[0_0_8px] shadow-primary/60">
+            {count > 99 ? "99+" : count}
+          </span>
+        )}
+      </div>
+    </Link>
+  );
+}
 
 export function Layout({ children }: { children: React.ReactNode }) {
   const [location] = useLocation();
@@ -17,20 +35,24 @@ export function Layout({ children }: { children: React.ReactNode }) {
 
   return (
     <div className="min-h-screen bg-background text-foreground flex flex-col md:flex-row dark">
-      {/* Mobile Top Bar (Optional, can be hidden on desktop) */}
+      {/* Mobile Top Bar */}
       <header className="md:hidden sticky top-0 z-40 bg-background/80 backdrop-blur-md border-b border-border p-4 flex items-center justify-between">
         <h1 className="text-xl font-bold italic tracking-tight text-primary">FITTRACK</h1>
-        <Link href="/search" aria-label="Search for users">
-          <div className="p-2 rounded-full text-muted-foreground hover:bg-white/5 hover:text-foreground">
-            <Search className="w-5 h-5" />
-          </div>
-        </Link>
+        <div className="flex items-center gap-1">
+          <NotificationBell />
+          <Link href="/search" aria-label="Search for users">
+            <div className="p-2 rounded-full text-muted-foreground hover:bg-white/5 hover:text-foreground">
+              <Search className="w-5 h-5" />
+            </div>
+          </Link>
+        </div>
       </header>
 
       {/* Desktop Sidebar */}
       <aside className="hidden md:flex flex-col w-64 border-r border-border bg-card/50 h-screen sticky top-0 p-4">
-        <div className="mb-8 px-4">
+        <div className="mb-8 px-4 flex items-center justify-between">
           <h1 className="text-2xl font-black italic tracking-tighter text-primary">FITTRACK</h1>
+          <NotificationBell />
         </div>
         <nav className="flex-1 space-y-2">
           {navItems.map((item) => {
