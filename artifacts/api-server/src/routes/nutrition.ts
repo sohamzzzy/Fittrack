@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { getSingleValue } from "../lib/getSingleValue";
 import { requireAuth, getAuthUser } from "../lib/auth";
-import { db, foodItemsTable, foodLogsTable, nutritionGoalsTable, waterIntakeTable } from "@workspace/db";
+import { db, foodItemsTable, foodLogsTable, nutritionGoalsTable, waterIntakeTable, supplementsTable, supplementLogsTable } from "@workspace/db";
 import { eq, and, or, isNull, count, sql } from "drizzle-orm";
 
 const router = Router();
@@ -348,6 +348,93 @@ router.delete("/nutrition/water/:entryId", requireAuth, async (req, res) => {
     }
     const entryId = parseInt(entryIdParam);
     await db.delete(waterIntakeTable).where(and(eq(waterIntakeTable.id, entryId), eq(waterIntakeTable.userId, user.id)));
+    res.status(204).send();
+  } catch (e) {
+    req.log.error(e);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+router.get("/nutrition/supplements", requireAuth, async (req, res) => {
+  try {
+    const user = await getAuthUser(req);
+    const date = getSingleValue(req.query.date);
+    if (!date) {
+      res.status(400).json({ error: "Missing date" });
+      return;
+    }
+    const supplements = await db.select().from(supplementsTable).where(eq(supplementsTable.userId, user.id)).orderBy(supplementsTable.displayOrder, supplementsTable.createdAt);
+    const logs = await db.select().from(supplementLogsTable).where(and(eq(supplementLogsTable.userId, user.id), eq(supplementLogsTable.date, date)));
+    
+    const loggedIds = new Set(logs.map(l => l.supplementId));
+    const result = supplements.map(s => ({ ...s, isTaken: loggedIds.has(s.id) }));
+    res.json(result);
+  } catch (e) {
+    req.log.error(e);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+router.post("/nutrition/supplements", requireAuth, async (req, res) => {
+  try {
+    const user = await getAuthUser(req);
+    const { name, dosage } = req.body;
+    const [supplement] = await db.insert(supplementsTable).values({ userId: user.id, name, dosage }).returning();
+    res.status(201).json(supplement);
+  } catch (e) {
+    req.log.error(e);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+router.patch("/nutrition/supplements/:id", requireAuth, async (req, res) => {
+  try {
+    const user = await getAuthUser(req);
+    const id = parseInt(getSingleValue(req.params.id) ?? "");
+    const { name, dosage, displayOrder } = req.body;
+    const [supplement] = await db.update(supplementsTable).set({ name, dosage, displayOrder }).where(and(eq(supplementsTable.id, id), eq(supplementsTable.userId, user.id))).returning();
+    if (!supplement) { res.status(404).json({ error: "Not found" }); return; }
+    res.json(supplement);
+  } catch (e) {
+    req.log.error(e);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+router.delete("/nutrition/supplements/:id", requireAuth, async (req, res) => {
+  try {
+    const user = await getAuthUser(req);
+    const id = parseInt(getSingleValue(req.params.id) ?? "");
+    await db.delete(supplementsTable).where(and(eq(supplementsTable.id, id), eq(supplementsTable.userId, user.id)));
+    res.status(204).send();
+  } catch (e) {
+    req.log.error(e);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+router.post("/nutrition/supplements/logs", requireAuth, async (req, res) => {
+  try {
+    const user = await getAuthUser(req);
+    const { supplementId, date } = req.body;
+    // ensure supplement exists and belongs to user
+    const exists = await db.query.supplementsTable.findFirst({ where: and(eq(supplementsTable.id, supplementId), eq(supplementsTable.userId, user.id)) });
+    if (!exists) { res.status(404).json({ error: "Supplement not found" }); return; }
+    
+    // insert if not exists
+    await db.insert(supplementLogsTable).values({ userId: user.id, supplementId, date }).onConflictDoNothing();
+    res.json({ success: true });
+  } catch (e) {
+    req.log.error(e);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+router.delete("/nutrition/supplements/logs", requireAuth, async (req, res) => {
+  try {
+    const user = await getAuthUser(req);
+    const { supplementId, date } = req.body;
+    await db.delete(supplementLogsTable).where(and(eq(supplementLogsTable.userId, user.id), eq(supplementLogsTable.supplementId, supplementId), eq(supplementLogsTable.date, date)));
     res.status(204).send();
   } catch (e) {
     req.log.error(e);

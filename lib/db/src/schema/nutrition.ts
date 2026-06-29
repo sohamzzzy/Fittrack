@@ -51,6 +51,23 @@ export const waterIntakeTable = pgTable("water_intake", {
   loggedAt: timestamp("logged_at", { withTimezone: true }).notNull().defaultNow(),
 });
 
+export const supplementsTable = pgTable("supplements", {
+  id: serial("id").primaryKey(),
+  userId: integer("user_id").notNull().references(() => usersTable.id, { onDelete: "cascade" }),
+  name: text("name").notNull(),
+  dosage: text("dosage"),
+  displayOrder: integer("display_order").notNull().default(0),
+  createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+});
+
+export const supplementLogsTable = pgTable("supplement_logs", {
+  id: serial("id").primaryKey(),
+  userId: integer("user_id").notNull().references(() => usersTable.id, { onDelete: "cascade" }),
+  supplementId: integer("supplement_id").notNull().references(() => supplementsTable.id, { onDelete: "cascade" }),
+  date: date("date").notNull(),
+  loggedAt: timestamp("logged_at", { withTimezone: true }).notNull().defaultNow(),
+});
+
 export const insertFoodItemSchema = createInsertSchema(foodItemsTable).omit({ id: true, createdAt: true });
 export const insertFoodLogSchema = createInsertSchema(foodLogsTable).omit({ id: true, loggedAt: true });
 
@@ -59,3 +76,5 @@ export type FoodItem = typeof foodItemsTable.$inferSelect;
 export type FoodLog = typeof foodLogsTable.$inferSelect;
 export type NutritionGoals = typeof nutritionGoalsTable.$inferSelect;
 export type WaterIntake = typeof waterIntakeTable.$inferSelect;
+export type Supplement = typeof supplementsTable.$inferSelect;
+export type SupplementLog = typeof supplementLogsTable.$inferSelect;

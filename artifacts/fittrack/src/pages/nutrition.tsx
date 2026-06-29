@@ -13,6 +13,7 @@ import { Plus, Flame, Trash2, Settings, TrendingUp } from "lucide-react";
 import { motion } from "framer-motion";
 import { format } from "date-fns";
 import { WaterIntake } from "@/components/nutrition/water-intake";
+import { DailySupplements } from "@/components/nutrition/daily-supplements";
 
 const MEAL_TYPES = ["breakfast", "lunch", "dinner", "snack"] as const;
 const MEAL_LABELS: Record<string, string> = { breakfast: "Breakfast", lunch: "Lunch", dinner: "Dinner", snack: "Snacks" };
@@ -54,7 +55,7 @@ export default function Nutrition() {
   const calGoal = summary?.goalCalories ?? 2000;
   const calPct = calGoal > 0 ? Math.min((summary?.totalCalories ?? 0) / calGoal, 1) : 0;
   const calLeft = Math.max(0, calGoal - (summary?.totalCalories ?? 0));
-  const rMain = 64;
+  const rMain = 76;
   const circMain = 2 * Math.PI * rMain;
 
   const byMeal = MEAL_TYPES.reduce<Record<string, any[]>>((acc, mt) => {
@@ -80,31 +81,36 @@ export default function Nutrition() {
         </div>
       </div>
 
-      {/* Water Intake Dashboard */}
-      <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}>
-        <WaterIntake date={today} />
+      {/* Top Row: Water Intake & Supplements */}
+      <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="h-64">
+          <WaterIntake date={today} />
+        </div>
+        <div className="h-64">
+          <DailySupplements date={today} />
+        </div>
       </motion.div>
 
       {/* Calories + Macro Rings */}
       <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}>
-        <Card className="bg-card border-card-border">
-          <CardContent className="pt-6 pb-6">
+        <Card className="bg-card border-card-border shadow-sm">
+          <CardContent className="pt-8 pb-8">
             {isLoading ? (
-              <div className="flex justify-center gap-6"><Skeleton className="w-36 h-36 rounded-full" />{[0,1,2].map(i => <Skeleton key={i} className="w-20 h-20 rounded-full" />)}</div>
+              <div className="flex justify-center gap-10"><Skeleton className="w-44 h-44 rounded-full" />{[0,1,2].map(i => <Skeleton key={i} className="w-20 h-20 rounded-full" />)}</div>
             ) : (
-              <div className="flex items-center justify-around flex-wrap gap-4">
-                <div className="relative w-36 h-36">
-                  <svg className="w-full h-full -rotate-90" viewBox="0 0 144 144">
-                    <circle cx="72" cy="72" r={rMain} fill="none" stroke="hsl(220 10% 10%)" strokeWidth="16" />
-                    <circle cx="72" cy="72" r={rMain} fill="none" stroke="hsl(15 100% 55%)" strokeWidth="16" strokeDasharray={`${calPct * circMain} ${circMain}`} strokeLinecap="round" className="transition-all duration-700" />
+              <div className="flex items-center justify-around flex-wrap gap-8">
+                <div className="relative w-44 h-44">
+                  <svg className="w-full h-full -rotate-90" viewBox="0 0 168 168">
+                    <circle cx="84" cy="84" r={rMain} fill="none" stroke="hsl(220 10% 10%)" strokeWidth="16" />
+                    <circle cx="84" cy="84" r={rMain} fill="none" stroke="hsl(15 100% 55%)" strokeWidth="16" strokeDasharray={`${calPct * circMain} ${circMain}`} strokeLinecap="round" className="transition-all duration-700" />
                   </svg>
                   <div className="absolute inset-0 flex flex-col items-center justify-center">
-                    <Flame className="w-5 h-5 text-primary mb-0.5" />
-                    <span className="text-2xl font-black">{Math.round(calLeft)}</span>
-                    <span className="text-[10px] text-muted-foreground">kcal left</span>
+                    <Flame className="w-6 h-6 text-primary mb-1" />
+                    <span className="text-3xl font-black">{Math.round(calLeft)}</span>
+                    <span className="text-xs text-muted-foreground font-semibold uppercase tracking-wider">kcal left</span>
                   </div>
                 </div>
-                <div className="flex gap-4">
+                <div className="flex gap-8">
                   <MacroRing value={summary?.totalProtein ?? 0} goal={summary?.goalProtein ?? 150} color={MACRO_COLORS.protein} label="Protein" />
                   <MacroRing value={summary?.totalCarbs ?? 0} goal={summary?.goalCarbs ?? 200} color={MACRO_COLORS.carbs} label="Carbs" />
                   <MacroRing value={summary?.totalFats ?? 0} goal={summary?.goalFats ?? 65} color={MACRO_COLORS.fats} label="Fats" />

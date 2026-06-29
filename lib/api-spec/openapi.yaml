@@ -1172,6 +1172,111 @@ paths:
         "204":
           description: Entry deleted
 
+  /nutrition/supplements:
+    get:
+      operationId: getSupplements
+      tags: [nutrition]
+      summary: Get user supplements with daily log status
+      parameters:
+        - name: date
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date
+      responses:
+        "200":
+          description: Supplements list
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/SupplementWithStatus"
+    post:
+      operationId: addSupplement
+      tags: [nutrition]
+      summary: Add a new supplement
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SupplementInput"
+      responses:
+        "201":
+          description: Created supplement
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Supplement"
+
+  /nutrition/supplements/{id}:
+    patch:
+      operationId: updateSupplement
+      tags: [nutrition]
+      summary: Update a supplement
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SupplementUpdate"
+      responses:
+        "200":
+          description: Updated supplement
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Supplement"
+    delete:
+      operationId: deleteSupplement
+      tags: [nutrition]
+      summary: Delete a supplement
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "204":
+          description: Deleted
+
+  /nutrition/supplements/logs:
+    post:
+      operationId: logSupplement
+      tags: [nutrition]
+      summary: Mark a supplement as taken
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SupplementLogInput"
+      responses:
+        "200":
+          description: Logged
+    delete:
+      operationId: unlogSupplement
+      tags: [nutrition]
+      summary: Unmark a supplement as taken
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SupplementLogInput"
+      responses:
+        "204":
+          description: Unlogged
+
 components:
   schemas:
     HealthStatus:
@@ -1866,6 +1971,66 @@ components:
       properties:
         amountMl:
           type: integer
+
+    Supplement:
+      type: object
+      required: [id, name, displayOrder, createdAt]
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        dosage:
+          type: string
+        displayOrder:
+          type: integer
+        createdAt:
+          type: string
+          format: date-time
+
+    SupplementWithStatus:
+      type: object
+      required: [id, name, displayOrder, isTaken]
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        dosage:
+          type: string
+        displayOrder:
+          type: integer
+        isTaken:
+          type: boolean
+
+    SupplementInput:
+      type: object
+      required: [name]
+      properties:
+        name:
+          type: string
+        dosage:
+          type: string
+
+    SupplementUpdate:
+      type: object
+      properties:
+        name:
+          type: string
+        dosage:
+          type: string
+        displayOrder:
+          type: integer
+
+    SupplementLogInput:
+      type: object
+      required: [supplementId, date]
+      properties:
+        supplementId:
+          type: integer
+        date:
+          type: string
+          format: date
 
     # ─── Social ────────────────────────────────────────────────────────────────
     Post:

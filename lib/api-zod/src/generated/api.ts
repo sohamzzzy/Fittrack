@@ -1260,3 +1260,77 @@ export const DeleteWaterEntryParams = zod.object({
 })
 
 
+/**
+ * @summary Get user supplements with daily log status
+ */
+export const GetSupplementsQueryParams = zod.object({
+  "date": zod.date()
+})
+
+export const GetSupplementsResponseItem = zod.object({
+  "id": zod.number(),
+  "name": zod.string(),
+  "dosage": zod.string().optional(),
+  "displayOrder": zod.number(),
+  "isTaken": zod.boolean()
+})
+export const GetSupplementsResponse = zod.array(GetSupplementsResponseItem)
+
+
+/**
+ * @summary Add a new supplement
+ */
+export const AddSupplementBody = zod.object({
+  "name": zod.string(),
+  "dosage": zod.string().optional()
+})
+
+
+/**
+ * @summary Update a supplement
+ */
+export const UpdateSupplementParams = zod.object({
+  "id": zod.coerce.number()
+})
+
+export const UpdateSupplementBody = zod.object({
+  "name": zod.string().optional(),
+  "dosage": zod.string().optional(),
+  "displayOrder": zod.number().optional()
+})
+
+export const UpdateSupplementResponse = zod.object({
+  "id": zod.number(),
+  "name": zod.string(),
+  "dosage": zod.string().optional(),
+  "displayOrder": zod.number(),
+  "createdAt": zod.coerce.date()
+})
+
+
+/**
+ * @summary Delete a supplement
+ */
+export const DeleteSupplementParams = zod.object({
+  "id": zod.coerce.number()
+})
+
+
+/**
+ * @summary Mark a supplement as taken
+ */
+export const LogSupplementBody = zod.object({
+  "supplementId": zod.number(),
+  "date": zod.coerce.date()
+})
+
+
+/**
+ * @summary Unmark a supplement as taken
+ */
+export const UnlogSupplementBody = zod.object({
+  "supplementId": zod.number(),
+  "date": zod.coerce.date()
+})
+
+

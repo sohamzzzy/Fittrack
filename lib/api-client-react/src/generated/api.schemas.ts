@@ -448,6 +448,38 @@ export interface WaterEntryUpdate {
   amountMl: number;
 }
 
+export interface Supplement {
+  id: number;
+  name: string;
+  dosage?: string;
+  displayOrder: number;
+  createdAt: string;
+}
+
+export interface SupplementWithStatus {
+  id: number;
+  name: string;
+  dosage?: string;
+  displayOrder: number;
+  isTaken: boolean;
+}
+
+export interface SupplementInput {
+  name: string;
+  dosage?: string;
+}
+
+export interface SupplementUpdate {
+  name?: string;
+  dosage?: string;
+  displayOrder?: number;
+}
+
+export interface SupplementLogInput {
+  supplementId: number;
+  date: string;
+}
+
 export interface Post {
   id: number;
   userId: number;
@@ -528,6 +560,10 @@ offset?: number;
 };
 
 export type GetWaterIntakeParams = {
+date: string;
+};
+
+export type GetSupplementsParams = {
 date: string;
 };
 

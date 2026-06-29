@@ -35,6 +35,7 @@ import type {
   FoodLogUpdate,
   GetNutritionSummaryParams,
   GetSocialFeedParams,
+  GetSupplementsParams,
   GetWaterIntakeParams,
   HealthStatus,
   LikeResult,
@@ -53,6 +54,11 @@ import type {
   SearchUsersParams,
   SetInput,
   SetUpdate,
+  Supplement,
+  SupplementInput,
+  SupplementLogInput,
+  SupplementUpdate,
+  SupplementWithStatus,
   User,
   UserStats,
   UserUpdate,
@@ -4532,5 +4538,440 @@ export const useDeleteWaterEntry = <TError = ErrorType<unknown>,
         TContext
       > => {
       return useMutation(getDeleteWaterEntryMutationOptions(options));
+    }
+
+export const getGetSupplementsUrl = (params: GetSupplementsParams,) => {
+  const normalizedParams = new URLSearchParams();
+
+  Object.entries(params || {}).forEach(([key, value]) => {
+
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? 'null' : String(value))
+    }
+  });
+
+  const stringifiedParams = normalizedParams.toString();
+
+  return stringifiedParams.length > 0 ? `/api/nutrition/supplements?${stringifiedParams}` : `/api/nutrition/supplements`
+}
+
+/**
+ * @summary Get user supplements with daily log status
+ */
+export const getSupplements = async (params: GetSupplementsParams, options?: RequestInit): Promise<SupplementWithStatus[]> => {
+
+  return customFetch<SupplementWithStatus[]>(getGetSupplementsUrl(params),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+
+
+export const getGetSupplementsQueryKey = (params?: GetSupplementsParams,) => {
+    return [
+    `/api/nutrition/supplements`, ...(params ? [params] : [])
+    ] as const;
+    }
+
+
+export const getGetSupplementsQueryOptions = <TData = Awaited<ReturnType<typeof getSupplements>>, TError = ErrorType<unknown>>(params: GetSupplementsParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getSupplements>>, TError, TData>, request?: SecondParameter<typeof customFetch>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetSupplementsQueryKey(params);
+
+
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getSupplements>>> = ({ signal }) => getSupplements(params, { signal, ...requestOptions });
+
+
+
+
+
+   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getSupplements>>, TError, TData> & { queryKey: QueryKey }
+}
+
+export type GetSupplementsQueryResult = NonNullable<Awaited<ReturnType<typeof getSupplements>>>
+export type GetSupplementsQueryError = ErrorType<unknown>
+
+
+/**
+ * @summary Get user supplements with daily log status
+ */
+
+export function useGetSupplements<TData = Awaited<ReturnType<typeof getSupplements>>, TError = ErrorType<unknown>>(
+ params: GetSupplementsParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getSupplements>>, TError, TData>, request?: SecondParameter<typeof customFetch>}
+
+ ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } {
+
+  const queryOptions = getGetSupplementsQueryOptions(params,options)
+
+  const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
+
+  return { ...query, queryKey: queryOptions.queryKey };
+}
+
+
+
+
+
+
+
+export const getAddSupplementUrl = () => {
+
+
+
+
+  return `/api/nutrition/supplements`
+}
+
+/**
+ * @summary Add a new supplement
+ */
+export const addSupplement = async (supplementInput: SupplementInput, options?: RequestInit): Promise<Supplement> => {
+
+  return customFetch<Supplement>(getAddSupplementUrl(),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(supplementInput)
+  }
+);}
+
+
+
+
+export const getAddSupplementMutationOptions = <TError = ErrorType<unknown>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof addSupplement>>, TError,{data: BodyType<SupplementInput>}, TContext>, request?: SecondParameter<typeof customFetch>}
+): UseMutationOptions<Awaited<ReturnType<typeof addSupplement>>, TError,{data: BodyType<SupplementInput>}, TContext> => {
+
+const mutationKey = ['addSupplement'];
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
+
+
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof addSupplement>>, {data: BodyType<SupplementInput>}> = (props) => {
+          const {data} = props ?? {};
+
+          return  addSupplement(data,requestOptions)
+        }
+
+
+
+
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type AddSupplementMutationResult = NonNullable<Awaited<ReturnType<typeof addSupplement>>>
+    export type AddSupplementMutationBody = BodyType<SupplementInput>
+    export type AddSupplementMutationError = ErrorType<unknown>
+
+    /**
+ * @summary Add a new supplement
+ */
+export const useAddSupplement = <TError = ErrorType<unknown>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof addSupplement>>, TError,{data: BodyType<SupplementInput>}, TContext>, request?: SecondParameter<typeof customFetch>}
+ ): UseMutationResult<
+        Awaited<ReturnType<typeof addSupplement>>,
+        TError,
+        {data: BodyType<SupplementInput>},
+        TContext
+      > => {
+      return useMutation(getAddSupplementMutationOptions(options));
+    }
+
+export const getUpdateSupplementUrl = (id: number,) => {
+
+
+
+
+  return `/api/nutrition/supplements/${id}`
+}
+
+/**
+ * @summary Update a supplement
+ */
+export const updateSupplement = async (id: number,
+    supplementUpdate: SupplementUpdate, options?: RequestInit): Promise<Supplement> => {
+
+  return customFetch<Supplement>(getUpdateSupplementUrl(id),
+  {
+    ...options,
+    method: 'PATCH',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(supplementUpdate)
+  }
+);}
+
+
+
+
+export const getUpdateSupplementMutationOptions = <TError = ErrorType<unknown>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof updateSupplement>>, TError,{id: number;data: BodyType<SupplementUpdate>}, TContext>, request?: SecondParameter<typeof customFetch>}
+): UseMutationOptions<Awaited<ReturnType<typeof updateSupplement>>, TError,{id: number;data: BodyType<SupplementUpdate>}, TContext> => {
+
+const mutationKey = ['updateSupplement'];
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
+
+
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof updateSupplement>>, {id: number;data: BodyType<SupplementUpdate>}> = (props) => {
+          const {id,data} = props ?? {};
+
+          return  updateSupplement(id,data,requestOptions)
+        }
+
+
+
+
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type UpdateSupplementMutationResult = NonNullable<Awaited<ReturnType<typeof updateSupplement>>>
+    export type UpdateSupplementMutationBody = BodyType<SupplementUpdate>
+    export type UpdateSupplementMutationError = ErrorType<unknown>
+
+    /**
+ * @summary Update a supplement
+ */
+export const useUpdateSupplement = <TError = ErrorType<unknown>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof updateSupplement>>, TError,{id: number;data: BodyType<SupplementUpdate>}, TContext>, request?: SecondParameter<typeof customFetch>}
+ ): UseMutationResult<
+        Awaited<ReturnType<typeof updateSupplement>>,
+        TError,
+        {id: number;data: BodyType<SupplementUpdate>},
+        TContext
+      > => {
+      return useMutation(getUpdateSupplementMutationOptions(options));
+    }
+
+export const getDeleteSupplementUrl = (id: number,) => {
+
+
+
+
+  return `/api/nutrition/supplements/${id}`
+}
+
+/**
+ * @summary Delete a supplement
+ */
+export const deleteSupplement = async (id: number, options?: RequestInit): Promise<void> => {
+
+  return customFetch<void>(getDeleteSupplementUrl(id),
+  {
+    ...options,
+    method: 'DELETE'
+
+
+  }
+);}
+
+
+
+
+export const getDeleteSupplementMutationOptions = <TError = ErrorType<unknown>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteSupplement>>, TError,{id: number}, TContext>, request?: SecondParameter<typeof customFetch>}
+): UseMutationOptions<Awaited<ReturnType<typeof deleteSupplement>>, TError,{id: number}, TContext> => {
+
+const mutationKey = ['deleteSupplement'];
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
+
+
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof deleteSupplement>>, {id: number}> = (props) => {
+          const {id} = props ?? {};
+
+          return  deleteSupplement(id,requestOptions)
+        }
+
+
+
+
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type DeleteSupplementMutationResult = NonNullable<Awaited<ReturnType<typeof deleteSupplement>>>
+
+    export type DeleteSupplementMutationError = ErrorType<unknown>
+
+    /**
+ * @summary Delete a supplement
+ */
+export const useDeleteSupplement = <TError = ErrorType<unknown>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteSupplement>>, TError,{id: number}, TContext>, request?: SecondParameter<typeof customFetch>}
+ ): UseMutationResult<
+        Awaited<ReturnType<typeof deleteSupplement>>,
+        TError,
+        {id: number},
+        TContext
+      > => {
+      return useMutation(getDeleteSupplementMutationOptions(options));
+    }
+
+export const getLogSupplementUrl = () => {
+
+
+
+
+  return `/api/nutrition/supplements/logs`
+}
+
+/**
+ * @summary Mark a supplement as taken
+ */
+export const logSupplement = async (supplementLogInput: SupplementLogInput, options?: RequestInit): Promise<void> => {
+
+  return customFetch<void>(getLogSupplementUrl(),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(supplementLogInput)
+  }
+);}
+
+
+
+
+export const getLogSupplementMutationOptions = <TError = ErrorType<unknown>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof logSupplement>>, TError,{data: BodyType<SupplementLogInput>}, TContext>, request?: SecondParameter<typeof customFetch>}
+): UseMutationOptions<Awaited<ReturnType<typeof logSupplement>>, TError,{data: BodyType<SupplementLogInput>}, TContext> => {
+
+const mutationKey = ['logSupplement'];
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
+
+
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof logSupplement>>, {data: BodyType<SupplementLogInput>}> = (props) => {
+          const {data} = props ?? {};
+
+          return  logSupplement(data,requestOptions)
+        }
+
+
+
+
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type LogSupplementMutationResult = NonNullable<Awaited<ReturnType<typeof logSupplement>>>
+    export type LogSupplementMutationBody = BodyType<SupplementLogInput>
+    export type LogSupplementMutationError = ErrorType<unknown>
+
+    /**
+ * @summary Mark a supplement as taken
+ */
+export const useLogSupplement = <TError = ErrorType<unknown>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof logSupplement>>, TError,{data: BodyType<SupplementLogInput>}, TContext>, request?: SecondParameter<typeof customFetch>}
+ ): UseMutationResult<
+        Awaited<ReturnType<typeof logSupplement>>,
+        TError,
+        {data: BodyType<SupplementLogInput>},
+        TContext
+      > => {
+      return useMutation(getLogSupplementMutationOptions(options));
+    }
+
+export const getUnlogSupplementUrl = () => {
+
+
+
+
+  return `/api/nutrition/supplements/logs`
+}
+
+/**
+ * @summary Unmark a supplement as taken
+ */
+export const unlogSupplement = async (supplementLogInput: SupplementLogInput, options?: RequestInit): Promise<void> => {
+
+  return customFetch<void>(getUnlogSupplementUrl(),
+  {
+    ...options,
+    method: 'DELETE',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(supplementLogInput)
+  }
+);}
+
+
+
+
+export const getUnlogSupplementMutationOptions = <TError = ErrorType<unknown>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof unlogSupplement>>, TError,{data: BodyType<SupplementLogInput>}, TContext>, request?: SecondParameter<typeof customFetch>}
+): UseMutationOptions<Awaited<ReturnType<typeof unlogSupplement>>, TError,{data: BodyType<SupplementLogInput>}, TContext> => {
+
+const mutationKey = ['unlogSupplement'];
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
+
+
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof unlogSupplement>>, {data: BodyType<SupplementLogInput>}> = (props) => {
+          const {data} = props ?? {};
+
+          return  unlogSupplement(data,requestOptions)
+        }
+
+
+
+
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type UnlogSupplementMutationResult = NonNullable<Awaited<ReturnType<typeof unlogSupplement>>>
+    export type UnlogSupplementMutationBody = BodyType<SupplementLogInput>
+    export type UnlogSupplementMutationError = ErrorType<unknown>
+
+    /**
+ * @summary Unmark a supplement as taken
+ */
+export const useUnlogSupplement = <TError = ErrorType<unknown>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof unlogSupplement>>, TError,{data: BodyType<SupplementLogInput>}, TContext>, request?: SecondParameter<typeof customFetch>}
+ ): UseMutationResult<
+        Awaited<ReturnType<typeof unlogSupplement>>,
+        TError,
+        {data: BodyType<SupplementLogInput>},
+        TContext
+      > => {
+      return useMutation(getUnlogSupplementMutationOptions(options));
     }
 
