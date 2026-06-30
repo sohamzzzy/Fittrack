@@ -1,0 +1,6770 @@
+[
+  {
+    "name": "Butter Chicken",
+    "calories": "400",
+    "protein": "25",
+    "carbs": "12",
+    "fats": "28",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Chicken Tikka Masala",
+    "calories": "380",
+    "protein": "28",
+    "carbs": "14",
+    "fats": "24",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Palak Paneer",
+    "calories": "320",
+    "protein": "15",
+    "carbs": "10",
+    "fats": "25",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Paneer Butter Masala",
+    "calories": "420",
+    "protein": "16",
+    "carbs": "15",
+    "fats": "32",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Chana Masala",
+    "calories": "260",
+    "protein": "10",
+    "carbs": "35",
+    "fats": "8",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Rajma Chawal",
+    "calories": "350",
+    "protein": "12",
+    "carbs": "60",
+    "fats": "6",
+    "servingSize": "1",
+    "servingUnit": "plate"
+  },
+  {
+    "name": "Chole Bhature",
+    "calories": "550",
+    "protein": "14",
+    "carbs": "65",
+    "fats": "26",
+    "servingSize": "2",
+    "servingUnit": "bhature + 1 cup chole"
+  },
+  {
+    "name": "Dal Makhani",
+    "calories": "310",
+    "protein": "11",
+    "carbs": "30",
+    "fats": "16",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Dal Tadka",
+    "calories": "220",
+    "protein": "12",
+    "carbs": "30",
+    "fats": "6",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Aloo Gobi",
+    "calories": "150",
+    "protein": "4",
+    "carbs": "22",
+    "fats": "6",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Bhindi Masala",
+    "calories": "120",
+    "protein": "3",
+    "carbs": "12",
+    "fats": "7",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Malai Kofta",
+    "calories": "450",
+    "protein": "10",
+    "carbs": "35",
+    "fats": "30",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Naan (Plain)",
+    "calories": "260",
+    "protein": "8",
+    "carbs": "45",
+    "fats": "4",
+    "servingSize": "1",
+    "servingUnit": "piece"
+  },
+  {
+    "name": "Garlic Naan",
+    "calories": "290",
+    "protein": "8",
+    "carbs": "46",
+    "fats": "8",
+    "servingSize": "1",
+    "servingUnit": "piece"
+  },
+  {
+    "name": "Butter Naan",
+    "calories": "310",
+    "protein": "8",
+    "carbs": "45",
+    "fats": "10",
+    "servingSize": "1",
+    "servingUnit": "piece"
+  },
+  {
+    "name": "Tandoori Roti",
+    "calories": "110",
+    "protein": "4",
+    "carbs": "22",
+    "fats": "1",
+    "servingSize": "1",
+    "servingUnit": "piece"
+  },
+  {
+    "name": "Aloo Paratha (with butter)",
+    "calories": "320",
+    "protein": "6",
+    "carbs": "42",
+    "fats": "14",
+    "servingSize": "1",
+    "servingUnit": "paratha"
+  },
+  {
+    "name": "Paneer Paratha",
+    "calories": "340",
+    "protein": "12",
+    "carbs": "38",
+    "fats": "16",
+    "servingSize": "1",
+    "servingUnit": "paratha"
+  },
+  {
+    "name": "Gobi Paratha",
+    "calories": "280",
+    "protein": "6",
+    "carbs": "40",
+    "fats": "10",
+    "servingSize": "1",
+    "servingUnit": "paratha"
+  },
+  {
+    "name": "Puri",
+    "calories": "140",
+    "protein": "2",
+    "carbs": "15",
+    "fats": "8",
+    "servingSize": "1",
+    "servingUnit": "piece"
+  },
+  {
+    "name": "Masala Dosa",
+    "calories": "415",
+    "protein": "9",
+    "carbs": "65",
+    "fats": "13",
+    "servingSize": "1",
+    "servingUnit": "dosa"
+  },
+  {
+    "name": "Plain Dosa",
+    "calories": "160",
+    "protein": "4",
+    "carbs": "28",
+    "fats": "4",
+    "servingSize": "1",
+    "servingUnit": "dosa"
+  },
+  {
+    "name": "Idli",
+    "calories": "40",
+    "protein": "1.5",
+    "carbs": "8",
+    "fats": "0.2",
+    "servingSize": "1",
+    "servingUnit": "piece"
+  },
+  {
+    "name": "Medu Vada",
+    "calories": "97",
+    "protein": "3",
+    "carbs": "12",
+    "fats": "4.5",
+    "servingSize": "1",
+    "servingUnit": "piece"
+  },
+  {
+    "name": "Sambar",
+    "calories": "130",
+    "protein": "6",
+    "carbs": "20",
+    "fats": "4",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Coconut Chutney",
+    "calories": "70",
+    "protein": "1",
+    "carbs": "3",
+    "fats": "6",
+    "servingSize": "2",
+    "servingUnit": "tbsp"
+  },
+  {
+    "name": "Upma",
+    "calories": "220",
+    "protein": "6",
+    "carbs": "35",
+    "fats": "6",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Uttapam",
+    "calories": "180",
+    "protein": "5",
+    "carbs": "30",
+    "fats": "4",
+    "servingSize": "1",
+    "servingUnit": "piece"
+  },
+  {
+    "name": "Lemon Rice",
+    "calories": "250",
+    "protein": "4",
+    "carbs": "40",
+    "fats": "8",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Curd Rice",
+    "calories": "210",
+    "protein": "6",
+    "carbs": "32",
+    "fats": "6",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Bisi Bele Bath",
+    "calories": "310",
+    "protein": "9",
+    "carbs": "50",
+    "fats": "9",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Appam",
+    "calories": "110",
+    "protein": "2",
+    "carbs": "22",
+    "fats": "1",
+    "servingSize": "1",
+    "servingUnit": "piece"
+  },
+  {
+    "name": "Misal Pav",
+    "calories": "450",
+    "protein": "14",
+    "carbs": "55",
+    "fats": "20",
+    "servingSize": "1",
+    "servingUnit": "plate"
+  },
+  {
+    "name": "Vada Pav",
+    "calories": "300",
+    "protein": "6",
+    "carbs": "42",
+    "fats": "12",
+    "servingSize": "1",
+    "servingUnit": "piece"
+  },
+  {
+    "name": "Poha",
+    "calories": "260",
+    "protein": "5",
+    "carbs": "45",
+    "fats": "6",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Sabudana Khichdi",
+    "calories": "350",
+    "protein": "3",
+    "carbs": "60",
+    "fats": "12",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Pav Bhaji",
+    "calories": "400",
+    "protein": "8",
+    "carbs": "52",
+    "fats": "18",
+    "servingSize": "1",
+    "servingUnit": "plate"
+  },
+  {
+    "name": "Puran Poli",
+    "calories": "290",
+    "protein": "7",
+    "carbs": "50",
+    "fats": "8",
+    "servingSize": "1",
+    "servingUnit": "piece"
+  },
+  {
+    "name": "Dhokla",
+    "calories": "160",
+    "protein": "6",
+    "carbs": "22",
+    "fats": "4",
+    "servingSize": "3",
+    "servingUnit": "pieces"
+  },
+  {
+    "name": "Khandvi",
+    "calories": "210",
+    "protein": "8",
+    "carbs": "26",
+    "fats": "9",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Thepla",
+    "calories": "110",
+    "protein": "3",
+    "carbs": "16",
+    "fats": "4",
+    "servingSize": "1",
+    "servingUnit": "piece"
+  },
+  {
+    "name": "Undhiyu",
+    "calories": "240",
+    "protein": "6",
+    "carbs": "28",
+    "fats": "12",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Shrikhand",
+    "calories": "280",
+    "protein": "8",
+    "carbs": "40",
+    "fats": "10",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Fish Curry (Rohu)",
+    "calories": "220",
+    "protein": "20",
+    "carbs": "8",
+    "fats": "12",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Kosha Mangsho (Mutton Curry)",
+    "calories": "450",
+    "protein": "25",
+    "carbs": "12",
+    "fats": "32",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Shorshe Ilish",
+    "calories": "350",
+    "protein": "18",
+    "carbs": "6",
+    "fats": "28",
+    "servingSize": "1",
+    "servingUnit": "piece with gravy"
+  },
+  {
+    "name": "Luchi",
+    "calories": "120",
+    "protein": "2",
+    "carbs": "14",
+    "fats": "6",
+    "servingSize": "1",
+    "servingUnit": "piece"
+  },
+  {
+    "name": "Cholar Dal",
+    "calories": "180",
+    "protein": "8",
+    "carbs": "26",
+    "fats": "5",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Rosogolla",
+    "calories": "150",
+    "protein": "3",
+    "carbs": "30",
+    "fats": "1",
+    "servingSize": "2",
+    "servingUnit": "pieces"
+  },
+  {
+    "name": "Sandesh",
+    "calories": "120",
+    "protein": "4",
+    "carbs": "15",
+    "fats": "5",
+    "servingSize": "2",
+    "servingUnit": "pieces"
+  },
+  {
+    "name": "Mishti Doi",
+    "calories": "200",
+    "protein": "6",
+    "carbs": "28",
+    "fats": "7",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Chicken Biryani",
+    "calories": "480",
+    "protein": "22",
+    "carbs": "60",
+    "fats": "16",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Mutton Biryani",
+    "calories": "550",
+    "protein": "24",
+    "carbs": "58",
+    "fats": "24",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Veg Biryani",
+    "calories": "320",
+    "protein": "8",
+    "carbs": "52",
+    "fats": "10",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Egg Biryani",
+    "calories": "380",
+    "protein": "14",
+    "carbs": "54",
+    "fats": "12",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Jeera Rice",
+    "calories": "220",
+    "protein": "4",
+    "carbs": "42",
+    "fats": "4",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Peas Pulao",
+    "calories": "240",
+    "protein": "6",
+    "carbs": "44",
+    "fats": "4",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Khichdi (Moong Dal)",
+    "calories": "210",
+    "protein": "8",
+    "carbs": "36",
+    "fats": "4",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Pani Puri / Golgappa",
+    "calories": "150",
+    "protein": "3",
+    "carbs": "25",
+    "fats": "4",
+    "servingSize": "6",
+    "servingUnit": "pieces"
+  },
+  {
+    "name": "Samosa",
+    "calories": "260",
+    "protein": "4",
+    "carbs": "32",
+    "fats": "14",
+    "servingSize": "1",
+    "servingUnit": "piece"
+  },
+  {
+    "name": "Kachori",
+    "calories": "290",
+    "protein": "5",
+    "carbs": "30",
+    "fats": "16",
+    "servingSize": "1",
+    "servingUnit": "piece"
+  },
+  {
+    "name": "Bhel Puri",
+    "calories": "250",
+    "protein": "5",
+    "carbs": "48",
+    "fats": "5",
+    "servingSize": "1",
+    "servingUnit": "plate"
+  },
+  {
+    "name": "Aloo Tikki",
+    "calories": "220",
+    "protein": "3",
+    "carbs": "30",
+    "fats": "10",
+    "servingSize": "2",
+    "servingUnit": "pieces"
+  },
+  {
+    "name": "Dahi Vada",
+    "calories": "180",
+    "protein": "6",
+    "carbs": "24",
+    "fats": "6",
+    "servingSize": "2",
+    "servingUnit": "pieces"
+  },
+  {
+    "name": "Pakora (Mixed Veg)",
+    "calories": "250",
+    "protein": "6",
+    "carbs": "22",
+    "fats": "16",
+    "servingSize": "5",
+    "servingUnit": "pieces"
+  },
+  {
+    "name": "Onion Bhaji",
+    "calories": "210",
+    "protein": "5",
+    "carbs": "20",
+    "fats": "12",
+    "servingSize": "4",
+    "servingUnit": "pieces"
+  },
+  {
+    "name": "Gulab Jamun",
+    "calories": "300",
+    "protein": "4",
+    "carbs": "45",
+    "fats": "10",
+    "servingSize": "2",
+    "servingUnit": "pieces"
+  },
+  {
+    "name": "Jalebi",
+    "calories": "300",
+    "protein": "2",
+    "carbs": "55",
+    "fats": "8",
+    "servingSize": "3",
+    "servingUnit": "pieces"
+  },
+  {
+    "name": "Kheer (Rice Pudding)",
+    "calories": "220",
+    "protein": "6",
+    "carbs": "35",
+    "fats": "6",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Gajar Ka Halwa",
+    "calories": "320",
+    "protein": "6",
+    "carbs": "40",
+    "fats": "16",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Rasmalai",
+    "calories": "250",
+    "protein": "8",
+    "carbs": "30",
+    "fats": "12",
+    "servingSize": "2",
+    "servingUnit": "pieces"
+  },
+  {
+    "name": "Ladoo (Besan)",
+    "calories": "220",
+    "protein": "4",
+    "carbs": "28",
+    "fats": "11",
+    "servingSize": "1",
+    "servingUnit": "piece"
+  },
+  {
+    "name": "Barfi (Kaju Katli)",
+    "calories": "160",
+    "protein": "3",
+    "carbs": "18",
+    "fats": "9",
+    "servingSize": "3",
+    "servingUnit": "pieces"
+  },
+  {
+    "name": "Mysore Pak",
+    "calories": "250",
+    "protein": "2",
+    "carbs": "30",
+    "fats": "15",
+    "servingSize": "1",
+    "servingUnit": "piece"
+  },
+  {
+    "name": "Cheeseburger",
+    "calories": "550",
+    "protein": "28",
+    "carbs": "45",
+    "fats": "30",
+    "servingSize": "1",
+    "servingUnit": "burger"
+  },
+  {
+    "name": "French Fries (Medium)",
+    "calories": "365",
+    "protein": "4",
+    "carbs": "48",
+    "fats": "17",
+    "servingSize": "1",
+    "servingUnit": "order"
+  },
+  {
+    "name": "Hot Dog",
+    "calories": "300",
+    "protein": "10",
+    "carbs": "25",
+    "fats": "18",
+    "servingSize": "1",
+    "servingUnit": "hot dog"
+  },
+  {
+    "name": "Fried Chicken (Breast)",
+    "calories": "400",
+    "protein": "32",
+    "carbs": "14",
+    "fats": "22",
+    "servingSize": "1",
+    "servingUnit": "piece"
+  },
+  {
+    "name": "Pizza (Pepperoni, 1 slice)",
+    "calories": "280",
+    "protein": "12",
+    "carbs": "30",
+    "fats": "12",
+    "servingSize": "1",
+    "servingUnit": "slice"
+  },
+  {
+    "name": "Macaroni and Cheese",
+    "calories": "450",
+    "protein": "16",
+    "carbs": "48",
+    "fats": "20",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Steak (Ribeye, 8oz)",
+    "calories": "650",
+    "protein": "50",
+    "carbs": "0",
+    "fats": "48",
+    "servingSize": "8",
+    "servingUnit": "oz"
+  },
+  {
+    "name": "Spaghetti Bolognese",
+    "calories": "500",
+    "protein": "25",
+    "carbs": "60",
+    "fats": "18",
+    "servingSize": "1",
+    "servingUnit": "plate"
+  },
+  {
+    "name": "Lasagna",
+    "calories": "600",
+    "protein": "30",
+    "carbs": "45",
+    "fats": "32",
+    "servingSize": "1",
+    "servingUnit": "piece"
+  },
+  {
+    "name": "Fettuccine Alfredo",
+    "calories": "650",
+    "protein": "20",
+    "carbs": "55",
+    "fats": "38",
+    "servingSize": "1",
+    "servingUnit": "plate"
+  },
+  {
+    "name": "Margherita Pizza (1 slice)",
+    "calories": "220",
+    "protein": "10",
+    "carbs": "28",
+    "fats": "8",
+    "servingSize": "1",
+    "servingUnit": "slice"
+  },
+  {
+    "name": "Ravioli (Cheese)",
+    "calories": "350",
+    "protein": "15",
+    "carbs": "42",
+    "fats": "14",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Minestrone Soup",
+    "calories": "150",
+    "protein": "6",
+    "carbs": "25",
+    "fats": "4",
+    "servingSize": "1",
+    "servingUnit": "bowl"
+  },
+  {
+    "name": "Tiramisu",
+    "calories": "450",
+    "protein": "8",
+    "carbs": "42",
+    "fats": "28",
+    "servingSize": "1",
+    "servingUnit": "piece"
+  },
+  {
+    "name": "Chicken Taco",
+    "calories": "200",
+    "protein": "15",
+    "carbs": "18",
+    "fats": "8",
+    "servingSize": "1",
+    "servingUnit": "taco"
+  },
+  {
+    "name": "Beef Burrito",
+    "calories": "700",
+    "protein": "35",
+    "carbs": "75",
+    "fats": "30",
+    "servingSize": "1",
+    "servingUnit": "burrito"
+  },
+  {
+    "name": "Cheese Enchilada",
+    "calories": "320",
+    "protein": "14",
+    "carbs": "30",
+    "fats": "18",
+    "servingSize": "1",
+    "servingUnit": "enchilada"
+  },
+  {
+    "name": "Guacamole",
+    "calories": "180",
+    "protein": "2",
+    "carbs": "10",
+    "fats": "16",
+    "servingSize": "0.25",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Tortilla Chips",
+    "calories": "140",
+    "protein": "2",
+    "carbs": "18",
+    "fats": "7",
+    "servingSize": "1",
+    "servingUnit": "oz"
+  },
+  {
+    "name": "Quesadilla (Chicken)",
+    "calories": "500",
+    "protein": "30",
+    "carbs": "40",
+    "fats": "25",
+    "servingSize": "1",
+    "servingUnit": "quesadilla"
+  },
+  {
+    "name": "Fajitas (Beef)",
+    "calories": "450",
+    "protein": "32",
+    "carbs": "35",
+    "fats": "20",
+    "servingSize": "1",
+    "servingUnit": "plate"
+  },
+  {
+    "name": "Kung Pao Chicken",
+    "calories": "420",
+    "protein": "28",
+    "carbs": "20",
+    "fats": "25",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Sweet and Sour Pork",
+    "calories": "550",
+    "protein": "20",
+    "carbs": "60",
+    "fats": "25",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Fried Rice (Chicken)",
+    "calories": "350",
+    "protein": "14",
+    "carbs": "45",
+    "fats": "12",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Chow Mein",
+    "calories": "400",
+    "protein": "12",
+    "carbs": "55",
+    "fats": "15",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Spring Roll",
+    "calories": "120",
+    "protein": "3",
+    "carbs": "14",
+    "fats": "6",
+    "servingSize": "1",
+    "servingUnit": "piece"
+  },
+  {
+    "name": "Dim Sum (Har Gow)",
+    "calories": "45",
+    "protein": "3",
+    "carbs": "6",
+    "fats": "1",
+    "servingSize": "1",
+    "servingUnit": "piece"
+  },
+  {
+    "name": "Peking Duck",
+    "calories": "320",
+    "protein": "18",
+    "carbs": "2",
+    "fats": "26",
+    "servingSize": "3",
+    "servingUnit": "oz"
+  },
+  {
+    "name": "Sushi (Salmon Nigiri)",
+    "calories": "60",
+    "protein": "4",
+    "carbs": "8",
+    "fats": "1",
+    "servingSize": "1",
+    "servingUnit": "piece"
+  },
+  {
+    "name": "California Roll",
+    "calories": "250",
+    "protein": "8",
+    "carbs": "38",
+    "fats": "7",
+    "servingSize": "6",
+    "servingUnit": "pieces"
+  },
+  {
+    "name": "Ramen (Tonkotsu)",
+    "calories": "600",
+    "protein": "25",
+    "carbs": "70",
+    "fats": "25",
+    "servingSize": "1",
+    "servingUnit": "bowl"
+  },
+  {
+    "name": "Chicken Teriyaki",
+    "calories": "300",
+    "protein": "28",
+    "carbs": "25",
+    "fats": "8",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Miso Soup",
+    "calories": "40",
+    "protein": "3",
+    "carbs": "4",
+    "fats": "1",
+    "servingSize": "1",
+    "servingUnit": "bowl"
+  },
+  {
+    "name": "Bibimbap",
+    "calories": "550",
+    "protein": "22",
+    "carbs": "75",
+    "fats": "18",
+    "servingSize": "1",
+    "servingUnit": "bowl"
+  },
+  {
+    "name": "Kimchi",
+    "calories": "20",
+    "protein": "1",
+    "carbs": "4",
+    "fats": "0",
+    "servingSize": "0.5",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Korean Fried Chicken",
+    "calories": "350",
+    "protein": "20",
+    "carbs": "22",
+    "fats": "20",
+    "servingSize": "3",
+    "servingUnit": "pieces"
+  },
+  {
+    "name": "Pad Thai",
+    "calories": "450",
+    "protein": "18",
+    "carbs": "65",
+    "fats": "14",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Green Curry (Chicken)",
+    "calories": "380",
+    "protein": "25",
+    "carbs": "12",
+    "fats": "26",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Tom Yum Soup",
+    "calories": "120",
+    "protein": "12",
+    "carbs": "8",
+    "fats": "4",
+    "servingSize": "1",
+    "servingUnit": "bowl"
+  },
+  {
+    "name": "Mango Sticky Rice",
+    "calories": "350",
+    "protein": "4",
+    "carbs": "65",
+    "fats": "10",
+    "servingSize": "1",
+    "servingUnit": "portion"
+  },
+  {
+    "name": "Hummus",
+    "calories": "170",
+    "protein": "4",
+    "carbs": "16",
+    "fats": "10",
+    "servingSize": "0.25",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Falafel",
+    "calories": "330",
+    "protein": "14",
+    "carbs": "32",
+    "fats": "18",
+    "servingSize": "3",
+    "servingUnit": "pieces"
+  },
+  {
+    "name": "Chicken Shawarma",
+    "calories": "400",
+    "protein": "30",
+    "carbs": "15",
+    "fats": "22",
+    "servingSize": "1",
+    "servingUnit": "wrap/pita"
+  },
+  {
+    "name": "Tabbouleh",
+    "calories": "150",
+    "protein": "4",
+    "carbs": "20",
+    "fats": "8",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Baba Ganoush",
+    "calories": "120",
+    "protein": "2",
+    "carbs": "10",
+    "fats": "8",
+    "servingSize": "0.25",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Greek Salad",
+    "calories": "250",
+    "protein": "8",
+    "carbs": "12",
+    "fats": "20",
+    "servingSize": "1",
+    "servingUnit": "bowl"
+  },
+  {
+    "name": "Apple",
+    "calories": "95",
+    "protein": "0.5",
+    "carbs": "25",
+    "fats": "0.3",
+    "servingSize": "1",
+    "servingUnit": "medium"
+  },
+  {
+    "name": "Banana",
+    "calories": "105",
+    "protein": "1.3",
+    "carbs": "27",
+    "fats": "0.4",
+    "servingSize": "1",
+    "servingUnit": "medium"
+  },
+  {
+    "name": "Orange",
+    "calories": "62",
+    "protein": "1.2",
+    "carbs": "15",
+    "fats": "0.2",
+    "servingSize": "1",
+    "servingUnit": "medium"
+  },
+  {
+    "name": "Strawberries",
+    "calories": "49",
+    "protein": "1",
+    "carbs": "12",
+    "fats": "0.5",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Blueberries",
+    "calories": "84",
+    "protein": "1",
+    "carbs": "21",
+    "fats": "0.5",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Grapes",
+    "calories": "104",
+    "protein": "1.1",
+    "carbs": "27",
+    "fats": "0.2",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Mango",
+    "calories": "202",
+    "protein": "2.8",
+    "carbs": "50",
+    "fats": "1.3",
+    "servingSize": "1",
+    "servingUnit": "fruit"
+  },
+  {
+    "name": "Pineapple",
+    "calories": "82",
+    "protein": "0.9",
+    "carbs": "22",
+    "fats": "0.2",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Watermelon",
+    "calories": "46",
+    "protein": "0.9",
+    "carbs": "11",
+    "fats": "0.2",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Avocado",
+    "calories": "234",
+    "protein": "2.9",
+    "carbs": "12",
+    "fats": "21",
+    "servingSize": "1",
+    "servingUnit": "medium"
+  },
+  {
+    "name": "Broccoli (Raw)",
+    "calories": "31",
+    "protein": "2.6",
+    "carbs": "6",
+    "fats": "0.3",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Spinach (Raw)",
+    "calories": "7",
+    "protein": "0.9",
+    "carbs": "1.1",
+    "fats": "0.1",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Carrot (Raw)",
+    "calories": "41",
+    "protein": "0.9",
+    "carbs": "10",
+    "fats": "0.2",
+    "servingSize": "1",
+    "servingUnit": "medium"
+  },
+  {
+    "name": "Tomato",
+    "calories": "22",
+    "protein": "1.1",
+    "carbs": "4.8",
+    "fats": "0.2",
+    "servingSize": "1",
+    "servingUnit": "medium"
+  },
+  {
+    "name": "Cucumber",
+    "calories": "16",
+    "protein": "0.7",
+    "carbs": "3.8",
+    "fats": "0.1",
+    "servingSize": "1",
+    "servingUnit": "medium"
+  },
+  {
+    "name": "Bell Pepper",
+    "calories": "24",
+    "protein": "1",
+    "carbs": "6",
+    "fats": "0.3",
+    "servingSize": "1",
+    "servingUnit": "medium"
+  },
+  {
+    "name": "Onion",
+    "calories": "44",
+    "protein": "1.2",
+    "carbs": "10",
+    "fats": "0.1",
+    "servingSize": "1",
+    "servingUnit": "medium"
+  },
+  {
+    "name": "Potato (Baked)",
+    "calories": "161",
+    "protein": "4.3",
+    "carbs": "37",
+    "fats": "0.2",
+    "servingSize": "1",
+    "servingUnit": "medium"
+  },
+  {
+    "name": "Sweet Potato (Baked)",
+    "calories": "103",
+    "protein": "2.3",
+    "carbs": "24",
+    "fats": "0.2",
+    "servingSize": "1",
+    "servingUnit": "medium"
+  },
+  {
+    "name": "Cauliflower (Raw)",
+    "calories": "25",
+    "protein": "2",
+    "carbs": "5",
+    "fats": "0.3",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Chicken Breast (Cooked)",
+    "calories": "165",
+    "protein": "31",
+    "carbs": "0",
+    "fats": "3.6",
+    "servingSize": "100",
+    "servingUnit": "g"
+  },
+  {
+    "name": "Chicken Thigh (Cooked)",
+    "calories": "209",
+    "protein": "26",
+    "carbs": "0",
+    "fats": "11",
+    "servingSize": "100",
+    "servingUnit": "g"
+  },
+  {
+    "name": "Ground Beef (90% Lean, Cooked)",
+    "calories": "214",
+    "protein": "27",
+    "carbs": "0",
+    "fats": "11",
+    "servingSize": "100",
+    "servingUnit": "g"
+  },
+  {
+    "name": "Salmon (Cooked)",
+    "calories": "206",
+    "protein": "22",
+    "carbs": "0",
+    "fats": "12",
+    "servingSize": "100",
+    "servingUnit": "g"
+  },
+  {
+    "name": "Tuna (Canned in Water)",
+    "calories": "116",
+    "protein": "26",
+    "carbs": "0",
+    "fats": "0.8",
+    "servingSize": "1",
+    "servingUnit": "can (165g)"
+  },
+  {
+    "name": "Turkey Breast (Sliced)",
+    "calories": "104",
+    "protein": "22",
+    "carbs": "2",
+    "fats": "1.6",
+    "servingSize": "100",
+    "servingUnit": "g"
+  },
+  {
+    "name": "Pork Chop (Cooked)",
+    "calories": "250",
+    "protein": "25",
+    "carbs": "0",
+    "fats": "16",
+    "servingSize": "100",
+    "servingUnit": "g"
+  },
+  {
+    "name": "Shrimp (Cooked)",
+    "calories": "99",
+    "protein": "24",
+    "carbs": "0.2",
+    "fats": "0.3",
+    "servingSize": "100",
+    "servingUnit": "g"
+  },
+  {
+    "name": "Bacon",
+    "calories": "43",
+    "protein": "3",
+    "carbs": "0.1",
+    "fats": "3.3",
+    "servingSize": "1",
+    "servingUnit": "slice"
+  },
+  {
+    "name": "Egg (Large)",
+    "calories": "78",
+    "protein": "6.3",
+    "carbs": "0.6",
+    "fats": "5.3",
+    "servingSize": "1",
+    "servingUnit": "egg"
+  },
+  {
+    "name": "Egg White",
+    "calories": "17",
+    "protein": "3.6",
+    "carbs": "0.2",
+    "fats": "0.1",
+    "servingSize": "1",
+    "servingUnit": "large"
+  },
+  {
+    "name": "Whole Milk",
+    "calories": "149",
+    "protein": "8",
+    "carbs": "12",
+    "fats": "8",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Skim Milk",
+    "calories": "83",
+    "protein": "8.3",
+    "carbs": "12.2",
+    "fats": "0.2",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Greek Yogurt (Nonfat)",
+    "calories": "100",
+    "protein": "17",
+    "carbs": "6",
+    "fats": "0.7",
+    "servingSize": "170",
+    "servingUnit": "g"
+  },
+  {
+    "name": "Cheddar Cheese",
+    "calories": "113",
+    "protein": "7",
+    "carbs": "0.4",
+    "fats": "9",
+    "servingSize": "1",
+    "servingUnit": "oz"
+  },
+  {
+    "name": "Mozzarella (Part Skim)",
+    "calories": "72",
+    "protein": "7",
+    "carbs": "0.8",
+    "fats": "4.5",
+    "servingSize": "1",
+    "servingUnit": "oz"
+  },
+  {
+    "name": "Paneer",
+    "calories": "265",
+    "protein": "18",
+    "carbs": "3",
+    "fats": "20",
+    "servingSize": "100",
+    "servingUnit": "g"
+  },
+  {
+    "name": "Butter",
+    "calories": "102",
+    "protein": "0.1",
+    "carbs": "0",
+    "fats": "11.5",
+    "servingSize": "1",
+    "servingUnit": "tbsp"
+  },
+  {
+    "name": "White Rice (Cooked)",
+    "calories": "205",
+    "protein": "4.3",
+    "carbs": "45",
+    "fats": "0.4",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Brown Rice (Cooked)",
+    "calories": "216",
+    "protein": "5",
+    "carbs": "45",
+    "fats": "1.8",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Quinoa (Cooked)",
+    "calories": "222",
+    "protein": "8",
+    "carbs": "39",
+    "fats": "3.6",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Oatmeal (Cooked)",
+    "calories": "158",
+    "protein": "6",
+    "carbs": "27",
+    "fats": "3.2",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Whole Wheat Bread",
+    "calories": "69",
+    "protein": "3.6",
+    "carbs": "12",
+    "fats": "0.9",
+    "servingSize": "1",
+    "servingUnit": "slice"
+  },
+  {
+    "name": "White Bread",
+    "calories": "79",
+    "protein": "2.7",
+    "carbs": "15",
+    "fats": "1",
+    "servingSize": "1",
+    "servingUnit": "slice"
+  },
+  {
+    "name": "Pasta (Cooked)",
+    "calories": "220",
+    "protein": "8",
+    "carbs": "43",
+    "fats": "1.3",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Lentils (Cooked)",
+    "calories": "230",
+    "protein": "18",
+    "carbs": "40",
+    "fats": "0.8",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Black Beans (Cooked)",
+    "calories": "227",
+    "protein": "15",
+    "carbs": "41",
+    "fats": "0.9",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Chickpeas (Cooked)",
+    "calories": "269",
+    "protein": "15",
+    "carbs": "45",
+    "fats": "4.2",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Almonds",
+    "calories": "164",
+    "protein": "6",
+    "carbs": "6",
+    "fats": "14",
+    "servingSize": "1",
+    "servingUnit": "oz"
+  },
+  {
+    "name": "Walnuts",
+    "calories": "185",
+    "protein": "4.3",
+    "carbs": "3.9",
+    "fats": "18.5",
+    "servingSize": "1",
+    "servingUnit": "oz"
+  },
+  {
+    "name": "Peanuts",
+    "calories": "161",
+    "protein": "7.3",
+    "carbs": "4.6",
+    "fats": "14",
+    "servingSize": "1",
+    "servingUnit": "oz"
+  },
+  {
+    "name": "Peanut Butter",
+    "calories": "188",
+    "protein": "8",
+    "carbs": "6",
+    "fats": "16",
+    "servingSize": "2",
+    "servingUnit": "tbsp"
+  },
+  {
+    "name": "Chia Seeds",
+    "calories": "138",
+    "protein": "4.7",
+    "carbs": "12",
+    "fats": "8.7",
+    "servingSize": "1",
+    "servingUnit": "oz"
+  },
+  {
+    "name": "Olive Oil",
+    "calories": "119",
+    "protein": "0",
+    "carbs": "0",
+    "fats": "13.5",
+    "servingSize": "1",
+    "servingUnit": "tbsp"
+  },
+  {
+    "name": "Coconut Oil",
+    "calories": "117",
+    "protein": "0",
+    "carbs": "0",
+    "fats": "13.6",
+    "servingSize": "1",
+    "servingUnit": "tbsp"
+  },
+  {
+    "name": "Whey Protein Powder",
+    "calories": "120",
+    "protein": "24",
+    "carbs": "3",
+    "fats": "1.5",
+    "servingSize": "1",
+    "servingUnit": "scoop"
+  },
+  {
+    "name": "Orange Juice",
+    "calories": "112",
+    "protein": "1.7",
+    "carbs": "26",
+    "fats": "0.5",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Black Coffee",
+    "calories": "2",
+    "protein": "0.3",
+    "carbs": "0",
+    "fats": "0",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Tea (Plain)",
+    "calories": "2",
+    "protein": "0",
+    "carbs": "0.5",
+    "fats": "0",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Coca Cola",
+    "calories": "140",
+    "protein": "0",
+    "carbs": "39",
+    "fats": "0",
+    "servingSize": "1",
+    "servingUnit": "can (12oz)"
+  },
+  {
+    "name": "Honey",
+    "calories": "64",
+    "protein": "0.1",
+    "carbs": "17",
+    "fats": "0",
+    "servingSize": "1",
+    "servingUnit": "tbsp"
+  },
+  {
+    "name": "Sourdough Bread",
+    "calories": "150",
+    "protein": "6",
+    "carbs": "28",
+    "fats": "1",
+    "servingSize": "2",
+    "servingUnit": "slices"
+  },
+  {
+    "name": "Croissant",
+    "calories": "230",
+    "protein": "4",
+    "carbs": "26",
+    "fats": "12",
+    "servingSize": "1",
+    "servingUnit": "piece"
+  },
+  {
+    "name": "Bagel",
+    "calories": "250",
+    "protein": "10",
+    "carbs": "48",
+    "fats": "1.5",
+    "servingSize": "1",
+    "servingUnit": "piece"
+  },
+  {
+    "name": "Cream Cheese",
+    "calories": "99",
+    "protein": "2",
+    "carbs": "1",
+    "fats": "10",
+    "servingSize": "1",
+    "servingUnit": "tbsp"
+  },
+  {
+    "name": "Pancake",
+    "calories": "86",
+    "protein": "2",
+    "carbs": "15",
+    "fats": "2",
+    "servingSize": "1",
+    "servingUnit": "pancake"
+  },
+  {
+    "name": "Waffle",
+    "calories": "120",
+    "protein": "3",
+    "carbs": "16",
+    "fats": "5",
+    "servingSize": "1",
+    "servingUnit": "waffle"
+  },
+  {
+    "name": "Maple Syrup",
+    "calories": "52",
+    "protein": "0",
+    "carbs": "13",
+    "fats": "0",
+    "servingSize": "1",
+    "servingUnit": "tbsp"
+  },
+  {
+    "name": "Tofu",
+    "calories": "144",
+    "protein": "15",
+    "carbs": "3",
+    "fats": "9",
+    "servingSize": "100",
+    "servingUnit": "g"
+  },
+  {
+    "name": "Tempeh",
+    "calories": "193",
+    "protein": "19",
+    "carbs": "9",
+    "fats": "11",
+    "servingSize": "100",
+    "servingUnit": "g"
+  },
+  {
+    "name": "Seitan",
+    "calories": "370",
+    "protein": "75",
+    "carbs": "14",
+    "fats": "2",
+    "servingSize": "100",
+    "servingUnit": "g"
+  },
+  {
+    "name": "Almond Milk",
+    "calories": "30",
+    "protein": "1",
+    "carbs": "1",
+    "fats": "2.5",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Oat Milk",
+    "calories": "120",
+    "protein": "3",
+    "carbs": "16",
+    "fats": "5",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Soy Milk",
+    "calories": "100",
+    "protein": "7",
+    "carbs": "8",
+    "fats": "4",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Edamame",
+    "calories": "122",
+    "protein": "11",
+    "carbs": "10",
+    "fats": "5",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Miso Paste",
+    "calories": "35",
+    "protein": "2",
+    "carbs": "5",
+    "fats": "1",
+    "servingSize": "1",
+    "servingUnit": "tbsp"
+  },
+  {
+    "name": "Matcha Powder",
+    "calories": "10",
+    "protein": "1",
+    "carbs": "2",
+    "fats": "0",
+    "servingSize": "1",
+    "servingUnit": "tsp"
+  },
+  {
+    "name": "Low Fat Butter Chicken",
+    "calories": "320",
+    "protein": "25",
+    "carbs": "12",
+    "fats": "14",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "High Protein Butter Chicken",
+    "calories": "440",
+    "protein": "38",
+    "carbs": "12",
+    "fats": "28",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Vegan Mock Butter Chicken",
+    "calories": "360",
+    "protein": "20",
+    "carbs": "14",
+    "fats": "28",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Spicy Butter Chicken",
+    "calories": "400",
+    "protein": "25",
+    "carbs": "12",
+    "fats": "28",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Low Fat Chicken Tikka Masala",
+    "calories": "304",
+    "protein": "28",
+    "carbs": "14",
+    "fats": "12",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "High Protein Chicken Tikka Masala",
+    "calories": "418",
+    "protein": "42",
+    "carbs": "14",
+    "fats": "24",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Vegan Mock Chicken Tikka Masala",
+    "calories": "342",
+    "protein": "22",
+    "carbs": "17",
+    "fats": "24",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Spicy Chicken Tikka Masala",
+    "calories": "380",
+    "protein": "28",
+    "carbs": "14",
+    "fats": "24",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Low Fat Palak Paneer",
+    "calories": "256",
+    "protein": "15",
+    "carbs": "10",
+    "fats": "13",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "High Protein Palak Paneer",
+    "calories": "352",
+    "protein": "23",
+    "carbs": "10",
+    "fats": "25",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Vegan Palak Paneer",
+    "calories": "288",
+    "protein": "12",
+    "carbs": "12",
+    "fats": "25",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Spicy Palak Paneer",
+    "calories": "320",
+    "protein": "15",
+    "carbs": "10",
+    "fats": "25",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Low Fat Paneer Butter Masala",
+    "calories": "336",
+    "protein": "16",
+    "carbs": "15",
+    "fats": "16",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "High Protein Paneer Butter Masala",
+    "calories": "462",
+    "protein": "24",
+    "carbs": "15",
+    "fats": "32",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Vegan Paneer Butter Masala",
+    "calories": "378",
+    "protein": "13",
+    "carbs": "18",
+    "fats": "32",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Spicy Paneer Butter Masala",
+    "calories": "420",
+    "protein": "16",
+    "carbs": "15",
+    "fats": "32",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Low Fat Chana Masala",
+    "calories": "208",
+    "protein": "10",
+    "carbs": "35",
+    "fats": "4",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "High Protein Chana Masala",
+    "calories": "286",
+    "protein": "15",
+    "carbs": "35",
+    "fats": "8",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Vegan Chana Masala",
+    "calories": "234",
+    "protein": "8",
+    "carbs": "42",
+    "fats": "8",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Spicy Chana Masala",
+    "calories": "260",
+    "protein": "10",
+    "carbs": "35",
+    "fats": "8",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Low Fat Rajma Chawal",
+    "calories": "280",
+    "protein": "12",
+    "carbs": "60",
+    "fats": "3",
+    "servingSize": "1",
+    "servingUnit": "plate"
+  },
+  {
+    "name": "High Protein Rajma Chawal",
+    "calories": "385",
+    "protein": "18",
+    "carbs": "60",
+    "fats": "6",
+    "servingSize": "1",
+    "servingUnit": "plate"
+  },
+  {
+    "name": "Vegan Rajma Chawal",
+    "calories": "315",
+    "protein": "10",
+    "carbs": "72",
+    "fats": "6",
+    "servingSize": "1",
+    "servingUnit": "plate"
+  },
+  {
+    "name": "Spicy Rajma Chawal",
+    "calories": "350",
+    "protein": "12",
+    "carbs": "60",
+    "fats": "6",
+    "servingSize": "1",
+    "servingUnit": "plate"
+  },
+  {
+    "name": "Low Fat Chole Bhature",
+    "calories": "440",
+    "protein": "14",
+    "carbs": "65",
+    "fats": "13",
+    "servingSize": "2",
+    "servingUnit": "bhature + 1 cup chole"
+  },
+  {
+    "name": "High Protein Chole Bhature",
+    "calories": "605",
+    "protein": "21",
+    "carbs": "65",
+    "fats": "26",
+    "servingSize": "2",
+    "servingUnit": "bhature + 1 cup chole"
+  },
+  {
+    "name": "Vegan Chole Bhature",
+    "calories": "495",
+    "protein": "11",
+    "carbs": "78",
+    "fats": "26",
+    "servingSize": "2",
+    "servingUnit": "bhature + 1 cup chole"
+  },
+  {
+    "name": "Spicy Chole Bhature",
+    "calories": "550",
+    "protein": "14",
+    "carbs": "65",
+    "fats": "26",
+    "servingSize": "2",
+    "servingUnit": "bhature + 1 cup chole"
+  },
+  {
+    "name": "Low Fat Dal Makhani",
+    "calories": "248",
+    "protein": "11",
+    "carbs": "30",
+    "fats": "8",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "High Protein Dal Makhani",
+    "calories": "341",
+    "protein": "17",
+    "carbs": "30",
+    "fats": "16",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Vegan Dal Makhani",
+    "calories": "279",
+    "protein": "9",
+    "carbs": "36",
+    "fats": "16",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Spicy Dal Makhani",
+    "calories": "310",
+    "protein": "11",
+    "carbs": "30",
+    "fats": "16",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Low Fat Dal Tadka",
+    "calories": "176",
+    "protein": "12",
+    "carbs": "30",
+    "fats": "3",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "High Protein Dal Tadka",
+    "calories": "242",
+    "protein": "18",
+    "carbs": "30",
+    "fats": "6",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Vegan Dal Tadka",
+    "calories": "198",
+    "protein": "10",
+    "carbs": "36",
+    "fats": "6",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Spicy Dal Tadka",
+    "calories": "220",
+    "protein": "12",
+    "carbs": "30",
+    "fats": "6",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Low Fat Aloo Gobi",
+    "calories": "120",
+    "protein": "4",
+    "carbs": "22",
+    "fats": "3",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "High Protein Aloo Gobi",
+    "calories": "165",
+    "protein": "6",
+    "carbs": "22",
+    "fats": "6",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Vegan Aloo Gobi",
+    "calories": "135",
+    "protein": "3",
+    "carbs": "26",
+    "fats": "6",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Spicy Aloo Gobi",
+    "calories": "150",
+    "protein": "4",
+    "carbs": "22",
+    "fats": "6",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Low Fat Bhindi Masala",
+    "calories": "96",
+    "protein": "3",
+    "carbs": "12",
+    "fats": "4",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "High Protein Bhindi Masala",
+    "calories": "132",
+    "protein": "5",
+    "carbs": "12",
+    "fats": "7",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Vegan Bhindi Masala",
+    "calories": "108",
+    "protein": "2",
+    "carbs": "14",
+    "fats": "7",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Spicy Bhindi Masala",
+    "calories": "120",
+    "protein": "3",
+    "carbs": "12",
+    "fats": "7",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Low Fat Malai Kofta",
+    "calories": "360",
+    "protein": "10",
+    "carbs": "35",
+    "fats": "15",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "High Protein Malai Kofta",
+    "calories": "495",
+    "protein": "15",
+    "carbs": "35",
+    "fats": "30",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Vegan Malai Kofta",
+    "calories": "405",
+    "protein": "8",
+    "carbs": "42",
+    "fats": "30",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Spicy Malai Kofta",
+    "calories": "450",
+    "protein": "10",
+    "carbs": "35",
+    "fats": "30",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "High Protein Naan (Plain)",
+    "calories": "286",
+    "protein": "12",
+    "carbs": "45",
+    "fats": "4",
+    "servingSize": "1",
+    "servingUnit": "piece"
+  },
+  {
+    "name": "Vegan Naan (Plain)",
+    "calories": "234",
+    "protein": "6",
+    "carbs": "54",
+    "fats": "4",
+    "servingSize": "1",
+    "servingUnit": "piece"
+  },
+  {
+    "name": "Spicy Naan (Plain)",
+    "calories": "260",
+    "protein": "8",
+    "carbs": "45",
+    "fats": "4",
+    "servingSize": "1",
+    "servingUnit": "piece"
+  },
+  {
+    "name": "Low Fat Garlic Naan",
+    "calories": "232",
+    "protein": "8",
+    "carbs": "46",
+    "fats": "4",
+    "servingSize": "1",
+    "servingUnit": "piece"
+  },
+  {
+    "name": "High Protein Garlic Naan",
+    "calories": "319",
+    "protein": "12",
+    "carbs": "46",
+    "fats": "8",
+    "servingSize": "1",
+    "servingUnit": "piece"
+  },
+  {
+    "name": "Vegan Garlic Naan",
+    "calories": "261",
+    "protein": "6",
+    "carbs": "55",
+    "fats": "8",
+    "servingSize": "1",
+    "servingUnit": "piece"
+  },
+  {
+    "name": "Spicy Garlic Naan",
+    "calories": "290",
+    "protein": "8",
+    "carbs": "46",
+    "fats": "8",
+    "servingSize": "1",
+    "servingUnit": "piece"
+  },
+  {
+    "name": "Low Fat Butter Naan",
+    "calories": "248",
+    "protein": "8",
+    "carbs": "45",
+    "fats": "5",
+    "servingSize": "1",
+    "servingUnit": "piece"
+  },
+  {
+    "name": "High Protein Butter Naan",
+    "calories": "341",
+    "protein": "12",
+    "carbs": "45",
+    "fats": "10",
+    "servingSize": "1",
+    "servingUnit": "piece"
+  },
+  {
+    "name": "Vegan Butter Naan",
+    "calories": "279",
+    "protein": "6",
+    "carbs": "54",
+    "fats": "10",
+    "servingSize": "1",
+    "servingUnit": "piece"
+  },
+  {
+    "name": "Spicy Butter Naan",
+    "calories": "310",
+    "protein": "8",
+    "carbs": "45",
+    "fats": "10",
+    "servingSize": "1",
+    "servingUnit": "piece"
+  },
+  {
+    "name": "High Protein Tandoori Roti",
+    "calories": "121",
+    "protein": "6",
+    "carbs": "22",
+    "fats": "1",
+    "servingSize": "1",
+    "servingUnit": "piece"
+  },
+  {
+    "name": "Vegan Tandoori Roti",
+    "calories": "99",
+    "protein": "3",
+    "carbs": "26",
+    "fats": "1",
+    "servingSize": "1",
+    "servingUnit": "piece"
+  },
+  {
+    "name": "Spicy Tandoori Roti",
+    "calories": "110",
+    "protein": "4",
+    "carbs": "22",
+    "fats": "1",
+    "servingSize": "1",
+    "servingUnit": "piece"
+  },
+  {
+    "name": "Low Fat Aloo Paratha (with butter)",
+    "calories": "256",
+    "protein": "6",
+    "carbs": "42",
+    "fats": "7",
+    "servingSize": "1",
+    "servingUnit": "paratha"
+  },
+  {
+    "name": "High Protein Aloo Paratha (with butter)",
+    "calories": "352",
+    "protein": "9",
+    "carbs": "42",
+    "fats": "14",
+    "servingSize": "1",
+    "servingUnit": "paratha"
+  },
+  {
+    "name": "Vegan Aloo Paratha (with butter)",
+    "calories": "288",
+    "protein": "5",
+    "carbs": "50",
+    "fats": "14",
+    "servingSize": "1",
+    "servingUnit": "paratha"
+  },
+  {
+    "name": "Spicy Aloo Paratha (with butter)",
+    "calories": "320",
+    "protein": "6",
+    "carbs": "42",
+    "fats": "14",
+    "servingSize": "1",
+    "servingUnit": "paratha"
+  },
+  {
+    "name": "Low Fat Paneer Paratha",
+    "calories": "272",
+    "protein": "12",
+    "carbs": "38",
+    "fats": "8",
+    "servingSize": "1",
+    "servingUnit": "paratha"
+  },
+  {
+    "name": "High Protein Paneer Paratha",
+    "calories": "374",
+    "protein": "18",
+    "carbs": "38",
+    "fats": "16",
+    "servingSize": "1",
+    "servingUnit": "paratha"
+  },
+  {
+    "name": "Vegan Paneer Paratha",
+    "calories": "306",
+    "protein": "10",
+    "carbs": "46",
+    "fats": "16",
+    "servingSize": "1",
+    "servingUnit": "paratha"
+  },
+  {
+    "name": "Spicy Paneer Paratha",
+    "calories": "340",
+    "protein": "12",
+    "carbs": "38",
+    "fats": "16",
+    "servingSize": "1",
+    "servingUnit": "paratha"
+  },
+  {
+    "name": "Low Fat Gobi Paratha",
+    "calories": "224",
+    "protein": "6",
+    "carbs": "40",
+    "fats": "5",
+    "servingSize": "1",
+    "servingUnit": "paratha"
+  },
+  {
+    "name": "High Protein Gobi Paratha",
+    "calories": "308",
+    "protein": "9",
+    "carbs": "40",
+    "fats": "10",
+    "servingSize": "1",
+    "servingUnit": "paratha"
+  },
+  {
+    "name": "Vegan Gobi Paratha",
+    "calories": "252",
+    "protein": "5",
+    "carbs": "48",
+    "fats": "10",
+    "servingSize": "1",
+    "servingUnit": "paratha"
+  },
+  {
+    "name": "Spicy Gobi Paratha",
+    "calories": "280",
+    "protein": "6",
+    "carbs": "40",
+    "fats": "10",
+    "servingSize": "1",
+    "servingUnit": "paratha"
+  },
+  {
+    "name": "Low Fat Puri",
+    "calories": "112",
+    "protein": "2",
+    "carbs": "15",
+    "fats": "4",
+    "servingSize": "1",
+    "servingUnit": "piece"
+  },
+  {
+    "name": "High Protein Puri",
+    "calories": "154",
+    "protein": "3",
+    "carbs": "15",
+    "fats": "8",
+    "servingSize": "1",
+    "servingUnit": "piece"
+  },
+  {
+    "name": "Vegan Puri",
+    "calories": "126",
+    "protein": "2",
+    "carbs": "18",
+    "fats": "8",
+    "servingSize": "1",
+    "servingUnit": "piece"
+  },
+  {
+    "name": "Spicy Puri",
+    "calories": "140",
+    "protein": "2",
+    "carbs": "15",
+    "fats": "8",
+    "servingSize": "1",
+    "servingUnit": "piece"
+  },
+  {
+    "name": "Low Fat Masala Dosa",
+    "calories": "332",
+    "protein": "9",
+    "carbs": "65",
+    "fats": "7",
+    "servingSize": "1",
+    "servingUnit": "dosa"
+  },
+  {
+    "name": "High Protein Masala Dosa",
+    "calories": "457",
+    "protein": "14",
+    "carbs": "65",
+    "fats": "13",
+    "servingSize": "1",
+    "servingUnit": "dosa"
+  },
+  {
+    "name": "Vegan Masala Dosa",
+    "calories": "374",
+    "protein": "7",
+    "carbs": "78",
+    "fats": "13",
+    "servingSize": "1",
+    "servingUnit": "dosa"
+  },
+  {
+    "name": "Spicy Masala Dosa",
+    "calories": "415",
+    "protein": "9",
+    "carbs": "65",
+    "fats": "13",
+    "servingSize": "1",
+    "servingUnit": "dosa"
+  },
+  {
+    "name": "High Protein Plain Dosa",
+    "calories": "176",
+    "protein": "6",
+    "carbs": "28",
+    "fats": "4",
+    "servingSize": "1",
+    "servingUnit": "dosa"
+  },
+  {
+    "name": "Vegan Plain Dosa",
+    "calories": "144",
+    "protein": "3",
+    "carbs": "34",
+    "fats": "4",
+    "servingSize": "1",
+    "servingUnit": "dosa"
+  },
+  {
+    "name": "Spicy Plain Dosa",
+    "calories": "160",
+    "protein": "4",
+    "carbs": "28",
+    "fats": "4",
+    "servingSize": "1",
+    "servingUnit": "dosa"
+  },
+  {
+    "name": "High Protein Idli",
+    "calories": "44",
+    "protein": "2",
+    "carbs": "8",
+    "fats": "0",
+    "servingSize": "1",
+    "servingUnit": "piece"
+  },
+  {
+    "name": "Vegan Idli",
+    "calories": "36",
+    "protein": "1",
+    "carbs": "10",
+    "fats": "0",
+    "servingSize": "1",
+    "servingUnit": "piece"
+  },
+  {
+    "name": "Spicy Idli",
+    "calories": "40",
+    "protein": "2",
+    "carbs": "8",
+    "fats": "0",
+    "servingSize": "1",
+    "servingUnit": "piece"
+  },
+  {
+    "name": "High Protein Medu Vada",
+    "calories": "107",
+    "protein": "5",
+    "carbs": "12",
+    "fats": "5",
+    "servingSize": "1",
+    "servingUnit": "piece"
+  },
+  {
+    "name": "Vegan Medu Vada",
+    "calories": "87",
+    "protein": "2",
+    "carbs": "14",
+    "fats": "5",
+    "servingSize": "1",
+    "servingUnit": "piece"
+  },
+  {
+    "name": "Spicy Medu Vada",
+    "calories": "97",
+    "protein": "3",
+    "carbs": "12",
+    "fats": "5",
+    "servingSize": "1",
+    "servingUnit": "piece"
+  },
+  {
+    "name": "High Protein Sambar",
+    "calories": "143",
+    "protein": "9",
+    "carbs": "20",
+    "fats": "4",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Vegan Sambar",
+    "calories": "117",
+    "protein": "5",
+    "carbs": "24",
+    "fats": "4",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Spicy Sambar",
+    "calories": "130",
+    "protein": "6",
+    "carbs": "20",
+    "fats": "4",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Low Fat Coconut Chutney",
+    "calories": "56",
+    "protein": "1",
+    "carbs": "3",
+    "fats": "3",
+    "servingSize": "2",
+    "servingUnit": "tbsp"
+  },
+  {
+    "name": "High Protein Coconut Chutney",
+    "calories": "77",
+    "protein": "2",
+    "carbs": "3",
+    "fats": "6",
+    "servingSize": "2",
+    "servingUnit": "tbsp"
+  },
+  {
+    "name": "Vegan Coconut Chutney",
+    "calories": "63",
+    "protein": "1",
+    "carbs": "4",
+    "fats": "6",
+    "servingSize": "2",
+    "servingUnit": "tbsp"
+  },
+  {
+    "name": "Spicy Coconut Chutney",
+    "calories": "70",
+    "protein": "1",
+    "carbs": "3",
+    "fats": "6",
+    "servingSize": "2",
+    "servingUnit": "tbsp"
+  },
+  {
+    "name": "Low Fat Upma",
+    "calories": "176",
+    "protein": "6",
+    "carbs": "35",
+    "fats": "3",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "High Protein Upma",
+    "calories": "242",
+    "protein": "9",
+    "carbs": "35",
+    "fats": "6",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Vegan Upma",
+    "calories": "198",
+    "protein": "5",
+    "carbs": "42",
+    "fats": "6",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Spicy Upma",
+    "calories": "220",
+    "protein": "6",
+    "carbs": "35",
+    "fats": "6",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "High Protein Uttapam",
+    "calories": "198",
+    "protein": "8",
+    "carbs": "30",
+    "fats": "4",
+    "servingSize": "1",
+    "servingUnit": "piece"
+  },
+  {
+    "name": "Vegan Uttapam",
+    "calories": "162",
+    "protein": "4",
+    "carbs": "36",
+    "fats": "4",
+    "servingSize": "1",
+    "servingUnit": "piece"
+  },
+  {
+    "name": "Spicy Uttapam",
+    "calories": "180",
+    "protein": "5",
+    "carbs": "30",
+    "fats": "4",
+    "servingSize": "1",
+    "servingUnit": "piece"
+  },
+  {
+    "name": "Low Fat Lemon Rice",
+    "calories": "200",
+    "protein": "4",
+    "carbs": "40",
+    "fats": "4",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "High Protein Lemon Rice",
+    "calories": "275",
+    "protein": "6",
+    "carbs": "40",
+    "fats": "8",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Vegan Lemon Rice",
+    "calories": "225",
+    "protein": "3",
+    "carbs": "48",
+    "fats": "8",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Spicy Lemon Rice",
+    "calories": "250",
+    "protein": "4",
+    "carbs": "40",
+    "fats": "8",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Low Fat Curd Rice",
+    "calories": "168",
+    "protein": "6",
+    "carbs": "32",
+    "fats": "3",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "High Protein Curd Rice",
+    "calories": "231",
+    "protein": "9",
+    "carbs": "32",
+    "fats": "6",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Vegan Curd Rice",
+    "calories": "189",
+    "protein": "5",
+    "carbs": "38",
+    "fats": "6",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Spicy Curd Rice",
+    "calories": "210",
+    "protein": "6",
+    "carbs": "32",
+    "fats": "6",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Low Fat Bisi Bele Bath",
+    "calories": "248",
+    "protein": "9",
+    "carbs": "50",
+    "fats": "5",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "High Protein Bisi Bele Bath",
+    "calories": "341",
+    "protein": "14",
+    "carbs": "50",
+    "fats": "9",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Vegan Bisi Bele Bath",
+    "calories": "279",
+    "protein": "7",
+    "carbs": "60",
+    "fats": "9",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Spicy Bisi Bele Bath",
+    "calories": "310",
+    "protein": "9",
+    "carbs": "50",
+    "fats": "9",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "High Protein Appam",
+    "calories": "121",
+    "protein": "3",
+    "carbs": "22",
+    "fats": "1",
+    "servingSize": "1",
+    "servingUnit": "piece"
+  },
+  {
+    "name": "Vegan Appam",
+    "calories": "99",
+    "protein": "2",
+    "carbs": "26",
+    "fats": "1",
+    "servingSize": "1",
+    "servingUnit": "piece"
+  },
+  {
+    "name": "Spicy Appam",
+    "calories": "110",
+    "protein": "2",
+    "carbs": "22",
+    "fats": "1",
+    "servingSize": "1",
+    "servingUnit": "piece"
+  },
+  {
+    "name": "Low Fat Misal Pav",
+    "calories": "360",
+    "protein": "14",
+    "carbs": "55",
+    "fats": "10",
+    "servingSize": "1",
+    "servingUnit": "plate"
+  },
+  {
+    "name": "High Protein Misal Pav",
+    "calories": "495",
+    "protein": "21",
+    "carbs": "55",
+    "fats": "20",
+    "servingSize": "1",
+    "servingUnit": "plate"
+  },
+  {
+    "name": "Vegan Misal Pav",
+    "calories": "405",
+    "protein": "11",
+    "carbs": "66",
+    "fats": "20",
+    "servingSize": "1",
+    "servingUnit": "plate"
+  },
+  {
+    "name": "Spicy Misal Pav",
+    "calories": "450",
+    "protein": "14",
+    "carbs": "55",
+    "fats": "20",
+    "servingSize": "1",
+    "servingUnit": "plate"
+  },
+  {
+    "name": "Low Fat Vada Pav",
+    "calories": "240",
+    "protein": "6",
+    "carbs": "42",
+    "fats": "6",
+    "servingSize": "1",
+    "servingUnit": "piece"
+  },
+  {
+    "name": "High Protein Vada Pav",
+    "calories": "330",
+    "protein": "9",
+    "carbs": "42",
+    "fats": "12",
+    "servingSize": "1",
+    "servingUnit": "piece"
+  },
+  {
+    "name": "Vegan Vada Pav",
+    "calories": "270",
+    "protein": "5",
+    "carbs": "50",
+    "fats": "12",
+    "servingSize": "1",
+    "servingUnit": "piece"
+  },
+  {
+    "name": "Spicy Vada Pav",
+    "calories": "300",
+    "protein": "6",
+    "carbs": "42",
+    "fats": "12",
+    "servingSize": "1",
+    "servingUnit": "piece"
+  },
+  {
+    "name": "Low Fat Poha",
+    "calories": "208",
+    "protein": "5",
+    "carbs": "45",
+    "fats": "3",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "High Protein Poha",
+    "calories": "286",
+    "protein": "8",
+    "carbs": "45",
+    "fats": "6",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Vegan Poha",
+    "calories": "234",
+    "protein": "4",
+    "carbs": "54",
+    "fats": "6",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Spicy Poha",
+    "calories": "260",
+    "protein": "5",
+    "carbs": "45",
+    "fats": "6",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Low Fat Sabudana Khichdi",
+    "calories": "280",
+    "protein": "3",
+    "carbs": "60",
+    "fats": "6",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "High Protein Sabudana Khichdi",
+    "calories": "385",
+    "protein": "5",
+    "carbs": "60",
+    "fats": "12",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Vegan Sabudana Khichdi",
+    "calories": "315",
+    "protein": "2",
+    "carbs": "72",
+    "fats": "12",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Spicy Sabudana Khichdi",
+    "calories": "350",
+    "protein": "3",
+    "carbs": "60",
+    "fats": "12",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Low Fat Pav Bhaji",
+    "calories": "320",
+    "protein": "8",
+    "carbs": "52",
+    "fats": "9",
+    "servingSize": "1",
+    "servingUnit": "plate"
+  },
+  {
+    "name": "High Protein Pav Bhaji",
+    "calories": "440",
+    "protein": "12",
+    "carbs": "52",
+    "fats": "18",
+    "servingSize": "1",
+    "servingUnit": "plate"
+  },
+  {
+    "name": "Vegan Pav Bhaji",
+    "calories": "360",
+    "protein": "6",
+    "carbs": "62",
+    "fats": "18",
+    "servingSize": "1",
+    "servingUnit": "plate"
+  },
+  {
+    "name": "Spicy Pav Bhaji",
+    "calories": "400",
+    "protein": "8",
+    "carbs": "52",
+    "fats": "18",
+    "servingSize": "1",
+    "servingUnit": "plate"
+  },
+  {
+    "name": "Low Fat Puran Poli",
+    "calories": "232",
+    "protein": "7",
+    "carbs": "50",
+    "fats": "4",
+    "servingSize": "1",
+    "servingUnit": "piece"
+  },
+  {
+    "name": "High Protein Puran Poli",
+    "calories": "319",
+    "protein": "11",
+    "carbs": "50",
+    "fats": "8",
+    "servingSize": "1",
+    "servingUnit": "piece"
+  },
+  {
+    "name": "Vegan Puran Poli",
+    "calories": "261",
+    "protein": "6",
+    "carbs": "60",
+    "fats": "8",
+    "servingSize": "1",
+    "servingUnit": "piece"
+  },
+  {
+    "name": "Spicy Puran Poli",
+    "calories": "290",
+    "protein": "7",
+    "carbs": "50",
+    "fats": "8",
+    "servingSize": "1",
+    "servingUnit": "piece"
+  },
+  {
+    "name": "High Protein Dhokla",
+    "calories": "176",
+    "protein": "9",
+    "carbs": "22",
+    "fats": "4",
+    "servingSize": "3",
+    "servingUnit": "pieces"
+  },
+  {
+    "name": "Vegan Dhokla",
+    "calories": "144",
+    "protein": "5",
+    "carbs": "26",
+    "fats": "4",
+    "servingSize": "3",
+    "servingUnit": "pieces"
+  },
+  {
+    "name": "Spicy Dhokla",
+    "calories": "160",
+    "protein": "6",
+    "carbs": "22",
+    "fats": "4",
+    "servingSize": "3",
+    "servingUnit": "pieces"
+  },
+  {
+    "name": "Low Fat Khandvi",
+    "calories": "168",
+    "protein": "8",
+    "carbs": "26",
+    "fats": "5",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "High Protein Khandvi",
+    "calories": "231",
+    "protein": "12",
+    "carbs": "26",
+    "fats": "9",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Vegan Khandvi",
+    "calories": "189",
+    "protein": "6",
+    "carbs": "31",
+    "fats": "9",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Spicy Khandvi",
+    "calories": "210",
+    "protein": "8",
+    "carbs": "26",
+    "fats": "9",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "High Protein Thepla",
+    "calories": "121",
+    "protein": "5",
+    "carbs": "16",
+    "fats": "4",
+    "servingSize": "1",
+    "servingUnit": "piece"
+  },
+  {
+    "name": "Vegan Thepla",
+    "calories": "99",
+    "protein": "2",
+    "carbs": "19",
+    "fats": "4",
+    "servingSize": "1",
+    "servingUnit": "piece"
+  },
+  {
+    "name": "Spicy Thepla",
+    "calories": "110",
+    "protein": "3",
+    "carbs": "16",
+    "fats": "4",
+    "servingSize": "1",
+    "servingUnit": "piece"
+  },
+  {
+    "name": "Low Fat Undhiyu",
+    "calories": "192",
+    "protein": "6",
+    "carbs": "28",
+    "fats": "6",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "High Protein Undhiyu",
+    "calories": "264",
+    "protein": "9",
+    "carbs": "28",
+    "fats": "12",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Vegan Undhiyu",
+    "calories": "216",
+    "protein": "5",
+    "carbs": "34",
+    "fats": "12",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Spicy Undhiyu",
+    "calories": "240",
+    "protein": "6",
+    "carbs": "28",
+    "fats": "12",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Low Fat Shrikhand",
+    "calories": "224",
+    "protein": "8",
+    "carbs": "40",
+    "fats": "5",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "High Protein Shrikhand",
+    "calories": "308",
+    "protein": "12",
+    "carbs": "40",
+    "fats": "10",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Vegan Shrikhand",
+    "calories": "252",
+    "protein": "6",
+    "carbs": "48",
+    "fats": "10",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Spicy Shrikhand",
+    "calories": "280",
+    "protein": "8",
+    "carbs": "40",
+    "fats": "10",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Low Fat Fish Curry (Rohu)",
+    "calories": "176",
+    "protein": "20",
+    "carbs": "8",
+    "fats": "6",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "High Protein Fish Curry (Rohu)",
+    "calories": "242",
+    "protein": "30",
+    "carbs": "8",
+    "fats": "12",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Vegan Mock Fish Curry (Rohu)",
+    "calories": "198",
+    "protein": "16",
+    "carbs": "10",
+    "fats": "12",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Spicy Fish Curry (Rohu)",
+    "calories": "220",
+    "protein": "20",
+    "carbs": "8",
+    "fats": "12",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Low Fat Kosha Mangsho (Mutton Curry)",
+    "calories": "360",
+    "protein": "25",
+    "carbs": "12",
+    "fats": "16",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "High Protein Kosha Mangsho (Mutton Curry)",
+    "calories": "495",
+    "protein": "38",
+    "carbs": "12",
+    "fats": "32",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Vegan Kosha Mangsho (Mutton Curry)",
+    "calories": "405",
+    "protein": "20",
+    "carbs": "14",
+    "fats": "32",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Spicy Kosha Mangsho (Mutton Curry)",
+    "calories": "450",
+    "protein": "25",
+    "carbs": "12",
+    "fats": "32",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Low Fat Shorshe Ilish",
+    "calories": "280",
+    "protein": "18",
+    "carbs": "6",
+    "fats": "14",
+    "servingSize": "1",
+    "servingUnit": "piece with gravy"
+  },
+  {
+    "name": "High Protein Shorshe Ilish",
+    "calories": "385",
+    "protein": "27",
+    "carbs": "6",
+    "fats": "28",
+    "servingSize": "1",
+    "servingUnit": "piece with gravy"
+  },
+  {
+    "name": "Vegan Shorshe Ilish",
+    "calories": "315",
+    "protein": "14",
+    "carbs": "7",
+    "fats": "28",
+    "servingSize": "1",
+    "servingUnit": "piece with gravy"
+  },
+  {
+    "name": "Spicy Shorshe Ilish",
+    "calories": "350",
+    "protein": "18",
+    "carbs": "6",
+    "fats": "28",
+    "servingSize": "1",
+    "servingUnit": "piece with gravy"
+  },
+  {
+    "name": "Low Fat Luchi",
+    "calories": "96",
+    "protein": "2",
+    "carbs": "14",
+    "fats": "3",
+    "servingSize": "1",
+    "servingUnit": "piece"
+  },
+  {
+    "name": "High Protein Luchi",
+    "calories": "132",
+    "protein": "3",
+    "carbs": "14",
+    "fats": "6",
+    "servingSize": "1",
+    "servingUnit": "piece"
+  },
+  {
+    "name": "Vegan Luchi",
+    "calories": "108",
+    "protein": "2",
+    "carbs": "17",
+    "fats": "6",
+    "servingSize": "1",
+    "servingUnit": "piece"
+  },
+  {
+    "name": "Spicy Luchi",
+    "calories": "120",
+    "protein": "2",
+    "carbs": "14",
+    "fats": "6",
+    "servingSize": "1",
+    "servingUnit": "piece"
+  },
+  {
+    "name": "Low Fat Cholar Dal",
+    "calories": "144",
+    "protein": "8",
+    "carbs": "26",
+    "fats": "3",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "High Protein Cholar Dal",
+    "calories": "198",
+    "protein": "12",
+    "carbs": "26",
+    "fats": "5",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Vegan Cholar Dal",
+    "calories": "162",
+    "protein": "6",
+    "carbs": "31",
+    "fats": "5",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Spicy Cholar Dal",
+    "calories": "180",
+    "protein": "8",
+    "carbs": "26",
+    "fats": "5",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "High Protein Rosogolla",
+    "calories": "165",
+    "protein": "5",
+    "carbs": "30",
+    "fats": "1",
+    "servingSize": "2",
+    "servingUnit": "pieces"
+  },
+  {
+    "name": "Vegan Rosogolla",
+    "calories": "135",
+    "protein": "2",
+    "carbs": "36",
+    "fats": "1",
+    "servingSize": "2",
+    "servingUnit": "pieces"
+  },
+  {
+    "name": "Spicy Rosogolla",
+    "calories": "150",
+    "protein": "3",
+    "carbs": "30",
+    "fats": "1",
+    "servingSize": "2",
+    "servingUnit": "pieces"
+  },
+  {
+    "name": "Low Fat Sandesh",
+    "calories": "96",
+    "protein": "4",
+    "carbs": "15",
+    "fats": "3",
+    "servingSize": "2",
+    "servingUnit": "pieces"
+  },
+  {
+    "name": "High Protein Sandesh",
+    "calories": "132",
+    "protein": "6",
+    "carbs": "15",
+    "fats": "5",
+    "servingSize": "2",
+    "servingUnit": "pieces"
+  },
+  {
+    "name": "Vegan Sandesh",
+    "calories": "108",
+    "protein": "3",
+    "carbs": "18",
+    "fats": "5",
+    "servingSize": "2",
+    "servingUnit": "pieces"
+  },
+  {
+    "name": "Spicy Sandesh",
+    "calories": "120",
+    "protein": "4",
+    "carbs": "15",
+    "fats": "5",
+    "servingSize": "2",
+    "servingUnit": "pieces"
+  },
+  {
+    "name": "Low Fat Mishti Doi",
+    "calories": "160",
+    "protein": "6",
+    "carbs": "28",
+    "fats": "4",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "High Protein Mishti Doi",
+    "calories": "220",
+    "protein": "9",
+    "carbs": "28",
+    "fats": "7",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Vegan Mishti Doi",
+    "calories": "180",
+    "protein": "5",
+    "carbs": "34",
+    "fats": "7",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Spicy Mishti Doi",
+    "calories": "200",
+    "protein": "6",
+    "carbs": "28",
+    "fats": "7",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Low Fat Chicken Biryani",
+    "calories": "384",
+    "protein": "22",
+    "carbs": "60",
+    "fats": "8",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "High Protein Chicken Biryani",
+    "calories": "528",
+    "protein": "33",
+    "carbs": "60",
+    "fats": "16",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Vegan Mock Chicken Biryani",
+    "calories": "432",
+    "protein": "18",
+    "carbs": "72",
+    "fats": "16",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Spicy Chicken Biryani",
+    "calories": "480",
+    "protein": "22",
+    "carbs": "60",
+    "fats": "16",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Low Fat Mutton Biryani",
+    "calories": "440",
+    "protein": "24",
+    "carbs": "58",
+    "fats": "12",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "High Protein Mutton Biryani",
+    "calories": "605",
+    "protein": "36",
+    "carbs": "58",
+    "fats": "24",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Vegan Mutton Biryani",
+    "calories": "495",
+    "protein": "19",
+    "carbs": "70",
+    "fats": "24",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Spicy Mutton Biryani",
+    "calories": "550",
+    "protein": "24",
+    "carbs": "58",
+    "fats": "24",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Low Fat Veg Biryani",
+    "calories": "256",
+    "protein": "8",
+    "carbs": "52",
+    "fats": "5",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "High Protein Veg Biryani",
+    "calories": "352",
+    "protein": "12",
+    "carbs": "52",
+    "fats": "10",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Vegan Veg Biryani",
+    "calories": "288",
+    "protein": "6",
+    "carbs": "62",
+    "fats": "10",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Spicy Veg Biryani",
+    "calories": "320",
+    "protein": "8",
+    "carbs": "52",
+    "fats": "10",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Low Fat Egg Biryani",
+    "calories": "304",
+    "protein": "14",
+    "carbs": "54",
+    "fats": "6",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "High Protein Egg Biryani",
+    "calories": "418",
+    "protein": "21",
+    "carbs": "54",
+    "fats": "12",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Vegan Egg Biryani",
+    "calories": "342",
+    "protein": "11",
+    "carbs": "65",
+    "fats": "12",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Spicy Egg Biryani",
+    "calories": "380",
+    "protein": "14",
+    "carbs": "54",
+    "fats": "12",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "High Protein Jeera Rice",
+    "calories": "242",
+    "protein": "6",
+    "carbs": "42",
+    "fats": "4",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Vegan Jeera Rice",
+    "calories": "198",
+    "protein": "3",
+    "carbs": "50",
+    "fats": "4",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Spicy Jeera Rice",
+    "calories": "220",
+    "protein": "4",
+    "carbs": "42",
+    "fats": "4",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "High Protein Peas Pulao",
+    "calories": "264",
+    "protein": "9",
+    "carbs": "44",
+    "fats": "4",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Vegan Peas Pulao",
+    "calories": "216",
+    "protein": "5",
+    "carbs": "53",
+    "fats": "4",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Spicy Peas Pulao",
+    "calories": "240",
+    "protein": "6",
+    "carbs": "44",
+    "fats": "4",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "High Protein Khichdi (Moong Dal)",
+    "calories": "231",
+    "protein": "12",
+    "carbs": "36",
+    "fats": "4",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Vegan Khichdi (Moong Dal)",
+    "calories": "189",
+    "protein": "6",
+    "carbs": "43",
+    "fats": "4",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Spicy Khichdi (Moong Dal)",
+    "calories": "210",
+    "protein": "8",
+    "carbs": "36",
+    "fats": "4",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "High Protein Pani Puri / Golgappa",
+    "calories": "165",
+    "protein": "5",
+    "carbs": "25",
+    "fats": "4",
+    "servingSize": "6",
+    "servingUnit": "pieces"
+  },
+  {
+    "name": "Vegan Pani Puri / Golgappa",
+    "calories": "135",
+    "protein": "2",
+    "carbs": "30",
+    "fats": "4",
+    "servingSize": "6",
+    "servingUnit": "pieces"
+  },
+  {
+    "name": "Spicy Pani Puri / Golgappa",
+    "calories": "150",
+    "protein": "3",
+    "carbs": "25",
+    "fats": "4",
+    "servingSize": "6",
+    "servingUnit": "pieces"
+  },
+  {
+    "name": "Low Fat Samosa",
+    "calories": "208",
+    "protein": "4",
+    "carbs": "32",
+    "fats": "7",
+    "servingSize": "1",
+    "servingUnit": "piece"
+  },
+  {
+    "name": "High Protein Samosa",
+    "calories": "286",
+    "protein": "6",
+    "carbs": "32",
+    "fats": "14",
+    "servingSize": "1",
+    "servingUnit": "piece"
+  },
+  {
+    "name": "Vegan Samosa",
+    "calories": "234",
+    "protein": "3",
+    "carbs": "38",
+    "fats": "14",
+    "servingSize": "1",
+    "servingUnit": "piece"
+  },
+  {
+    "name": "Spicy Samosa",
+    "calories": "260",
+    "protein": "4",
+    "carbs": "32",
+    "fats": "14",
+    "servingSize": "1",
+    "servingUnit": "piece"
+  },
+  {
+    "name": "Low Fat Kachori",
+    "calories": "232",
+    "protein": "5",
+    "carbs": "30",
+    "fats": "8",
+    "servingSize": "1",
+    "servingUnit": "piece"
+  },
+  {
+    "name": "High Protein Kachori",
+    "calories": "319",
+    "protein": "8",
+    "carbs": "30",
+    "fats": "16",
+    "servingSize": "1",
+    "servingUnit": "piece"
+  },
+  {
+    "name": "Vegan Kachori",
+    "calories": "261",
+    "protein": "4",
+    "carbs": "36",
+    "fats": "16",
+    "servingSize": "1",
+    "servingUnit": "piece"
+  },
+  {
+    "name": "Spicy Kachori",
+    "calories": "290",
+    "protein": "5",
+    "carbs": "30",
+    "fats": "16",
+    "servingSize": "1",
+    "servingUnit": "piece"
+  },
+  {
+    "name": "Low Fat Bhel Puri",
+    "calories": "200",
+    "protein": "5",
+    "carbs": "48",
+    "fats": "3",
+    "servingSize": "1",
+    "servingUnit": "plate"
+  },
+  {
+    "name": "High Protein Bhel Puri",
+    "calories": "275",
+    "protein": "8",
+    "carbs": "48",
+    "fats": "5",
+    "servingSize": "1",
+    "servingUnit": "plate"
+  },
+  {
+    "name": "Vegan Bhel Puri",
+    "calories": "225",
+    "protein": "4",
+    "carbs": "58",
+    "fats": "5",
+    "servingSize": "1",
+    "servingUnit": "plate"
+  },
+  {
+    "name": "Spicy Bhel Puri",
+    "calories": "250",
+    "protein": "5",
+    "carbs": "48",
+    "fats": "5",
+    "servingSize": "1",
+    "servingUnit": "plate"
+  },
+  {
+    "name": "Low Fat Aloo Tikki",
+    "calories": "176",
+    "protein": "3",
+    "carbs": "30",
+    "fats": "5",
+    "servingSize": "2",
+    "servingUnit": "pieces"
+  },
+  {
+    "name": "High Protein Aloo Tikki",
+    "calories": "242",
+    "protein": "5",
+    "carbs": "30",
+    "fats": "10",
+    "servingSize": "2",
+    "servingUnit": "pieces"
+  },
+  {
+    "name": "Vegan Aloo Tikki",
+    "calories": "198",
+    "protein": "2",
+    "carbs": "36",
+    "fats": "10",
+    "servingSize": "2",
+    "servingUnit": "pieces"
+  },
+  {
+    "name": "Spicy Aloo Tikki",
+    "calories": "220",
+    "protein": "3",
+    "carbs": "30",
+    "fats": "10",
+    "servingSize": "2",
+    "servingUnit": "pieces"
+  },
+  {
+    "name": "Low Fat Dahi Vada",
+    "calories": "144",
+    "protein": "6",
+    "carbs": "24",
+    "fats": "3",
+    "servingSize": "2",
+    "servingUnit": "pieces"
+  },
+  {
+    "name": "High Protein Dahi Vada",
+    "calories": "198",
+    "protein": "9",
+    "carbs": "24",
+    "fats": "6",
+    "servingSize": "2",
+    "servingUnit": "pieces"
+  },
+  {
+    "name": "Vegan Dahi Vada",
+    "calories": "162",
+    "protein": "5",
+    "carbs": "29",
+    "fats": "6",
+    "servingSize": "2",
+    "servingUnit": "pieces"
+  },
+  {
+    "name": "Spicy Dahi Vada",
+    "calories": "180",
+    "protein": "6",
+    "carbs": "24",
+    "fats": "6",
+    "servingSize": "2",
+    "servingUnit": "pieces"
+  },
+  {
+    "name": "Low Fat Pakora (Mixed Veg)",
+    "calories": "200",
+    "protein": "6",
+    "carbs": "22",
+    "fats": "8",
+    "servingSize": "5",
+    "servingUnit": "pieces"
+  },
+  {
+    "name": "High Protein Pakora (Mixed Veg)",
+    "calories": "275",
+    "protein": "9",
+    "carbs": "22",
+    "fats": "16",
+    "servingSize": "5",
+    "servingUnit": "pieces"
+  },
+  {
+    "name": "Vegan Pakora (Mixed Veg)",
+    "calories": "225",
+    "protein": "5",
+    "carbs": "26",
+    "fats": "16",
+    "servingSize": "5",
+    "servingUnit": "pieces"
+  },
+  {
+    "name": "Spicy Pakora (Mixed Veg)",
+    "calories": "250",
+    "protein": "6",
+    "carbs": "22",
+    "fats": "16",
+    "servingSize": "5",
+    "servingUnit": "pieces"
+  },
+  {
+    "name": "Low Fat Onion Bhaji",
+    "calories": "168",
+    "protein": "5",
+    "carbs": "20",
+    "fats": "6",
+    "servingSize": "4",
+    "servingUnit": "pieces"
+  },
+  {
+    "name": "High Protein Onion Bhaji",
+    "calories": "231",
+    "protein": "8",
+    "carbs": "20",
+    "fats": "12",
+    "servingSize": "4",
+    "servingUnit": "pieces"
+  },
+  {
+    "name": "Vegan Onion Bhaji",
+    "calories": "189",
+    "protein": "4",
+    "carbs": "24",
+    "fats": "12",
+    "servingSize": "4",
+    "servingUnit": "pieces"
+  },
+  {
+    "name": "Spicy Onion Bhaji",
+    "calories": "210",
+    "protein": "5",
+    "carbs": "20",
+    "fats": "12",
+    "servingSize": "4",
+    "servingUnit": "pieces"
+  },
+  {
+    "name": "Low Fat Gulab Jamun",
+    "calories": "240",
+    "protein": "4",
+    "carbs": "45",
+    "fats": "5",
+    "servingSize": "2",
+    "servingUnit": "pieces"
+  },
+  {
+    "name": "High Protein Gulab Jamun",
+    "calories": "330",
+    "protein": "6",
+    "carbs": "45",
+    "fats": "10",
+    "servingSize": "2",
+    "servingUnit": "pieces"
+  },
+  {
+    "name": "Vegan Gulab Jamun",
+    "calories": "270",
+    "protein": "3",
+    "carbs": "54",
+    "fats": "10",
+    "servingSize": "2",
+    "servingUnit": "pieces"
+  },
+  {
+    "name": "Spicy Gulab Jamun",
+    "calories": "300",
+    "protein": "4",
+    "carbs": "45",
+    "fats": "10",
+    "servingSize": "2",
+    "servingUnit": "pieces"
+  },
+  {
+    "name": "Low Fat Jalebi",
+    "calories": "240",
+    "protein": "2",
+    "carbs": "55",
+    "fats": "4",
+    "servingSize": "3",
+    "servingUnit": "pieces"
+  },
+  {
+    "name": "High Protein Jalebi",
+    "calories": "330",
+    "protein": "3",
+    "carbs": "55",
+    "fats": "8",
+    "servingSize": "3",
+    "servingUnit": "pieces"
+  },
+  {
+    "name": "Vegan Jalebi",
+    "calories": "270",
+    "protein": "2",
+    "carbs": "66",
+    "fats": "8",
+    "servingSize": "3",
+    "servingUnit": "pieces"
+  },
+  {
+    "name": "Spicy Jalebi",
+    "calories": "300",
+    "protein": "2",
+    "carbs": "55",
+    "fats": "8",
+    "servingSize": "3",
+    "servingUnit": "pieces"
+  },
+  {
+    "name": "Low Fat Kheer (Rice Pudding)",
+    "calories": "176",
+    "protein": "6",
+    "carbs": "35",
+    "fats": "3",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "High Protein Kheer (Rice Pudding)",
+    "calories": "242",
+    "protein": "9",
+    "carbs": "35",
+    "fats": "6",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Vegan Kheer (Rice Pudding)",
+    "calories": "198",
+    "protein": "5",
+    "carbs": "42",
+    "fats": "6",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Spicy Kheer (Rice Pudding)",
+    "calories": "220",
+    "protein": "6",
+    "carbs": "35",
+    "fats": "6",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Low Fat Gajar Ka Halwa",
+    "calories": "256",
+    "protein": "6",
+    "carbs": "40",
+    "fats": "8",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "High Protein Gajar Ka Halwa",
+    "calories": "352",
+    "protein": "9",
+    "carbs": "40",
+    "fats": "16",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Vegan Gajar Ka Halwa",
+    "calories": "288",
+    "protein": "5",
+    "carbs": "48",
+    "fats": "16",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Spicy Gajar Ka Halwa",
+    "calories": "320",
+    "protein": "6",
+    "carbs": "40",
+    "fats": "16",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Low Fat Rasmalai",
+    "calories": "200",
+    "protein": "8",
+    "carbs": "30",
+    "fats": "6",
+    "servingSize": "2",
+    "servingUnit": "pieces"
+  },
+  {
+    "name": "High Protein Rasmalai",
+    "calories": "275",
+    "protein": "12",
+    "carbs": "30",
+    "fats": "12",
+    "servingSize": "2",
+    "servingUnit": "pieces"
+  },
+  {
+    "name": "Vegan Rasmalai",
+    "calories": "225",
+    "protein": "6",
+    "carbs": "36",
+    "fats": "12",
+    "servingSize": "2",
+    "servingUnit": "pieces"
+  },
+  {
+    "name": "Spicy Rasmalai",
+    "calories": "250",
+    "protein": "8",
+    "carbs": "30",
+    "fats": "12",
+    "servingSize": "2",
+    "servingUnit": "pieces"
+  },
+  {
+    "name": "Low Fat Ladoo (Besan)",
+    "calories": "176",
+    "protein": "4",
+    "carbs": "28",
+    "fats": "6",
+    "servingSize": "1",
+    "servingUnit": "piece"
+  },
+  {
+    "name": "High Protein Ladoo (Besan)",
+    "calories": "242",
+    "protein": "6",
+    "carbs": "28",
+    "fats": "11",
+    "servingSize": "1",
+    "servingUnit": "piece"
+  },
+  {
+    "name": "Vegan Ladoo (Besan)",
+    "calories": "198",
+    "protein": "3",
+    "carbs": "34",
+    "fats": "11",
+    "servingSize": "1",
+    "servingUnit": "piece"
+  },
+  {
+    "name": "Spicy Ladoo (Besan)",
+    "calories": "220",
+    "protein": "4",
+    "carbs": "28",
+    "fats": "11",
+    "servingSize": "1",
+    "servingUnit": "piece"
+  },
+  {
+    "name": "Low Fat Barfi (Kaju Katli)",
+    "calories": "128",
+    "protein": "3",
+    "carbs": "18",
+    "fats": "5",
+    "servingSize": "3",
+    "servingUnit": "pieces"
+  },
+  {
+    "name": "High Protein Barfi (Kaju Katli)",
+    "calories": "176",
+    "protein": "5",
+    "carbs": "18",
+    "fats": "9",
+    "servingSize": "3",
+    "servingUnit": "pieces"
+  },
+  {
+    "name": "Vegan Barfi (Kaju Katli)",
+    "calories": "144",
+    "protein": "2",
+    "carbs": "22",
+    "fats": "9",
+    "servingSize": "3",
+    "servingUnit": "pieces"
+  },
+  {
+    "name": "Spicy Barfi (Kaju Katli)",
+    "calories": "160",
+    "protein": "3",
+    "carbs": "18",
+    "fats": "9",
+    "servingSize": "3",
+    "servingUnit": "pieces"
+  },
+  {
+    "name": "Low Fat Mysore Pak",
+    "calories": "200",
+    "protein": "2",
+    "carbs": "30",
+    "fats": "8",
+    "servingSize": "1",
+    "servingUnit": "piece"
+  },
+  {
+    "name": "High Protein Mysore Pak",
+    "calories": "275",
+    "protein": "3",
+    "carbs": "30",
+    "fats": "15",
+    "servingSize": "1",
+    "servingUnit": "piece"
+  },
+  {
+    "name": "Vegan Mysore Pak",
+    "calories": "225",
+    "protein": "2",
+    "carbs": "36",
+    "fats": "15",
+    "servingSize": "1",
+    "servingUnit": "piece"
+  },
+  {
+    "name": "Spicy Mysore Pak",
+    "calories": "250",
+    "protein": "2",
+    "carbs": "30",
+    "fats": "15",
+    "servingSize": "1",
+    "servingUnit": "piece"
+  },
+  {
+    "name": "Low Fat Cheeseburger",
+    "calories": "440",
+    "protein": "28",
+    "carbs": "45",
+    "fats": "15",
+    "servingSize": "1",
+    "servingUnit": "burger"
+  },
+  {
+    "name": "High Protein Cheeseburger",
+    "calories": "605",
+    "protein": "42",
+    "carbs": "45",
+    "fats": "30",
+    "servingSize": "1",
+    "servingUnit": "burger"
+  },
+  {
+    "name": "Vegan Cheeseburger",
+    "calories": "495",
+    "protein": "22",
+    "carbs": "54",
+    "fats": "30",
+    "servingSize": "1",
+    "servingUnit": "burger"
+  },
+  {
+    "name": "Spicy Cheeseburger",
+    "calories": "550",
+    "protein": "28",
+    "carbs": "45",
+    "fats": "30",
+    "servingSize": "1",
+    "servingUnit": "burger"
+  },
+  {
+    "name": "Low Fat French Fries (Medium)",
+    "calories": "292",
+    "protein": "4",
+    "carbs": "48",
+    "fats": "9",
+    "servingSize": "1",
+    "servingUnit": "order"
+  },
+  {
+    "name": "High Protein French Fries (Medium)",
+    "calories": "402",
+    "protein": "6",
+    "carbs": "48",
+    "fats": "17",
+    "servingSize": "1",
+    "servingUnit": "order"
+  },
+  {
+    "name": "Vegan French Fries (Medium)",
+    "calories": "329",
+    "protein": "3",
+    "carbs": "58",
+    "fats": "17",
+    "servingSize": "1",
+    "servingUnit": "order"
+  },
+  {
+    "name": "Spicy French Fries (Medium)",
+    "calories": "365",
+    "protein": "4",
+    "carbs": "48",
+    "fats": "17",
+    "servingSize": "1",
+    "servingUnit": "order"
+  },
+  {
+    "name": "Low Fat Hot Dog",
+    "calories": "240",
+    "protein": "10",
+    "carbs": "25",
+    "fats": "9",
+    "servingSize": "1",
+    "servingUnit": "hot dog"
+  },
+  {
+    "name": "High Protein Hot Dog",
+    "calories": "330",
+    "protein": "15",
+    "carbs": "25",
+    "fats": "18",
+    "servingSize": "1",
+    "servingUnit": "hot dog"
+  },
+  {
+    "name": "Vegan Hot Dog",
+    "calories": "270",
+    "protein": "8",
+    "carbs": "30",
+    "fats": "18",
+    "servingSize": "1",
+    "servingUnit": "hot dog"
+  },
+  {
+    "name": "Spicy Hot Dog",
+    "calories": "300",
+    "protein": "10",
+    "carbs": "25",
+    "fats": "18",
+    "servingSize": "1",
+    "servingUnit": "hot dog"
+  },
+  {
+    "name": "Low Fat Fried Chicken (Breast)",
+    "calories": "320",
+    "protein": "32",
+    "carbs": "14",
+    "fats": "11",
+    "servingSize": "1",
+    "servingUnit": "piece"
+  },
+  {
+    "name": "High Protein Fried Chicken (Breast)",
+    "calories": "440",
+    "protein": "48",
+    "carbs": "14",
+    "fats": "22",
+    "servingSize": "1",
+    "servingUnit": "piece"
+  },
+  {
+    "name": "Vegan Mock Fried Chicken (Breast)",
+    "calories": "360",
+    "protein": "26",
+    "carbs": "17",
+    "fats": "22",
+    "servingSize": "1",
+    "servingUnit": "piece"
+  },
+  {
+    "name": "Spicy Fried Chicken (Breast)",
+    "calories": "400",
+    "protein": "32",
+    "carbs": "14",
+    "fats": "22",
+    "servingSize": "1",
+    "servingUnit": "piece"
+  },
+  {
+    "name": "Low Fat Pizza (Pepperoni, 1 slice)",
+    "calories": "224",
+    "protein": "12",
+    "carbs": "30",
+    "fats": "6",
+    "servingSize": "1",
+    "servingUnit": "slice"
+  },
+  {
+    "name": "High Protein Pizza (Pepperoni, 1 slice)",
+    "calories": "308",
+    "protein": "18",
+    "carbs": "30",
+    "fats": "12",
+    "servingSize": "1",
+    "servingUnit": "slice"
+  },
+  {
+    "name": "Vegan Pizza (Pepperoni, 1 slice)",
+    "calories": "252",
+    "protein": "10",
+    "carbs": "36",
+    "fats": "12",
+    "servingSize": "1",
+    "servingUnit": "slice"
+  },
+  {
+    "name": "Spicy Pizza (Pepperoni, 1 slice)",
+    "calories": "280",
+    "protein": "12",
+    "carbs": "30",
+    "fats": "12",
+    "servingSize": "1",
+    "servingUnit": "slice"
+  },
+  {
+    "name": "Low Fat Macaroni and Cheese",
+    "calories": "360",
+    "protein": "16",
+    "carbs": "48",
+    "fats": "10",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "High Protein Macaroni and Cheese",
+    "calories": "495",
+    "protein": "24",
+    "carbs": "48",
+    "fats": "20",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Vegan Macaroni and Cheese",
+    "calories": "405",
+    "protein": "13",
+    "carbs": "58",
+    "fats": "20",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Spicy Macaroni and Cheese",
+    "calories": "450",
+    "protein": "16",
+    "carbs": "48",
+    "fats": "20",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Low Fat Steak (Ribeye, 8oz)",
+    "calories": "520",
+    "protein": "50",
+    "carbs": "0",
+    "fats": "24",
+    "servingSize": "8",
+    "servingUnit": "oz"
+  },
+  {
+    "name": "High Protein Steak (Ribeye, 8oz)",
+    "calories": "715",
+    "protein": "75",
+    "carbs": "0",
+    "fats": "48",
+    "servingSize": "8",
+    "servingUnit": "oz"
+  },
+  {
+    "name": "Vegan Steak (Ribeye, 8oz)",
+    "calories": "585",
+    "protein": "40",
+    "carbs": "0",
+    "fats": "48",
+    "servingSize": "8",
+    "servingUnit": "oz"
+  },
+  {
+    "name": "Spicy Steak (Ribeye, 8oz)",
+    "calories": "650",
+    "protein": "50",
+    "carbs": "0",
+    "fats": "48",
+    "servingSize": "8",
+    "servingUnit": "oz"
+  },
+  {
+    "name": "Low Fat Spaghetti Bolognese",
+    "calories": "400",
+    "protein": "25",
+    "carbs": "60",
+    "fats": "9",
+    "servingSize": "1",
+    "servingUnit": "plate"
+  },
+  {
+    "name": "High Protein Spaghetti Bolognese",
+    "calories": "550",
+    "protein": "38",
+    "carbs": "60",
+    "fats": "18",
+    "servingSize": "1",
+    "servingUnit": "plate"
+  },
+  {
+    "name": "Vegan Spaghetti Bolognese",
+    "calories": "450",
+    "protein": "20",
+    "carbs": "72",
+    "fats": "18",
+    "servingSize": "1",
+    "servingUnit": "plate"
+  },
+  {
+    "name": "Spicy Spaghetti Bolognese",
+    "calories": "500",
+    "protein": "25",
+    "carbs": "60",
+    "fats": "18",
+    "servingSize": "1",
+    "servingUnit": "plate"
+  },
+  {
+    "name": "Low Fat Lasagna",
+    "calories": "480",
+    "protein": "30",
+    "carbs": "45",
+    "fats": "16",
+    "servingSize": "1",
+    "servingUnit": "piece"
+  },
+  {
+    "name": "High Protein Lasagna",
+    "calories": "660",
+    "protein": "45",
+    "carbs": "45",
+    "fats": "32",
+    "servingSize": "1",
+    "servingUnit": "piece"
+  },
+  {
+    "name": "Vegan Lasagna",
+    "calories": "540",
+    "protein": "24",
+    "carbs": "54",
+    "fats": "32",
+    "servingSize": "1",
+    "servingUnit": "piece"
+  },
+  {
+    "name": "Spicy Lasagna",
+    "calories": "600",
+    "protein": "30",
+    "carbs": "45",
+    "fats": "32",
+    "servingSize": "1",
+    "servingUnit": "piece"
+  },
+  {
+    "name": "Low Fat Fettuccine Alfredo",
+    "calories": "520",
+    "protein": "20",
+    "carbs": "55",
+    "fats": "19",
+    "servingSize": "1",
+    "servingUnit": "plate"
+  },
+  {
+    "name": "High Protein Fettuccine Alfredo",
+    "calories": "715",
+    "protein": "30",
+    "carbs": "55",
+    "fats": "38",
+    "servingSize": "1",
+    "servingUnit": "plate"
+  },
+  {
+    "name": "Vegan Fettuccine Alfredo",
+    "calories": "585",
+    "protein": "16",
+    "carbs": "66",
+    "fats": "38",
+    "servingSize": "1",
+    "servingUnit": "plate"
+  },
+  {
+    "name": "Spicy Fettuccine Alfredo",
+    "calories": "650",
+    "protein": "20",
+    "carbs": "55",
+    "fats": "38",
+    "servingSize": "1",
+    "servingUnit": "plate"
+  },
+  {
+    "name": "Low Fat Margherita Pizza (1 slice)",
+    "calories": "176",
+    "protein": "10",
+    "carbs": "28",
+    "fats": "4",
+    "servingSize": "1",
+    "servingUnit": "slice"
+  },
+  {
+    "name": "High Protein Margherita Pizza (1 slice)",
+    "calories": "242",
+    "protein": "15",
+    "carbs": "28",
+    "fats": "8",
+    "servingSize": "1",
+    "servingUnit": "slice"
+  },
+  {
+    "name": "Vegan Margherita Pizza (1 slice)",
+    "calories": "198",
+    "protein": "8",
+    "carbs": "34",
+    "fats": "8",
+    "servingSize": "1",
+    "servingUnit": "slice"
+  },
+  {
+    "name": "Spicy Margherita Pizza (1 slice)",
+    "calories": "220",
+    "protein": "10",
+    "carbs": "28",
+    "fats": "8",
+    "servingSize": "1",
+    "servingUnit": "slice"
+  },
+  {
+    "name": "Low Fat Ravioli (Cheese)",
+    "calories": "280",
+    "protein": "15",
+    "carbs": "42",
+    "fats": "7",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "High Protein Ravioli (Cheese)",
+    "calories": "385",
+    "protein": "23",
+    "carbs": "42",
+    "fats": "14",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Vegan Ravioli (Cheese)",
+    "calories": "315",
+    "protein": "12",
+    "carbs": "50",
+    "fats": "14",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Spicy Ravioli (Cheese)",
+    "calories": "350",
+    "protein": "15",
+    "carbs": "42",
+    "fats": "14",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "High Protein Minestrone Soup",
+    "calories": "165",
+    "protein": "9",
+    "carbs": "25",
+    "fats": "4",
+    "servingSize": "1",
+    "servingUnit": "bowl"
+  },
+  {
+    "name": "Vegan Minestrone Soup",
+    "calories": "135",
+    "protein": "5",
+    "carbs": "30",
+    "fats": "4",
+    "servingSize": "1",
+    "servingUnit": "bowl"
+  },
+  {
+    "name": "Spicy Minestrone Soup",
+    "calories": "150",
+    "protein": "6",
+    "carbs": "25",
+    "fats": "4",
+    "servingSize": "1",
+    "servingUnit": "bowl"
+  },
+  {
+    "name": "Low Fat Tiramisu",
+    "calories": "360",
+    "protein": "8",
+    "carbs": "42",
+    "fats": "14",
+    "servingSize": "1",
+    "servingUnit": "piece"
+  },
+  {
+    "name": "High Protein Tiramisu",
+    "calories": "495",
+    "protein": "12",
+    "carbs": "42",
+    "fats": "28",
+    "servingSize": "1",
+    "servingUnit": "piece"
+  },
+  {
+    "name": "Vegan Tiramisu",
+    "calories": "405",
+    "protein": "6",
+    "carbs": "50",
+    "fats": "28",
+    "servingSize": "1",
+    "servingUnit": "piece"
+  },
+  {
+    "name": "Spicy Tiramisu",
+    "calories": "450",
+    "protein": "8",
+    "carbs": "42",
+    "fats": "28",
+    "servingSize": "1",
+    "servingUnit": "piece"
+  },
+  {
+    "name": "Low Fat Chicken Taco",
+    "calories": "160",
+    "protein": "15",
+    "carbs": "18",
+    "fats": "4",
+    "servingSize": "1",
+    "servingUnit": "taco"
+  },
+  {
+    "name": "High Protein Chicken Taco",
+    "calories": "220",
+    "protein": "23",
+    "carbs": "18",
+    "fats": "8",
+    "servingSize": "1",
+    "servingUnit": "taco"
+  },
+  {
+    "name": "Vegan Mock Chicken Taco",
+    "calories": "180",
+    "protein": "12",
+    "carbs": "22",
+    "fats": "8",
+    "servingSize": "1",
+    "servingUnit": "taco"
+  },
+  {
+    "name": "Spicy Chicken Taco",
+    "calories": "200",
+    "protein": "15",
+    "carbs": "18",
+    "fats": "8",
+    "servingSize": "1",
+    "servingUnit": "taco"
+  },
+  {
+    "name": "Low Fat Beef Burrito",
+    "calories": "560",
+    "protein": "35",
+    "carbs": "75",
+    "fats": "15",
+    "servingSize": "1",
+    "servingUnit": "burrito"
+  },
+  {
+    "name": "High Protein Beef Burrito",
+    "calories": "770",
+    "protein": "53",
+    "carbs": "75",
+    "fats": "30",
+    "servingSize": "1",
+    "servingUnit": "burrito"
+  },
+  {
+    "name": "Vegan Mock Beef Burrito",
+    "calories": "630",
+    "protein": "28",
+    "carbs": "90",
+    "fats": "30",
+    "servingSize": "1",
+    "servingUnit": "burrito"
+  },
+  {
+    "name": "Spicy Beef Burrito",
+    "calories": "700",
+    "protein": "35",
+    "carbs": "75",
+    "fats": "30",
+    "servingSize": "1",
+    "servingUnit": "burrito"
+  },
+  {
+    "name": "Low Fat Cheese Enchilada",
+    "calories": "256",
+    "protein": "14",
+    "carbs": "30",
+    "fats": "9",
+    "servingSize": "1",
+    "servingUnit": "enchilada"
+  },
+  {
+    "name": "High Protein Cheese Enchilada",
+    "calories": "352",
+    "protein": "21",
+    "carbs": "30",
+    "fats": "18",
+    "servingSize": "1",
+    "servingUnit": "enchilada"
+  },
+  {
+    "name": "Vegan Cheese Enchilada",
+    "calories": "288",
+    "protein": "11",
+    "carbs": "36",
+    "fats": "18",
+    "servingSize": "1",
+    "servingUnit": "enchilada"
+  },
+  {
+    "name": "Spicy Cheese Enchilada",
+    "calories": "320",
+    "protein": "14",
+    "carbs": "30",
+    "fats": "18",
+    "servingSize": "1",
+    "servingUnit": "enchilada"
+  },
+  {
+    "name": "Low Fat Guacamole",
+    "calories": "144",
+    "protein": "2",
+    "carbs": "10",
+    "fats": "8",
+    "servingSize": "0.25",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "High Protein Guacamole",
+    "calories": "198",
+    "protein": "3",
+    "carbs": "10",
+    "fats": "16",
+    "servingSize": "0.25",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Vegan Guacamole",
+    "calories": "162",
+    "protein": "2",
+    "carbs": "12",
+    "fats": "16",
+    "servingSize": "0.25",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Spicy Guacamole",
+    "calories": "180",
+    "protein": "2",
+    "carbs": "10",
+    "fats": "16",
+    "servingSize": "0.25",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Low Fat Tortilla Chips",
+    "calories": "112",
+    "protein": "2",
+    "carbs": "18",
+    "fats": "4",
+    "servingSize": "1",
+    "servingUnit": "oz"
+  },
+  {
+    "name": "High Protein Tortilla Chips",
+    "calories": "154",
+    "protein": "3",
+    "carbs": "18",
+    "fats": "7",
+    "servingSize": "1",
+    "servingUnit": "oz"
+  },
+  {
+    "name": "Vegan Tortilla Chips",
+    "calories": "126",
+    "protein": "2",
+    "carbs": "22",
+    "fats": "7",
+    "servingSize": "1",
+    "servingUnit": "oz"
+  },
+  {
+    "name": "Spicy Tortilla Chips",
+    "calories": "140",
+    "protein": "2",
+    "carbs": "18",
+    "fats": "7",
+    "servingSize": "1",
+    "servingUnit": "oz"
+  },
+  {
+    "name": "Low Fat Quesadilla (Chicken)",
+    "calories": "400",
+    "protein": "30",
+    "carbs": "40",
+    "fats": "13",
+    "servingSize": "1",
+    "servingUnit": "quesadilla"
+  },
+  {
+    "name": "High Protein Quesadilla (Chicken)",
+    "calories": "550",
+    "protein": "45",
+    "carbs": "40",
+    "fats": "25",
+    "servingSize": "1",
+    "servingUnit": "quesadilla"
+  },
+  {
+    "name": "Vegan Mock Quesadilla (Chicken)",
+    "calories": "450",
+    "protein": "24",
+    "carbs": "48",
+    "fats": "25",
+    "servingSize": "1",
+    "servingUnit": "quesadilla"
+  },
+  {
+    "name": "Spicy Quesadilla (Chicken)",
+    "calories": "500",
+    "protein": "30",
+    "carbs": "40",
+    "fats": "25",
+    "servingSize": "1",
+    "servingUnit": "quesadilla"
+  },
+  {
+    "name": "Low Fat Fajitas (Beef)",
+    "calories": "360",
+    "protein": "32",
+    "carbs": "35",
+    "fats": "10",
+    "servingSize": "1",
+    "servingUnit": "plate"
+  },
+  {
+    "name": "High Protein Fajitas (Beef)",
+    "calories": "495",
+    "protein": "48",
+    "carbs": "35",
+    "fats": "20",
+    "servingSize": "1",
+    "servingUnit": "plate"
+  },
+  {
+    "name": "Vegan Mock Fajitas (Beef)",
+    "calories": "405",
+    "protein": "26",
+    "carbs": "42",
+    "fats": "20",
+    "servingSize": "1",
+    "servingUnit": "plate"
+  },
+  {
+    "name": "Spicy Fajitas (Beef)",
+    "calories": "450",
+    "protein": "32",
+    "carbs": "35",
+    "fats": "20",
+    "servingSize": "1",
+    "servingUnit": "plate"
+  },
+  {
+    "name": "Low Fat Kung Pao Chicken",
+    "calories": "336",
+    "protein": "28",
+    "carbs": "20",
+    "fats": "13",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "High Protein Kung Pao Chicken",
+    "calories": "462",
+    "protein": "42",
+    "carbs": "20",
+    "fats": "25",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Vegan Mock Kung Pao Chicken",
+    "calories": "378",
+    "protein": "22",
+    "carbs": "24",
+    "fats": "25",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Spicy Kung Pao Chicken",
+    "calories": "420",
+    "protein": "28",
+    "carbs": "20",
+    "fats": "25",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Low Fat Sweet and Sour Pork",
+    "calories": "440",
+    "protein": "20",
+    "carbs": "60",
+    "fats": "13",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "High Protein Sweet and Sour Pork",
+    "calories": "605",
+    "protein": "30",
+    "carbs": "60",
+    "fats": "25",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Vegan Sweet and Sour Pork",
+    "calories": "495",
+    "protein": "16",
+    "carbs": "72",
+    "fats": "25",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Spicy Sweet and Sour Pork",
+    "calories": "550",
+    "protein": "20",
+    "carbs": "60",
+    "fats": "25",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Low Fat Fried Rice (Chicken)",
+    "calories": "280",
+    "protein": "14",
+    "carbs": "45",
+    "fats": "6",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "High Protein Fried Rice (Chicken)",
+    "calories": "385",
+    "protein": "21",
+    "carbs": "45",
+    "fats": "12",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Vegan Mock Fried Rice (Chicken)",
+    "calories": "315",
+    "protein": "11",
+    "carbs": "54",
+    "fats": "12",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Spicy Fried Rice (Chicken)",
+    "calories": "350",
+    "protein": "14",
+    "carbs": "45",
+    "fats": "12",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Low Fat Chow Mein",
+    "calories": "320",
+    "protein": "12",
+    "carbs": "55",
+    "fats": "8",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "High Protein Chow Mein",
+    "calories": "440",
+    "protein": "18",
+    "carbs": "55",
+    "fats": "15",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Vegan Chow Mein",
+    "calories": "360",
+    "protein": "10",
+    "carbs": "66",
+    "fats": "15",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Spicy Chow Mein",
+    "calories": "400",
+    "protein": "12",
+    "carbs": "55",
+    "fats": "15",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Low Fat Spring Roll",
+    "calories": "96",
+    "protein": "3",
+    "carbs": "14",
+    "fats": "3",
+    "servingSize": "1",
+    "servingUnit": "piece"
+  },
+  {
+    "name": "High Protein Spring Roll",
+    "calories": "132",
+    "protein": "5",
+    "carbs": "14",
+    "fats": "6",
+    "servingSize": "1",
+    "servingUnit": "piece"
+  },
+  {
+    "name": "Vegan Spring Roll",
+    "calories": "108",
+    "protein": "2",
+    "carbs": "17",
+    "fats": "6",
+    "servingSize": "1",
+    "servingUnit": "piece"
+  },
+  {
+    "name": "Spicy Spring Roll",
+    "calories": "120",
+    "protein": "3",
+    "carbs": "14",
+    "fats": "6",
+    "servingSize": "1",
+    "servingUnit": "piece"
+  },
+  {
+    "name": "High Protein Dim Sum (Har Gow)",
+    "calories": "50",
+    "protein": "5",
+    "carbs": "6",
+    "fats": "1",
+    "servingSize": "1",
+    "servingUnit": "piece"
+  },
+  {
+    "name": "Vegan Dim Sum (Har Gow)",
+    "calories": "41",
+    "protein": "2",
+    "carbs": "7",
+    "fats": "1",
+    "servingSize": "1",
+    "servingUnit": "piece"
+  },
+  {
+    "name": "Spicy Dim Sum (Har Gow)",
+    "calories": "45",
+    "protein": "3",
+    "carbs": "6",
+    "fats": "1",
+    "servingSize": "1",
+    "servingUnit": "piece"
+  },
+  {
+    "name": "Low Fat Peking Duck",
+    "calories": "256",
+    "protein": "18",
+    "carbs": "2",
+    "fats": "13",
+    "servingSize": "3",
+    "servingUnit": "oz"
+  },
+  {
+    "name": "High Protein Peking Duck",
+    "calories": "352",
+    "protein": "27",
+    "carbs": "2",
+    "fats": "26",
+    "servingSize": "3",
+    "servingUnit": "oz"
+  },
+  {
+    "name": "Vegan Peking Duck",
+    "calories": "288",
+    "protein": "14",
+    "carbs": "2",
+    "fats": "26",
+    "servingSize": "3",
+    "servingUnit": "oz"
+  },
+  {
+    "name": "Spicy Peking Duck",
+    "calories": "320",
+    "protein": "18",
+    "carbs": "2",
+    "fats": "26",
+    "servingSize": "3",
+    "servingUnit": "oz"
+  },
+  {
+    "name": "High Protein Sushi (Salmon Nigiri)",
+    "calories": "66",
+    "protein": "6",
+    "carbs": "8",
+    "fats": "1",
+    "servingSize": "1",
+    "servingUnit": "piece"
+  },
+  {
+    "name": "Vegan Sushi (Salmon Nigiri)",
+    "calories": "54",
+    "protein": "3",
+    "carbs": "10",
+    "fats": "1",
+    "servingSize": "1",
+    "servingUnit": "piece"
+  },
+  {
+    "name": "Spicy Sushi (Salmon Nigiri)",
+    "calories": "60",
+    "protein": "4",
+    "carbs": "8",
+    "fats": "1",
+    "servingSize": "1",
+    "servingUnit": "piece"
+  },
+  {
+    "name": "Low Fat California Roll",
+    "calories": "200",
+    "protein": "8",
+    "carbs": "38",
+    "fats": "4",
+    "servingSize": "6",
+    "servingUnit": "pieces"
+  },
+  {
+    "name": "High Protein California Roll",
+    "calories": "275",
+    "protein": "12",
+    "carbs": "38",
+    "fats": "7",
+    "servingSize": "6",
+    "servingUnit": "pieces"
+  },
+  {
+    "name": "Vegan California Roll",
+    "calories": "225",
+    "protein": "6",
+    "carbs": "46",
+    "fats": "7",
+    "servingSize": "6",
+    "servingUnit": "pieces"
+  },
+  {
+    "name": "Spicy California Roll",
+    "calories": "250",
+    "protein": "8",
+    "carbs": "38",
+    "fats": "7",
+    "servingSize": "6",
+    "servingUnit": "pieces"
+  },
+  {
+    "name": "Low Fat Ramen (Tonkotsu)",
+    "calories": "480",
+    "protein": "25",
+    "carbs": "70",
+    "fats": "13",
+    "servingSize": "1",
+    "servingUnit": "bowl"
+  },
+  {
+    "name": "High Protein Ramen (Tonkotsu)",
+    "calories": "660",
+    "protein": "38",
+    "carbs": "70",
+    "fats": "25",
+    "servingSize": "1",
+    "servingUnit": "bowl"
+  },
+  {
+    "name": "Vegan Ramen (Tonkotsu)",
+    "calories": "540",
+    "protein": "20",
+    "carbs": "84",
+    "fats": "25",
+    "servingSize": "1",
+    "servingUnit": "bowl"
+  },
+  {
+    "name": "Spicy Ramen (Tonkotsu)",
+    "calories": "600",
+    "protein": "25",
+    "carbs": "70",
+    "fats": "25",
+    "servingSize": "1",
+    "servingUnit": "bowl"
+  },
+  {
+    "name": "Low Fat Chicken Teriyaki",
+    "calories": "240",
+    "protein": "28",
+    "carbs": "25",
+    "fats": "4",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "High Protein Chicken Teriyaki",
+    "calories": "330",
+    "protein": "42",
+    "carbs": "25",
+    "fats": "8",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Vegan Mock Chicken Teriyaki",
+    "calories": "270",
+    "protein": "22",
+    "carbs": "30",
+    "fats": "8",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Spicy Chicken Teriyaki",
+    "calories": "300",
+    "protein": "28",
+    "carbs": "25",
+    "fats": "8",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "High Protein Miso Soup",
+    "calories": "44",
+    "protein": "5",
+    "carbs": "4",
+    "fats": "1",
+    "servingSize": "1",
+    "servingUnit": "bowl"
+  },
+  {
+    "name": "Vegan Miso Soup",
+    "calories": "36",
+    "protein": "2",
+    "carbs": "5",
+    "fats": "1",
+    "servingSize": "1",
+    "servingUnit": "bowl"
+  },
+  {
+    "name": "Spicy Miso Soup",
+    "calories": "40",
+    "protein": "3",
+    "carbs": "4",
+    "fats": "1",
+    "servingSize": "1",
+    "servingUnit": "bowl"
+  },
+  {
+    "name": "Low Fat Bibimbap",
+    "calories": "440",
+    "protein": "22",
+    "carbs": "75",
+    "fats": "9",
+    "servingSize": "1",
+    "servingUnit": "bowl"
+  },
+  {
+    "name": "High Protein Bibimbap",
+    "calories": "605",
+    "protein": "33",
+    "carbs": "75",
+    "fats": "18",
+    "servingSize": "1",
+    "servingUnit": "bowl"
+  },
+  {
+    "name": "Vegan Bibimbap",
+    "calories": "495",
+    "protein": "18",
+    "carbs": "90",
+    "fats": "18",
+    "servingSize": "1",
+    "servingUnit": "bowl"
+  },
+  {
+    "name": "Spicy Bibimbap",
+    "calories": "550",
+    "protein": "22",
+    "carbs": "75",
+    "fats": "18",
+    "servingSize": "1",
+    "servingUnit": "bowl"
+  },
+  {
+    "name": "High Protein Kimchi",
+    "calories": "22",
+    "protein": "2",
+    "carbs": "4",
+    "fats": "0",
+    "servingSize": "0.5",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Vegan Kimchi",
+    "calories": "18",
+    "protein": "1",
+    "carbs": "5",
+    "fats": "0",
+    "servingSize": "0.5",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Spicy Kimchi",
+    "calories": "20",
+    "protein": "1",
+    "carbs": "4",
+    "fats": "0",
+    "servingSize": "0.5",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Low Fat Korean Fried Chicken",
+    "calories": "280",
+    "protein": "20",
+    "carbs": "22",
+    "fats": "10",
+    "servingSize": "3",
+    "servingUnit": "pieces"
+  },
+  {
+    "name": "High Protein Korean Fried Chicken",
+    "calories": "385",
+    "protein": "30",
+    "carbs": "22",
+    "fats": "20",
+    "servingSize": "3",
+    "servingUnit": "pieces"
+  },
+  {
+    "name": "Vegan Mock Korean Fried Chicken",
+    "calories": "315",
+    "protein": "16",
+    "carbs": "26",
+    "fats": "20",
+    "servingSize": "3",
+    "servingUnit": "pieces"
+  },
+  {
+    "name": "Spicy Korean Fried Chicken",
+    "calories": "350",
+    "protein": "20",
+    "carbs": "22",
+    "fats": "20",
+    "servingSize": "3",
+    "servingUnit": "pieces"
+  },
+  {
+    "name": "Low Fat Pad Thai",
+    "calories": "360",
+    "protein": "18",
+    "carbs": "65",
+    "fats": "7",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "High Protein Pad Thai",
+    "calories": "495",
+    "protein": "27",
+    "carbs": "65",
+    "fats": "14",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Vegan Pad Thai",
+    "calories": "405",
+    "protein": "14",
+    "carbs": "78",
+    "fats": "14",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Spicy Pad Thai",
+    "calories": "450",
+    "protein": "18",
+    "carbs": "65",
+    "fats": "14",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Low Fat Green Curry (Chicken)",
+    "calories": "304",
+    "protein": "25",
+    "carbs": "12",
+    "fats": "13",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "High Protein Green Curry (Chicken)",
+    "calories": "418",
+    "protein": "38",
+    "carbs": "12",
+    "fats": "26",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Vegan Mock Green Curry (Chicken)",
+    "calories": "342",
+    "protein": "20",
+    "carbs": "14",
+    "fats": "26",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Spicy Green Curry (Chicken)",
+    "calories": "380",
+    "protein": "25",
+    "carbs": "12",
+    "fats": "26",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "High Protein Tom Yum Soup",
+    "calories": "132",
+    "protein": "18",
+    "carbs": "8",
+    "fats": "4",
+    "servingSize": "1",
+    "servingUnit": "bowl"
+  },
+  {
+    "name": "Vegan Tom Yum Soup",
+    "calories": "108",
+    "protein": "10",
+    "carbs": "10",
+    "fats": "4",
+    "servingSize": "1",
+    "servingUnit": "bowl"
+  },
+  {
+    "name": "Spicy Tom Yum Soup",
+    "calories": "120",
+    "protein": "12",
+    "carbs": "8",
+    "fats": "4",
+    "servingSize": "1",
+    "servingUnit": "bowl"
+  },
+  {
+    "name": "Low Fat Mango Sticky Rice",
+    "calories": "280",
+    "protein": "4",
+    "carbs": "65",
+    "fats": "5",
+    "servingSize": "1",
+    "servingUnit": "portion"
+  },
+  {
+    "name": "High Protein Mango Sticky Rice",
+    "calories": "385",
+    "protein": "6",
+    "carbs": "65",
+    "fats": "10",
+    "servingSize": "1",
+    "servingUnit": "portion"
+  },
+  {
+    "name": "Vegan Mango Sticky Rice",
+    "calories": "315",
+    "protein": "3",
+    "carbs": "78",
+    "fats": "10",
+    "servingSize": "1",
+    "servingUnit": "portion"
+  },
+  {
+    "name": "Spicy Mango Sticky Rice",
+    "calories": "350",
+    "protein": "4",
+    "carbs": "65",
+    "fats": "10",
+    "servingSize": "1",
+    "servingUnit": "portion"
+  },
+  {
+    "name": "Low Fat Hummus",
+    "calories": "136",
+    "protein": "4",
+    "carbs": "16",
+    "fats": "5",
+    "servingSize": "0.25",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "High Protein Hummus",
+    "calories": "187",
+    "protein": "6",
+    "carbs": "16",
+    "fats": "10",
+    "servingSize": "0.25",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Vegan Hummus",
+    "calories": "153",
+    "protein": "3",
+    "carbs": "19",
+    "fats": "10",
+    "servingSize": "0.25",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Spicy Hummus",
+    "calories": "170",
+    "protein": "4",
+    "carbs": "16",
+    "fats": "10",
+    "servingSize": "0.25",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Low Fat Falafel",
+    "calories": "264",
+    "protein": "14",
+    "carbs": "32",
+    "fats": "9",
+    "servingSize": "3",
+    "servingUnit": "pieces"
+  },
+  {
+    "name": "High Protein Falafel",
+    "calories": "363",
+    "protein": "21",
+    "carbs": "32",
+    "fats": "18",
+    "servingSize": "3",
+    "servingUnit": "pieces"
+  },
+  {
+    "name": "Vegan Falafel",
+    "calories": "297",
+    "protein": "11",
+    "carbs": "38",
+    "fats": "18",
+    "servingSize": "3",
+    "servingUnit": "pieces"
+  },
+  {
+    "name": "Spicy Falafel",
+    "calories": "330",
+    "protein": "14",
+    "carbs": "32",
+    "fats": "18",
+    "servingSize": "3",
+    "servingUnit": "pieces"
+  },
+  {
+    "name": "Low Fat Chicken Shawarma",
+    "calories": "320",
+    "protein": "30",
+    "carbs": "15",
+    "fats": "11",
+    "servingSize": "1",
+    "servingUnit": "wrap/pita"
+  },
+  {
+    "name": "High Protein Chicken Shawarma",
+    "calories": "440",
+    "protein": "45",
+    "carbs": "15",
+    "fats": "22",
+    "servingSize": "1",
+    "servingUnit": "wrap/pita"
+  },
+  {
+    "name": "Vegan Mock Chicken Shawarma",
+    "calories": "360",
+    "protein": "24",
+    "carbs": "18",
+    "fats": "22",
+    "servingSize": "1",
+    "servingUnit": "wrap/pita"
+  },
+  {
+    "name": "Spicy Chicken Shawarma",
+    "calories": "400",
+    "protein": "30",
+    "carbs": "15",
+    "fats": "22",
+    "servingSize": "1",
+    "servingUnit": "wrap/pita"
+  },
+  {
+    "name": "Low Fat Tabbouleh",
+    "calories": "120",
+    "protein": "4",
+    "carbs": "20",
+    "fats": "4",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "High Protein Tabbouleh",
+    "calories": "165",
+    "protein": "6",
+    "carbs": "20",
+    "fats": "8",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Vegan Tabbouleh",
+    "calories": "135",
+    "protein": "3",
+    "carbs": "24",
+    "fats": "8",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Spicy Tabbouleh",
+    "calories": "150",
+    "protein": "4",
+    "carbs": "20",
+    "fats": "8",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Low Fat Baba Ganoush",
+    "calories": "96",
+    "protein": "2",
+    "carbs": "10",
+    "fats": "4",
+    "servingSize": "0.25",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "High Protein Baba Ganoush",
+    "calories": "132",
+    "protein": "3",
+    "carbs": "10",
+    "fats": "8",
+    "servingSize": "0.25",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Vegan Baba Ganoush",
+    "calories": "108",
+    "protein": "2",
+    "carbs": "12",
+    "fats": "8",
+    "servingSize": "0.25",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Spicy Baba Ganoush",
+    "calories": "120",
+    "protein": "2",
+    "carbs": "10",
+    "fats": "8",
+    "servingSize": "0.25",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Low Fat Greek Salad",
+    "calories": "200",
+    "protein": "8",
+    "carbs": "12",
+    "fats": "10",
+    "servingSize": "1",
+    "servingUnit": "bowl"
+  },
+  {
+    "name": "High Protein Greek Salad",
+    "calories": "275",
+    "protein": "12",
+    "carbs": "12",
+    "fats": "20",
+    "servingSize": "1",
+    "servingUnit": "bowl"
+  },
+  {
+    "name": "Vegan Greek Salad",
+    "calories": "225",
+    "protein": "6",
+    "carbs": "14",
+    "fats": "20",
+    "servingSize": "1",
+    "servingUnit": "bowl"
+  },
+  {
+    "name": "Spicy Greek Salad",
+    "calories": "250",
+    "protein": "8",
+    "carbs": "12",
+    "fats": "20",
+    "servingSize": "1",
+    "servingUnit": "bowl"
+  },
+  {
+    "name": "High Protein Apple",
+    "calories": "105",
+    "protein": "1",
+    "carbs": "25",
+    "fats": "0",
+    "servingSize": "1",
+    "servingUnit": "medium"
+  },
+  {
+    "name": "Vegan Apple",
+    "calories": "86",
+    "protein": "0",
+    "carbs": "30",
+    "fats": "0",
+    "servingSize": "1",
+    "servingUnit": "medium"
+  },
+  {
+    "name": "Spicy Apple",
+    "calories": "95",
+    "protein": "1",
+    "carbs": "25",
+    "fats": "0",
+    "servingSize": "1",
+    "servingUnit": "medium"
+  },
+  {
+    "name": "High Protein Banana",
+    "calories": "116",
+    "protein": "2",
+    "carbs": "27",
+    "fats": "0",
+    "servingSize": "1",
+    "servingUnit": "medium"
+  },
+  {
+    "name": "Vegan Banana",
+    "calories": "95",
+    "protein": "1",
+    "carbs": "32",
+    "fats": "0",
+    "servingSize": "1",
+    "servingUnit": "medium"
+  },
+  {
+    "name": "Spicy Banana",
+    "calories": "105",
+    "protein": "1",
+    "carbs": "27",
+    "fats": "0",
+    "servingSize": "1",
+    "servingUnit": "medium"
+  },
+  {
+    "name": "High Protein Orange",
+    "calories": "68",
+    "protein": "2",
+    "carbs": "15",
+    "fats": "0",
+    "servingSize": "1",
+    "servingUnit": "medium"
+  },
+  {
+    "name": "Vegan Orange",
+    "calories": "56",
+    "protein": "1",
+    "carbs": "18",
+    "fats": "0",
+    "servingSize": "1",
+    "servingUnit": "medium"
+  },
+  {
+    "name": "Spicy Orange",
+    "calories": "62",
+    "protein": "1",
+    "carbs": "15",
+    "fats": "0",
+    "servingSize": "1",
+    "servingUnit": "medium"
+  },
+  {
+    "name": "High Protein Strawberries",
+    "calories": "54",
+    "protein": "2",
+    "carbs": "12",
+    "fats": "1",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Vegan Strawberries",
+    "calories": "44",
+    "protein": "1",
+    "carbs": "14",
+    "fats": "1",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Spicy Strawberries",
+    "calories": "49",
+    "protein": "1",
+    "carbs": "12",
+    "fats": "1",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "High Protein Blueberries",
+    "calories": "92",
+    "protein": "2",
+    "carbs": "21",
+    "fats": "1",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Vegan Blueberries",
+    "calories": "76",
+    "protein": "1",
+    "carbs": "25",
+    "fats": "1",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Spicy Blueberries",
+    "calories": "84",
+    "protein": "1",
+    "carbs": "21",
+    "fats": "1",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "High Protein Grapes",
+    "calories": "114",
+    "protein": "2",
+    "carbs": "27",
+    "fats": "0",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Vegan Grapes",
+    "calories": "94",
+    "protein": "1",
+    "carbs": "32",
+    "fats": "0",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Spicy Grapes",
+    "calories": "104",
+    "protein": "1",
+    "carbs": "27",
+    "fats": "0",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "High Protein Mango",
+    "calories": "222",
+    "protein": "4",
+    "carbs": "50",
+    "fats": "1",
+    "servingSize": "1",
+    "servingUnit": "fruit"
+  },
+  {
+    "name": "Vegan Mango",
+    "calories": "182",
+    "protein": "2",
+    "carbs": "60",
+    "fats": "1",
+    "servingSize": "1",
+    "servingUnit": "fruit"
+  },
+  {
+    "name": "Spicy Mango",
+    "calories": "202",
+    "protein": "3",
+    "carbs": "50",
+    "fats": "1",
+    "servingSize": "1",
+    "servingUnit": "fruit"
+  },
+  {
+    "name": "High Protein Pineapple",
+    "calories": "90",
+    "protein": "1",
+    "carbs": "22",
+    "fats": "0",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Vegan Pineapple",
+    "calories": "74",
+    "protein": "1",
+    "carbs": "26",
+    "fats": "0",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Spicy Pineapple",
+    "calories": "82",
+    "protein": "1",
+    "carbs": "22",
+    "fats": "0",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "High Protein Watermelon",
+    "calories": "51",
+    "protein": "1",
+    "carbs": "11",
+    "fats": "0",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Vegan Watermelon",
+    "calories": "41",
+    "protein": "1",
+    "carbs": "13",
+    "fats": "0",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Spicy Watermelon",
+    "calories": "46",
+    "protein": "1",
+    "carbs": "11",
+    "fats": "0",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Low Fat Avocado",
+    "calories": "187",
+    "protein": "3",
+    "carbs": "12",
+    "fats": "11",
+    "servingSize": "1",
+    "servingUnit": "medium"
+  },
+  {
+    "name": "High Protein Avocado",
+    "calories": "257",
+    "protein": "4",
+    "carbs": "12",
+    "fats": "21",
+    "servingSize": "1",
+    "servingUnit": "medium"
+  },
+  {
+    "name": "Vegan Avocado",
+    "calories": "211",
+    "protein": "2",
+    "carbs": "14",
+    "fats": "21",
+    "servingSize": "1",
+    "servingUnit": "medium"
+  },
+  {
+    "name": "Spicy Avocado",
+    "calories": "234",
+    "protein": "3",
+    "carbs": "12",
+    "fats": "21",
+    "servingSize": "1",
+    "servingUnit": "medium"
+  },
+  {
+    "name": "High Protein Broccoli (Raw)",
+    "calories": "34",
+    "protein": "4",
+    "carbs": "6",
+    "fats": "0",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Vegan Broccoli (Raw)",
+    "calories": "28",
+    "protein": "2",
+    "carbs": "7",
+    "fats": "0",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Spicy Broccoli (Raw)",
+    "calories": "31",
+    "protein": "3",
+    "carbs": "6",
+    "fats": "0",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "High Protein Spinach (Raw)",
+    "calories": "8",
+    "protein": "1",
+    "carbs": "1",
+    "fats": "0",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Vegan Spinach (Raw)",
+    "calories": "6",
+    "protein": "1",
+    "carbs": "1",
+    "fats": "0",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Spicy Spinach (Raw)",
+    "calories": "7",
+    "protein": "1",
+    "carbs": "1",
+    "fats": "0",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "High Protein Carrot (Raw)",
+    "calories": "45",
+    "protein": "1",
+    "carbs": "10",
+    "fats": "0",
+    "servingSize": "1",
+    "servingUnit": "medium"
+  },
+  {
+    "name": "Vegan Carrot (Raw)",
+    "calories": "37",
+    "protein": "1",
+    "carbs": "12",
+    "fats": "0",
+    "servingSize": "1",
+    "servingUnit": "medium"
+  },
+  {
+    "name": "Spicy Carrot (Raw)",
+    "calories": "41",
+    "protein": "1",
+    "carbs": "10",
+    "fats": "0",
+    "servingSize": "1",
+    "servingUnit": "medium"
+  },
+  {
+    "name": "High Protein Tomato",
+    "calories": "24",
+    "protein": "2",
+    "carbs": "5",
+    "fats": "0",
+    "servingSize": "1",
+    "servingUnit": "medium"
+  },
+  {
+    "name": "Vegan Tomato",
+    "calories": "20",
+    "protein": "1",
+    "carbs": "6",
+    "fats": "0",
+    "servingSize": "1",
+    "servingUnit": "medium"
+  },
+  {
+    "name": "Spicy Tomato",
+    "calories": "22",
+    "protein": "1",
+    "carbs": "5",
+    "fats": "0",
+    "servingSize": "1",
+    "servingUnit": "medium"
+  },
+  {
+    "name": "High Protein Cucumber",
+    "calories": "18",
+    "protein": "1",
+    "carbs": "4",
+    "fats": "0",
+    "servingSize": "1",
+    "servingUnit": "medium"
+  },
+  {
+    "name": "Vegan Cucumber",
+    "calories": "14",
+    "protein": "1",
+    "carbs": "5",
+    "fats": "0",
+    "servingSize": "1",
+    "servingUnit": "medium"
+  },
+  {
+    "name": "Spicy Cucumber",
+    "calories": "16",
+    "protein": "1",
+    "carbs": "4",
+    "fats": "0",
+    "servingSize": "1",
+    "servingUnit": "medium"
+  },
+  {
+    "name": "High Protein Bell Pepper",
+    "calories": "26",
+    "protein": "2",
+    "carbs": "6",
+    "fats": "0",
+    "servingSize": "1",
+    "servingUnit": "medium"
+  },
+  {
+    "name": "Vegan Bell Pepper",
+    "calories": "22",
+    "protein": "1",
+    "carbs": "7",
+    "fats": "0",
+    "servingSize": "1",
+    "servingUnit": "medium"
+  },
+  {
+    "name": "Spicy Bell Pepper",
+    "calories": "24",
+    "protein": "1",
+    "carbs": "6",
+    "fats": "0",
+    "servingSize": "1",
+    "servingUnit": "medium"
+  },
+  {
+    "name": "High Protein Onion",
+    "calories": "48",
+    "protein": "2",
+    "carbs": "10",
+    "fats": "0",
+    "servingSize": "1",
+    "servingUnit": "medium"
+  },
+  {
+    "name": "Vegan Onion",
+    "calories": "40",
+    "protein": "1",
+    "carbs": "12",
+    "fats": "0",
+    "servingSize": "1",
+    "servingUnit": "medium"
+  },
+  {
+    "name": "Spicy Onion",
+    "calories": "44",
+    "protein": "1",
+    "carbs": "10",
+    "fats": "0",
+    "servingSize": "1",
+    "servingUnit": "medium"
+  },
+  {
+    "name": "High Protein Potato (Baked)",
+    "calories": "177",
+    "protein": "6",
+    "carbs": "37",
+    "fats": "0",
+    "servingSize": "1",
+    "servingUnit": "medium"
+  },
+  {
+    "name": "Vegan Potato (Baked)",
+    "calories": "145",
+    "protein": "3",
+    "carbs": "44",
+    "fats": "0",
+    "servingSize": "1",
+    "servingUnit": "medium"
+  },
+  {
+    "name": "Spicy Potato (Baked)",
+    "calories": "161",
+    "protein": "4",
+    "carbs": "37",
+    "fats": "0",
+    "servingSize": "1",
+    "servingUnit": "medium"
+  },
+  {
+    "name": "High Protein Sweet Potato (Baked)",
+    "calories": "113",
+    "protein": "3",
+    "carbs": "24",
+    "fats": "0",
+    "servingSize": "1",
+    "servingUnit": "medium"
+  },
+  {
+    "name": "Vegan Sweet Potato (Baked)",
+    "calories": "93",
+    "protein": "2",
+    "carbs": "29",
+    "fats": "0",
+    "servingSize": "1",
+    "servingUnit": "medium"
+  },
+  {
+    "name": "Spicy Sweet Potato (Baked)",
+    "calories": "103",
+    "protein": "2",
+    "carbs": "24",
+    "fats": "0",
+    "servingSize": "1",
+    "servingUnit": "medium"
+  },
+  {
+    "name": "High Protein Cauliflower (Raw)",
+    "calories": "28",
+    "protein": "3",
+    "carbs": "5",
+    "fats": "0",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Vegan Cauliflower (Raw)",
+    "calories": "23",
+    "protein": "2",
+    "carbs": "6",
+    "fats": "0",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "Spicy Cauliflower (Raw)",
+    "calories": "25",
+    "protein": "2",
+    "carbs": "5",
+    "fats": "0",
+    "servingSize": "1",
+    "servingUnit": "cup"
+  },
+  {
+    "name": "High Protein Chicken Breast (Cooked)",
+    "calories": "182",
+    "protein": "47",
+    "carbs": "0",
+    "fats": "4",
+    "servingSize": "100",
+    "servingUnit": "g"
+  },
+  {
+    "name": "Vegan Mock Chicken Breast (Cooked)",
+    "calories": "149",
+    "protein": "25",
+    "carbs": "0",
+    "fats": "4",
+    "servingSize": "100",
+    "servingUnit": "g"
+  },
+  {
+    "name": "Spicy Chicken Breast (Cooked)",
+    "calories": "165",
+    "protein": "31",
+    "carbs": "0",
+    "fats": "4",
+    "servingSize": "100",
+    "servingUnit": "g"
+  },
+  {
+    "name": "Low Fat Chicken Thigh (Cooked)",
+    "calories": "167",
+    "protein": "26",
+    "carbs": "0",
+    "fats": "6",
+    "servingSize": "100",
+    "servingUnit": "g"
+  },
+  {
+    "name": "High Protein Chicken Thigh (Cooked)",
+    "calories": "230",
+    "protein": "39",
+    "carbs": "0",
+    "fats": "11",
+    "servingSize": "100",
+    "servingUnit": "g"
+  },
+  {
+    "name": "Vegan Mock Chicken Thigh (Cooked)",
+    "calories": "188",
+    "protein": "21",
+    "carbs": "0",
+    "fats": "11",
+    "servingSize": "100",
+    "servingUnit": "g"
+  },
+  {
+    "name": "Spicy Chicken Thigh (Cooked)",
+    "calories": "209",
+    "protein": "26",
+    "carbs": "0",
+    "fats": "11",
+    "servingSize": "100",
+    "servingUnit": "g"
+  },
+  {
+    "name": "Low Fat Ground Beef (90% Lean, Cooked)",
+    "calories": "171",
+    "protein": "27",
+    "carbs": "0",
+    "fats": "6",
+    "servingSize": "100",
+    "servingUnit": "g"
+  },
+  {
+    "name": "High Protein Ground Beef (90% Lean, Cooked)",
+    "calories": "235",
+    "protein": "41",
+    "carbs": "0",
+    "fats": "11",
+    "servingSize": "100",
+    "servingUnit": "g"
+  },
+  {
+    "name": "Vegan Mock Ground Beef (90% Lean, Cooked)",
+    "calories": "193",
+    "protein": "22",
+    "carbs": "0",
+    "fats": "11",
+    "servingSize": "100",
+    "servingUnit": "g"
+  },
+  {
+    "name": "Spicy Ground Beef (90% Lean, Cooked)",
+    "calories": "214",
+    "protein": "27",
+    "carbs": "0",
+    "fats": "11",
+    "servingSize": "100",
+    "servingUnit": "g"
+  },
+  {
+    "name": "Low Fat Salmon (Cooked)",
+    "calories": "165",
+    "protein": "22",
+    "carbs": "0",
+    "fats": "6",
+    "servingSize": "100",
+    "servingUnit": "g"
+  },
+  {
+    "name": "High Protein Salmon (Cooked)",
+    "calories": "227",
+    "protein": "33",
+    "carbs": "0",
+    "fats": "12",
+    "servingSize": "100",
+    "servingUnit": "g"
+  },
+  {
+    "name": "Vegan Salmon (Cooked)",
+    "calories": "185",
+    "protein": "18",
+    "carbs": "0",
+    "fats": "12",
+    "servingSize": "100",
+    "servingUnit": "g"
+  },
+  {
+    "name": "Spicy Salmon (Cooked)",
+    "calories": "206",
+    "protein": "22",
+    "carbs": "0",
+    "fats": "12",
+    "servingSize": "100",
+    "servingUnit": "g"
+  },
+  {
+    "name": "High Protein Tuna (Canned in Water)",
+    "calories": "128",
+    "protein": "39",
+    "carbs": "0",
+    "fats": "1",
+    "servingSize": "1",
+    "servingUnit": "can (165g)"
+  },
+  {
+    "name": "Vegan Tuna (Canned in Water)",
+    "calories": "104",
+    "protein": "21",
+    "carbs": "0",
+    "fats": "1",
+    "servingSize": "1",
+    "servingUnit": "can (165g)"
+  },
+  {
+    "name": "Spicy Tuna (Canned in Water)",
+    "calories": "116",
+    "protein": "26",
+    "carbs": "0",
+    "fats": "1",
+    "servingSize": "1",
+    "servingUnit": "can (165g)"
+  },
+  {
+    "name": "High Protein Turkey Breast (Sliced)",
+    "calories": "114",
+    "protein": "33",
+    "carbs": "2",
+    "fats": "2",
+    "servingSize": "100",
+    "servingUnit": "g"
+  },
+  {
+    "name": "Vegan Turkey Breast (Sliced)",
+    "calories": "94",
+    "protein": "18",
+    "carbs": "2",
+    "fats": "2",
+    "servingSize": "100",
+    "servingUnit": "g"
+  },
+  {
+    "name": "Spicy Turkey Breast (Sliced)",
+    "calories": "104",
+    "protein": "22",
+    "carbs": "2",
+    "fats": "2",
+    "servingSize": "100",
+    "servingUnit": "g"
+  },
+  {
+    "name": "Low Fat Pork Chop (Cooked)",
+    "calories": "200",
+    "protein": "25",
+    "carbs": "0",
+    "fats": "8",
+    "servingSize": "100",
+    "servingUnit": "g"
+  },
+  {
+    "name": "High Protein Pork Chop (Cooked)",
+    "calories": "275",
+    "protein": "38",
+    "carbs": "0",
+    "fats": "16",
+    "servingSize": "100",
+    "servingUnit": "g"
+  },
+  {
+    "name": "Vegan Pork Chop (Cooked)",
+    "calories": "225",
+    "protein": "20",
+    "carbs": "0",
+    "fats": "16",
+    "servingSize": "100",
+    "servingUnit": "g"
+  },
+  {
+    "name": "Spicy Pork Chop (Cooked)",
+    "calories": "250",
+    "protein": "25",
+    "carbs": "0",
+    "fats": "16",
+    "servingSize": "100",
+    "servingUnit": "g"
+  },
+  {
+    "name": "High Protein Shrimp (Cooked)",
+    "calories": "109",
+    "protein": "36",
+    "carbs": "0",
+    "fats": "0",
+    "servingSize": "100",
+    "servingUnit": "g"
+  },
+  {
+    "name": "Vegan Shrimp (Cooked)",
+    "calories": "89",
+    "protein": "19",
+    "carbs": "0",
+    "fats": "0",
+    "servingSize": "100",
+    "servingUnit": "g"
+  },
+  {
+    "name": "Spicy Shrimp (Cooked)",
+    "calories": "99",
+    "protein": "24",
+    "carbs": "0",
+    "fats": "0",
+    "servingSize": "100",
+    "servingUnit": "g"
+  },
+  {
+    "name": "High Protein Bacon",
+    "calories": "47",
+    "protein": "5",
+    "carbs": "0",
+    "fats": "3",
+    "servingSize": "1",
+    "servingUnit": "slice"
+  },
+  {
+    "name": "Vegan Bacon",
+    "calories": "39",
+    "protein": "2",
+    "carbs": "0",
+    "fats": "3",
+    "servingSize": "1",
+    "servingUnit": "slice"
+  },
+  {
+    "name": "Spicy Bacon",
+    "calories": "43",
+    "protein": "3",
+    "carbs": "0",
+    "fats": "3",
+    "servingSize": "1",
+    "servingUnit": "slice"
+  },
+  {
+    "name": "Low Fat Egg (Large)",
+    "calories": "62",
+    "protein": "6",
+    "carbs": "1",
+    "fats": "3",
+    "servingSize": "1",
+    "servingUnit": "egg"
+  },
+  {
+    "name": "High Protein Egg (Large)",
+    "calories": "86",
+    "protein": "9",
+    "carbs": "1",
+    "fats": "5",
+    "servingSize": "1",
+    "servingUnit": "egg"
+  },
+  {
+    "name": "Vegan Egg (Large)",
+    "calories": "70",
+    "protein": "5",
+    "carbs": "1",
+    "fats": "5",
+    "servingSize": "1",
+    "servingUnit": "egg"
+  },
+  {
+    "name": "Spicy Egg (Large)",
+    "calories": "78",
+    "protein": "6",
+    "carbs": "1",
+    "fats": "5",
+    "servingSize": "1",
+    "servingUnit": "egg"
+  }
+]

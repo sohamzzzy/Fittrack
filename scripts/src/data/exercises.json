@@ -1,0 +1,1814 @@
+[
+  {
+    "name": "Barbell Bench Press",
+    "category": "Barbell",
+    "muscleGroups": [
+      "Chest",
+      "Triceps",
+      "Shoulders"
+    ],
+    "description": "Flat bench, full ROM."
+  },
+  {
+    "name": "Incline Barbell Bench Press",
+    "category": "Barbell",
+    "muscleGroups": [
+      "Chest",
+      "Shoulders",
+      "Triceps"
+    ],
+    "description": "Upper chest focus."
+  },
+  {
+    "name": "Decline Barbell Bench Press",
+    "category": "Barbell",
+    "muscleGroups": [
+      "Chest",
+      "Triceps"
+    ],
+    "description": "Lower chest focus."
+  },
+  {
+    "name": "Dumbbell Bench Press",
+    "category": "Dumbbell",
+    "muscleGroups": [
+      "Chest",
+      "Triceps",
+      "Shoulders"
+    ],
+    "description": "Flat bench with dumbbells."
+  },
+  {
+    "name": "Incline Dumbbell Bench Press",
+    "category": "Dumbbell",
+    "muscleGroups": [
+      "Chest",
+      "Shoulders",
+      "Triceps"
+    ],
+    "description": "Upper chest focus with dumbbells."
+  },
+  {
+    "name": "Decline Dumbbell Bench Press",
+    "category": "Dumbbell",
+    "muscleGroups": [
+      "Chest",
+      "Triceps"
+    ],
+    "description": "Lower chest focus with dumbbells."
+  },
+  {
+    "name": "Dumbbell Fly",
+    "category": "Dumbbell",
+    "muscleGroups": [
+      "Chest"
+    ],
+    "description": "Chest isolation on a flat bench."
+  },
+  {
+    "name": "Incline Dumbbell Fly",
+    "category": "Dumbbell",
+    "muscleGroups": [
+      "Chest"
+    ],
+    "description": "Upper chest isolation."
+  },
+  {
+    "name": "Cable Fly",
+    "category": "Cable",
+    "muscleGroups": [
+      "Chest"
+    ],
+    "description": "Constant tension chest fly."
+  },
+  {
+    "name": "High-to-Low Cable Fly",
+    "category": "Cable",
+    "muscleGroups": [
+      "Chest"
+    ],
+    "description": "Lower chest focus cable fly."
+  },
+  {
+    "name": "Low-to-High Cable Fly",
+    "category": "Cable",
+    "muscleGroups": [
+      "Chest"
+    ],
+    "description": "Upper chest focus cable fly."
+  },
+  {
+    "name": "Pec Deck Machine",
+    "category": "Machine",
+    "muscleGroups": [
+      "Chest"
+    ],
+    "description": "Machine fly for chest isolation."
+  },
+  {
+    "name": "Machine Chest Press",
+    "category": "Machine",
+    "muscleGroups": [
+      "Chest",
+      "Triceps",
+      "Shoulders"
+    ],
+    "description": "Seated machine press."
+  },
+  {
+    "name": "Push-Up",
+    "category": "Bodyweight",
+    "muscleGroups": [
+      "Chest",
+      "Triceps",
+      "Core"
+    ],
+    "description": "Bodyweight pressing."
+  },
+  {
+    "name": "Decline Push-Up",
+    "category": "Bodyweight",
+    "muscleGroups": [
+      "Chest",
+      "Shoulders",
+      "Triceps"
+    ],
+    "description": "Feet elevated push-up."
+  },
+  {
+    "name": "Diamond Push-Up",
+    "category": "Bodyweight",
+    "muscleGroups": [
+      "Triceps",
+      "Chest"
+    ],
+    "description": "Close grip push-up for triceps."
+  },
+  {
+    "name": "Wide Grip Push-Up",
+    "category": "Bodyweight",
+    "muscleGroups": [
+      "Chest",
+      "Shoulders"
+    ],
+    "description": "Wide hand placement push-up."
+  },
+  {
+    "name": "Chest Dip",
+    "category": "Bodyweight",
+    "muscleGroups": [
+      "Chest",
+      "Triceps",
+      "Shoulders"
+    ],
+    "description": "Leaning forward dip for chest."
+  },
+  {
+    "name": "Pull-Up",
+    "category": "Bodyweight",
+    "muscleGroups": [
+      "Back",
+      "Biceps"
+    ],
+    "description": "Overhand grip vertical pull."
+  },
+  {
+    "name": "Chin-Up",
+    "category": "Bodyweight",
+    "muscleGroups": [
+      "Back",
+      "Biceps"
+    ],
+    "description": "Underhand grip vertical pull."
+  },
+  {
+    "name": "Wide Grip Pull-Up",
+    "category": "Bodyweight",
+    "muscleGroups": [
+      "Back"
+    ],
+    "description": "Wide overhand grip."
+  },
+  {
+    "name": "Neutral Grip Pull-Up",
+    "category": "Bodyweight",
+    "muscleGroups": [
+      "Back",
+      "Biceps"
+    ],
+    "description": "Palms facing each other."
+  },
+  {
+    "name": "Lat Pulldown",
+    "category": "Cable",
+    "muscleGroups": [
+      "Back",
+      "Biceps"
+    ],
+    "description": "Wide or neutral grip."
+  },
+  {
+    "name": "Close Grip Lat Pulldown",
+    "category": "Cable",
+    "muscleGroups": [
+      "Back",
+      "Biceps"
+    ],
+    "description": "V-bar attachment pulldown."
+  },
+  {
+    "name": "Reverse Grip Lat Pulldown",
+    "category": "Cable",
+    "muscleGroups": [
+      "Back",
+      "Biceps"
+    ],
+    "description": "Underhand grip pulldown."
+  },
+  {
+    "name": "Straight Arm Pulldown",
+    "category": "Cable",
+    "muscleGroups": [
+      "Back"
+    ],
+    "description": "Lat isolation with straight arms."
+  },
+  {
+    "name": "Barbell Row",
+    "category": "Barbell",
+    "muscleGroups": [
+      "Back",
+      "Biceps"
+    ],
+    "description": "Bent-over row."
+  },
+  {
+    "name": "Pendlay Row",
+    "category": "Barbell",
+    "muscleGroups": [
+      "Back",
+      "Core"
+    ],
+    "description": "Strict row starting from the floor."
+  },
+  {
+    "name": "T-Bar Row",
+    "category": "Barbell",
+    "muscleGroups": [
+      "Back",
+      "Biceps"
+    ],
+    "description": "Landmine or machine T-bar row."
+  },
+  {
+    "name": "Yates Row",
+    "category": "Barbell",
+    "muscleGroups": [
+      "Back",
+      "Biceps"
+    ],
+    "description": "Underhand grip, more upright row."
+  },
+  {
+    "name": "Dumbbell Row",
+    "category": "Dumbbell",
+    "muscleGroups": [
+      "Back",
+      "Biceps"
+    ],
+    "description": "Single-arm row supported on a bench."
+  },
+  {
+    "name": "Seated Cable Row",
+    "category": "Cable",
+    "muscleGroups": [
+      "Back",
+      "Biceps"
+    ],
+    "description": "Mid-back thickness."
+  },
+  {
+    "name": "Wide Grip Cable Row",
+    "category": "Cable",
+    "muscleGroups": [
+      "Back",
+      "Rear Delts"
+    ],
+    "description": "Upper back focus row."
+  },
+  {
+    "name": "Meadows Row",
+    "category": "Barbell",
+    "muscleGroups": [
+      "Back",
+      "Biceps"
+    ],
+    "description": "Single-arm landmine row."
+  },
+  {
+    "name": "Machine Row",
+    "category": "Machine",
+    "muscleGroups": [
+      "Back",
+      "Biceps"
+    ],
+    "description": "Chest-supported machine row."
+  },
+  {
+    "name": "Barbell Shrug",
+    "category": "Barbell",
+    "muscleGroups": [
+      "Traps"
+    ],
+    "description": "Heavy trap isolation."
+  },
+  {
+    "name": "Dumbbell Shrug",
+    "category": "Dumbbell",
+    "muscleGroups": [
+      "Traps"
+    ],
+    "description": "Trap isolation with dumbbells."
+  },
+  {
+    "name": "Overhead Press",
+    "category": "Barbell",
+    "muscleGroups": [
+      "Shoulders",
+      "Triceps"
+    ],
+    "description": "Strict standing press."
+  },
+  {
+    "name": "Push Press",
+    "category": "Barbell",
+    "muscleGroups": [
+      "Shoulders",
+      "Triceps",
+      "Legs"
+    ],
+    "description": "Overhead press with leg drive."
+  },
+  {
+    "name": "Seated Barbell Press",
+    "category": "Barbell",
+    "muscleGroups": [
+      "Shoulders",
+      "Triceps"
+    ],
+    "description": "Seated overhead press."
+  },
+  {
+    "name": "Seated Dumbbell Press",
+    "category": "Dumbbell",
+    "muscleGroups": [
+      "Shoulders",
+      "Triceps"
+    ],
+    "description": "Seated shoulder press with dumbbells."
+  },
+  {
+    "name": "Standing Dumbbell Press",
+    "category": "Dumbbell",
+    "muscleGroups": [
+      "Shoulders",
+      "Triceps",
+      "Core"
+    ],
+    "description": "Standing shoulder press with dumbbells."
+  },
+  {
+    "name": "Arnold Press",
+    "category": "Dumbbell",
+    "muscleGroups": [
+      "Shoulders",
+      "Triceps"
+    ],
+    "description": "Rotating dumbbell press."
+  },
+  {
+    "name": "Machine Shoulder Press",
+    "category": "Machine",
+    "muscleGroups": [
+      "Shoulders",
+      "Triceps"
+    ],
+    "description": "Seated machine shoulder press."
+  },
+  {
+    "name": "Lateral Raise",
+    "category": "Dumbbell",
+    "muscleGroups": [
+      "Shoulders"
+    ],
+    "description": "Side delt isolation."
+  },
+  {
+    "name": "Cable Lateral Raise",
+    "category": "Cable",
+    "muscleGroups": [
+      "Shoulders"
+    ],
+    "description": "Constant tension side delt isolation."
+  },
+  {
+    "name": "Machine Lateral Raise",
+    "category": "Machine",
+    "muscleGroups": [
+      "Shoulders"
+    ],
+    "description": "Machine-based side delt isolation."
+  },
+  {
+    "name": "Front Raise",
+    "category": "Dumbbell",
+    "muscleGroups": [
+      "Shoulders"
+    ],
+    "description": "Front delt isolation."
+  },
+  {
+    "name": "Cable Front Raise",
+    "category": "Cable",
+    "muscleGroups": [
+      "Shoulders"
+    ],
+    "description": "Front delt isolation with cable."
+  },
+  {
+    "name": "Barbell Front Raise",
+    "category": "Barbell",
+    "muscleGroups": [
+      "Shoulders"
+    ],
+    "description": "Front delt isolation with barbell."
+  },
+  {
+    "name": "Rear Delt Fly",
+    "category": "Dumbbell",
+    "muscleGroups": [
+      "Shoulders",
+      "Back"
+    ],
+    "description": "Bent-over rear delt isolation."
+  },
+  {
+    "name": "Reverse Pec Deck",
+    "category": "Machine",
+    "muscleGroups": [
+      "Shoulders",
+      "Back"
+    ],
+    "description": "Machine rear delt isolation."
+  },
+  {
+    "name": "Face Pull",
+    "category": "Cable",
+    "muscleGroups": [
+      "Shoulders",
+      "Back"
+    ],
+    "description": "Rear delt / external rotation."
+  },
+  {
+    "name": "Upright Row",
+    "category": "Barbell",
+    "muscleGroups": [
+      "Shoulders",
+      "Traps"
+    ],
+    "description": "Barbell upright row."
+  },
+  {
+    "name": "Dumbbell Upright Row",
+    "category": "Dumbbell",
+    "muscleGroups": [
+      "Shoulders",
+      "Traps"
+    ],
+    "description": "Dumbbell upright row."
+  },
+  {
+    "name": "Cable Upright Row",
+    "category": "Cable",
+    "muscleGroups": [
+      "Shoulders",
+      "Traps"
+    ],
+    "description": "Cable upright row."
+  },
+  {
+    "name": "Barbell Back Squat",
+    "category": "Barbell",
+    "muscleGroups": [
+      "Legs",
+      "Glutes",
+      "Core"
+    ],
+    "description": "High-bar or low-bar squat."
+  },
+  {
+    "name": "Barbell Front Squat",
+    "category": "Barbell",
+    "muscleGroups": [
+      "Legs",
+      "Core"
+    ],
+    "description": "Quad-dominant squat."
+  },
+  {
+    "name": "Goblet Squat",
+    "category": "Dumbbell",
+    "muscleGroups": [
+      "Legs",
+      "Glutes",
+      "Core"
+    ],
+    "description": "Squat with a single dumbbell or kettlebell."
+  },
+  {
+    "name": "Zercher Squat",
+    "category": "Barbell",
+    "muscleGroups": [
+      "Legs",
+      "Core"
+    ],
+    "description": "Barbell held in the crooks of the elbows."
+  },
+  {
+    "name": "Overhead Squat",
+    "category": "Barbell",
+    "muscleGroups": [
+      "Legs",
+      "Core",
+      "Shoulders"
+    ],
+    "description": "Squat with barbell held overhead."
+  },
+  {
+    "name": "Box Squat",
+    "category": "Barbell",
+    "muscleGroups": [
+      "Legs",
+      "Glutes"
+    ],
+    "description": "Squatting down to a box."
+  },
+  {
+    "name": "Pause Squat",
+    "category": "Barbell",
+    "muscleGroups": [
+      "Legs",
+      "Glutes"
+    ],
+    "description": "Squat with a pause at the bottom."
+  },
+  {
+    "name": "Bulgarian Split Squat",
+    "category": "Dumbbell",
+    "muscleGroups": [
+      "Legs",
+      "Glutes"
+    ],
+    "description": "Rear foot elevated split squat."
+  },
+  {
+    "name": "Barbell Split Squat",
+    "category": "Barbell",
+    "muscleGroups": [
+      "Legs",
+      "Glutes"
+    ],
+    "description": "Static lunge with barbell."
+  },
+  {
+    "name": "Walking Lunge",
+    "category": "Dumbbell",
+    "muscleGroups": [
+      "Legs",
+      "Glutes"
+    ],
+    "description": "Alternating lunges."
+  },
+  {
+    "name": "Reverse Lunge",
+    "category": "Dumbbell",
+    "muscleGroups": [
+      "Legs",
+      "Glutes"
+    ],
+    "description": "Stepping backwards into a lunge."
+  },
+  {
+    "name": "Forward Lunge",
+    "category": "Dumbbell",
+    "muscleGroups": [
+      "Legs",
+      "Glutes"
+    ],
+    "description": "Stepping forwards into a lunge."
+  },
+  {
+    "name": "Leg Press",
+    "category": "Machine",
+    "muscleGroups": [
+      "Legs",
+      "Glutes"
+    ],
+    "description": "Machine quad/glute emphasis."
+  },
+  {
+    "name": "Hack Squat",
+    "category": "Machine",
+    "muscleGroups": [
+      "Legs"
+    ],
+    "description": "Machine squat variation."
+  },
+  {
+    "name": "Leg Extension",
+    "category": "Machine",
+    "muscleGroups": [
+      "Legs"
+    ],
+    "description": "Quad isolation machine."
+  },
+  {
+    "name": "Conventional Deadlift",
+    "category": "Barbell",
+    "muscleGroups": [
+      "Back",
+      "Glutes",
+      "Legs",
+      "Core"
+    ],
+    "description": "Standard deadlift from the floor."
+  },
+  {
+    "name": "Sumo Deadlift",
+    "category": "Barbell",
+    "muscleGroups": [
+      "Glutes",
+      "Legs",
+      "Back",
+      "Core"
+    ],
+    "description": "Wide stance deadlift."
+  },
+  {
+    "name": "Romanian Deadlift",
+    "category": "Barbell",
+    "muscleGroups": [
+      "Glutes",
+      "Legs",
+      "Back"
+    ],
+    "description": "Hip hinge RDL."
+  },
+  {
+    "name": "Dumbbell Romanian Deadlift",
+    "category": "Dumbbell",
+    "muscleGroups": [
+      "Glutes",
+      "Legs",
+      "Back"
+    ],
+    "description": "Hip hinge with dumbbells."
+  },
+  {
+    "name": "Stiff-Leg Deadlift",
+    "category": "Barbell",
+    "muscleGroups": [
+      "Legs",
+      "Glutes",
+      "Back"
+    ],
+    "description": "Deadlift with mostly straight legs."
+  },
+  {
+    "name": "Trap Bar Deadlift",
+    "category": "Barbell",
+    "muscleGroups": [
+      "Legs",
+      "Glutes",
+      "Back"
+    ],
+    "description": "Deadlift using a hex bar."
+  },
+  {
+    "name": "Deficit Deadlift",
+    "category": "Barbell",
+    "muscleGroups": [
+      "Back",
+      "Glutes",
+      "Legs"
+    ],
+    "description": "Deadlift standing on an elevated surface."
+  },
+  {
+    "name": "Rack Pull",
+    "category": "Barbell",
+    "muscleGroups": [
+      "Back",
+      "Glutes"
+    ],
+    "description": "Partial range of motion deadlift."
+  },
+  {
+    "name": "Lying Leg Curl",
+    "category": "Machine",
+    "muscleGroups": [
+      "Legs"
+    ],
+    "description": "Hamstring isolation."
+  },
+  {
+    "name": "Seated Leg Curl",
+    "category": "Machine",
+    "muscleGroups": [
+      "Legs"
+    ],
+    "description": "Hamstring isolation."
+  },
+  {
+    "name": "Nordic Hamstring Curl",
+    "category": "Bodyweight",
+    "muscleGroups": [
+      "Legs"
+    ],
+    "description": "Eccentric hamstring focus."
+  },
+  {
+    "name": "Glute Ham Raise",
+    "category": "Machine",
+    "muscleGroups": [
+      "Legs",
+      "Glutes"
+    ],
+    "description": "Hamstring and glute focus on GHR machine."
+  },
+  {
+    "name": "Barbell Hip Thrust",
+    "category": "Barbell",
+    "muscleGroups": [
+      "Glutes"
+    ],
+    "description": "Heavy glute bridge with barbell."
+  },
+  {
+    "name": "Dumbbell Hip Thrust",
+    "category": "Dumbbell",
+    "muscleGroups": [
+      "Glutes"
+    ],
+    "description": "Glute bridge with dumbbell."
+  },
+  {
+    "name": "Machine Hip Thrust",
+    "category": "Machine",
+    "muscleGroups": [
+      "Glutes"
+    ],
+    "description": "Glute thrust on a dedicated machine."
+  },
+  {
+    "name": "Glute Bridge",
+    "category": "Bodyweight",
+    "muscleGroups": [
+      "Glutes"
+    ],
+    "description": "Bodyweight hip thrust."
+  },
+  {
+    "name": "Cable Pull Through",
+    "category": "Cable",
+    "muscleGroups": [
+      "Glutes",
+      "Legs"
+    ],
+    "description": "Hip hinge with cable."
+  },
+  {
+    "name": "Standing Calf Raise",
+    "category": "Machine",
+    "muscleGroups": [
+      "Calves"
+    ],
+    "description": "Gastrocnemius focus."
+  },
+  {
+    "name": "Seated Calf Raise",
+    "category": "Machine",
+    "muscleGroups": [
+      "Calves"
+    ],
+    "description": "Soleus focus."
+  },
+  {
+    "name": "Donkey Calf Raise",
+    "category": "Machine",
+    "muscleGroups": [
+      "Calves"
+    ],
+    "description": "Bent over calf raise."
+  },
+  {
+    "name": "Leg Press Calf Raise",
+    "category": "Machine",
+    "muscleGroups": [
+      "Calves"
+    ],
+    "description": "Calf raise on leg press machine."
+  },
+  {
+    "name": "Single Leg Calf Raise",
+    "category": "Bodyweight",
+    "muscleGroups": [
+      "Calves"
+    ],
+    "description": "Unilateral calf raise."
+  },
+  {
+    "name": "Barbell Curl",
+    "category": "Barbell",
+    "muscleGroups": [
+      "Biceps"
+    ],
+    "description": "Standing curl."
+  },
+  {
+    "name": "EZ Bar Curl",
+    "category": "Barbell",
+    "muscleGroups": [
+      "Biceps"
+    ],
+    "description": "Curl with cambered bar."
+  },
+  {
+    "name": "Dumbbell Curl",
+    "category": "Dumbbell",
+    "muscleGroups": [
+      "Biceps"
+    ],
+    "description": "Standard alternating or bilateral curl."
+  },
+  {
+    "name": "Hammer Curl",
+    "category": "Dumbbell",
+    "muscleGroups": [
+      "Biceps",
+      "Forearms"
+    ],
+    "description": "Neutral grip curl."
+  },
+  {
+    "name": "Incline Dumbbell Curl",
+    "category": "Dumbbell",
+    "muscleGroups": [
+      "Biceps"
+    ],
+    "description": "Seated on incline bench for a stretch."
+  },
+  {
+    "name": "Preacher Curl",
+    "category": "Barbell",
+    "muscleGroups": [
+      "Biceps"
+    ],
+    "description": "Arm supported curl."
+  },
+  {
+    "name": "Machine Preacher Curl",
+    "category": "Machine",
+    "muscleGroups": [
+      "Biceps"
+    ],
+    "description": "Machine-based preacher curl."
+  },
+  {
+    "name": "Concentration Curl",
+    "category": "Dumbbell",
+    "muscleGroups": [
+      "Biceps"
+    ],
+    "description": "Arm rested on inner thigh."
+  },
+  {
+    "name": "Spider Curl",
+    "category": "Dumbbell",
+    "muscleGroups": [
+      "Biceps"
+    ],
+    "description": "Chest supported on incline bench."
+  },
+  {
+    "name": "Cable Curl",
+    "category": "Cable",
+    "muscleGroups": [
+      "Biceps"
+    ],
+    "description": "Constant tension curl."
+  },
+  {
+    "name": "Reverse Curl",
+    "category": "Barbell",
+    "muscleGroups": [
+      "Biceps",
+      "Forearms"
+    ],
+    "description": "Overhand grip curl."
+  },
+  {
+    "name": "Zottman Curl",
+    "category": "Dumbbell",
+    "muscleGroups": [
+      "Biceps",
+      "Forearms"
+    ],
+    "description": "Curl up supinated, lower pronated."
+  },
+  {
+    "name": "Tricep Pushdown",
+    "category": "Cable",
+    "muscleGroups": [
+      "Triceps"
+    ],
+    "description": "Rope or straight bar."
+  },
+  {
+    "name": "Overhead Tricep Extension",
+    "category": "Cable",
+    "muscleGroups": [
+      "Triceps"
+    ],
+    "description": "Long head tricep focus."
+  },
+  {
+    "name": "Skull Crusher",
+    "category": "Barbell",
+    "muscleGroups": [
+      "Triceps"
+    ],
+    "description": "Lying tricep extension."
+  },
+  {
+    "name": "Dumbbell Skull Crusher",
+    "category": "Dumbbell",
+    "muscleGroups": [
+      "Triceps"
+    ],
+    "description": "Lying tricep extension with dumbbells."
+  },
+  {
+    "name": "Close Grip Bench Press",
+    "category": "Barbell",
+    "muscleGroups": [
+      "Triceps",
+      "Chest",
+      "Shoulders"
+    ],
+    "description": "Narrow grip for tricep emphasis."
+  },
+  {
+    "name": "Tricep Kickback",
+    "category": "Dumbbell",
+    "muscleGroups": [
+      "Triceps"
+    ],
+    "description": "Bent over tricep extension."
+  },
+  {
+    "name": "Cable Kickback",
+    "category": "Cable",
+    "muscleGroups": [
+      "Triceps"
+    ],
+    "description": "Constant tension kickback."
+  },
+  {
+    "name": "Machine Tricep Extension",
+    "category": "Machine",
+    "muscleGroups": [
+      "Triceps"
+    ],
+    "description": "Seated machine extension."
+  },
+  {
+    "name": "Tricep Dip",
+    "category": "Bodyweight",
+    "muscleGroups": [
+      "Triceps",
+      "Chest",
+      "Shoulders"
+    ],
+    "description": "Upright posture dip."
+  },
+  {
+    "name": "Bench Dip",
+    "category": "Bodyweight",
+    "muscleGroups": [
+      "Triceps"
+    ],
+    "description": "Hands on a bench behind the back."
+  },
+  {
+    "name": "Wrist Curl",
+    "category": "Barbell",
+    "muscleGroups": [
+      "Forearms"
+    ],
+    "description": "Forearm flexor isolation."
+  },
+  {
+    "name": "Reverse Wrist Curl",
+    "category": "Barbell",
+    "muscleGroups": [
+      "Forearms"
+    ],
+    "description": "Forearm extensor isolation."
+  },
+  {
+    "name": "Farmers Walk",
+    "category": "Dumbbell",
+    "muscleGroups": [
+      "Forearms",
+      "Core",
+      "Traps"
+    ],
+    "description": "Loaded carry."
+  },
+  {
+    "name": "Crunch",
+    "category": "Bodyweight",
+    "muscleGroups": [
+      "Core"
+    ],
+    "description": "Basic abdominal crunch."
+  },
+  {
+    "name": "Decline Crunch",
+    "category": "Bodyweight",
+    "muscleGroups": [
+      "Core"
+    ],
+    "description": "Crunch on a decline bench."
+  },
+  {
+    "name": "Cable Crunch",
+    "category": "Cable",
+    "muscleGroups": [
+      "Core"
+    ],
+    "description": "Weighted abdominal crunch."
+  },
+  {
+    "name": "Machine Crunch",
+    "category": "Machine",
+    "muscleGroups": [
+      "Core"
+    ],
+    "description": "Seated ab machine."
+  },
+  {
+    "name": "Plank",
+    "category": "Bodyweight",
+    "muscleGroups": [
+      "Core"
+    ],
+    "description": "Anti-extension hold."
+  },
+  {
+    "name": "Side Plank",
+    "category": "Bodyweight",
+    "muscleGroups": [
+      "Core"
+    ],
+    "description": "Oblique static hold."
+  },
+  {
+    "name": "Hanging Leg Raise",
+    "category": "Bodyweight",
+    "muscleGroups": [
+      "Core"
+    ],
+    "description": "Hip flexion from hang."
+  },
+  {
+    "name": "Hanging Knee Raise",
+    "category": "Bodyweight",
+    "muscleGroups": [
+      "Core"
+    ],
+    "description": "Easier variation of leg raise."
+  },
+  {
+    "name": "Captain's Chair Leg Raise",
+    "category": "Machine",
+    "muscleGroups": [
+      "Core"
+    ],
+    "description": "Supported leg raise."
+  },
+  {
+    "name": "Ab Wheel Rollout",
+    "category": "Bodyweight",
+    "muscleGroups": [
+      "Core"
+    ],
+    "description": "Anti-extension rollout."
+  },
+  {
+    "name": "Russian Twist",
+    "category": "Bodyweight",
+    "muscleGroups": [
+      "Core"
+    ],
+    "description": "Rotational ab exercise."
+  },
+  {
+    "name": "Bicycle Crunch",
+    "category": "Bodyweight",
+    "muscleGroups": [
+      "Core"
+    ],
+    "description": "Alternating knee to elbow."
+  },
+  {
+    "name": "V-Up",
+    "category": "Bodyweight",
+    "muscleGroups": [
+      "Core"
+    ],
+    "description": "Simultaneous upper and lower body flexion."
+  },
+  {
+    "name": "Dead Bug",
+    "category": "Bodyweight",
+    "muscleGroups": [
+      "Core"
+    ],
+    "description": "Core stabilization exercise."
+  },
+  {
+    "name": "Bird Dog",
+    "category": "Bodyweight",
+    "muscleGroups": [
+      "Core",
+      "Back"
+    ],
+    "description": "Core and spinal erector exercise."
+  },
+  {
+    "name": "Woodchopper",
+    "category": "Cable",
+    "muscleGroups": [
+      "Core"
+    ],
+    "description": "Rotational cable movement."
+  },
+  {
+    "name": "Pallof Press",
+    "category": "Cable",
+    "muscleGroups": [
+      "Core"
+    ],
+    "description": "Anti-rotation exercise."
+  },
+  {
+    "name": "Treadmill Run",
+    "category": "Cardio",
+    "muscleGroups": [
+      "Legs",
+      "Cardio"
+    ],
+    "description": "Steady-state or intervals."
+  },
+  {
+    "name": "Treadmill Walk",
+    "category": "Cardio",
+    "muscleGroups": [
+      "Legs",
+      "Cardio"
+    ],
+    "description": "Low intensity steady state."
+  },
+  {
+    "name": "Stationary Bike",
+    "category": "Cardio",
+    "muscleGroups": [
+      "Legs",
+      "Cardio"
+    ],
+    "description": "Upright or recumbent cycling."
+  },
+  {
+    "name": "Elliptical",
+    "category": "Cardio",
+    "muscleGroups": [
+      "Legs",
+      "Cardio"
+    ],
+    "description": "Low-impact cardio."
+  },
+  {
+    "name": "Stairmaster",
+    "category": "Cardio",
+    "muscleGroups": [
+      "Legs",
+      "Cardio"
+    ],
+    "description": "Continuous stair climbing."
+  },
+  {
+    "name": "Rowing Machine",
+    "category": "Cardio",
+    "muscleGroups": [
+      "Back",
+      "Legs",
+      "Cardio"
+    ],
+    "description": "Full-body cardio."
+  },
+  {
+    "name": "Assault Bike",
+    "category": "Cardio",
+    "muscleGroups": [
+      "Legs",
+      "Shoulders",
+      "Cardio"
+    ],
+    "description": "Full-body conditioning."
+  },
+  {
+    "name": "SkiErg",
+    "category": "Cardio",
+    "muscleGroups": [
+      "Back",
+      "Core",
+      "Cardio"
+    ],
+    "description": "Upper body dominant cardio."
+  },
+  {
+    "name": "Jump Rope",
+    "category": "Cardio",
+    "muscleGroups": [
+      "Calves",
+      "Cardio"
+    ],
+    "description": "High-intensity conditioning."
+  },
+  {
+    "name": "Burpees",
+    "category": "Bodyweight",
+    "muscleGroups": [
+      "Full Body",
+      "Cardio"
+    ],
+    "description": "Full body explosive movement."
+  },
+  {
+    "name": "Jumping Jacks",
+    "category": "Bodyweight",
+    "muscleGroups": [
+      "Full Body",
+      "Cardio"
+    ],
+    "description": "Aerobic bodyweight exercise."
+  },
+  {
+    "name": "Mountain Climbers",
+    "category": "Bodyweight",
+    "muscleGroups": [
+      "Core",
+      "Cardio"
+    ],
+    "description": "Dynamic plank variation."
+  },
+  {
+    "name": "Kettlebell Swing",
+    "category": "Kettlebell",
+    "muscleGroups": [
+      "Glutes",
+      "Hamstrings",
+      "Core"
+    ],
+    "description": "Explosive hip hinge."
+  },
+  {
+    "name": "Kettlebell Goblet Squat",
+    "category": "Kettlebell",
+    "muscleGroups": [
+      "Legs",
+      "Core"
+    ],
+    "description": "Front loaded squat."
+  },
+  {
+    "name": "Turkish Get-Up",
+    "category": "Kettlebell",
+    "muscleGroups": [
+      "Full Body",
+      "Core"
+    ],
+    "description": "Complex full body movement."
+  },
+  {
+    "name": "Snatch",
+    "category": "Barbell",
+    "muscleGroups": [
+      "Full Body",
+      "Powerlifting"
+    ],
+    "description": "Olympic lift."
+  },
+  {
+    "name": "Clean and Jerk",
+    "category": "Barbell",
+    "muscleGroups": [
+      "Full Body",
+      "Powerlifting"
+    ],
+    "description": "Olympic lift."
+  },
+  {
+    "name": "Power Clean",
+    "category": "Barbell",
+    "muscleGroups": [
+      "Full Body",
+      "Powerlifting"
+    ],
+    "description": "Explosive pull from floor."
+  },
+  {
+    "name": "Push Jerk",
+    "category": "Barbell",
+    "muscleGroups": [
+      "Shoulders",
+      "Triceps",
+      "Legs"
+    ],
+    "description": "Explosive overhead press."
+  },
+  {
+    "name": "Medicine Ball Slam",
+    "category": "Medicine Ball",
+    "muscleGroups": [
+      "Full Body",
+      "Core"
+    ],
+    "description": "Explosive downward throw."
+  },
+  {
+    "name": "Wall Ball",
+    "category": "Medicine Ball",
+    "muscleGroups": [
+      "Legs",
+      "Shoulders",
+      "Core"
+    ],
+    "description": "Squat to target throw."
+  },
+  {
+    "name": "Battle Ropes",
+    "category": "Cardio",
+    "muscleGroups": [
+      "Shoulders",
+      "Core",
+      "Cardio"
+    ],
+    "description": "High-intensity upper body cardio."
+  },
+  {
+    "name": "Sled Push",
+    "category": "Machine",
+    "muscleGroups": [
+      "Legs",
+      "Cardio"
+    ],
+    "description": "Heavy loaded push."
+  },
+  {
+    "name": "Sled Pull",
+    "category": "Machine",
+    "muscleGroups": [
+      "Back",
+      "Legs",
+      "Cardio"
+    ],
+    "description": "Heavy loaded pull."
+  },
+  {
+    "name": "Box Jump",
+    "category": "Bodyweight",
+    "muscleGroups": [
+      "Legs",
+      "Explosive"
+    ],
+    "description": "Plyometric jump onto a box."
+  },
+  {
+    "name": "Broad Jump",
+    "category": "Bodyweight",
+    "muscleGroups": [
+      "Legs",
+      "Explosive"
+    ],
+    "description": "Plyometric forward jump."
+  },
+  {
+    "name": "Bear Crawl",
+    "category": "Bodyweight",
+    "muscleGroups": [
+      "Core",
+      "Shoulders"
+    ],
+    "description": "Quadruped movement."
+  },
+  {
+    "name": "Cat-Cow",
+    "category": "Mobility",
+    "muscleGroups": [
+      "Spine"
+    ],
+    "description": "Spinal flexion and extension mobility."
+  },
+  {
+    "name": "Child's Pose",
+    "category": "Stretching",
+    "muscleGroups": [
+      "Back",
+      "Hips"
+    ],
+    "description": "Resting stretch position."
+  },
+  {
+    "name": "Downward Dog",
+    "category": "Stretching",
+    "muscleGroups": [
+      "Hamstrings",
+      "Calves",
+      "Shoulders"
+    ],
+    "description": "Inverted V pose."
+  },
+  {
+    "name": "Pigeon Pose",
+    "category": "Stretching",
+    "muscleGroups": [
+      "Glutes",
+      "Hips"
+    ],
+    "description": "Deep hip opener stretch."
+  },
+  {
+    "name": "Cobra Pose",
+    "category": "Stretching",
+    "muscleGroups": [
+      "Core",
+      "Chest"
+    ],
+    "description": "Spinal extension stretch."
+  },
+  {
+    "name": "Seated Forward Bend",
+    "category": "Stretching",
+    "muscleGroups": [
+      "Hamstrings",
+      "Back"
+    ],
+    "description": "Hamstring stretch."
+  },
+  {
+    "name": "World's Greatest Stretch",
+    "category": "Mobility",
+    "muscleGroups": [
+      "Full Body"
+    ],
+    "description": "Dynamic lunge and rotation stretch."
+  },
+  {
+    "name": "90/90 Stretch",
+    "category": "Mobility",
+    "muscleGroups": [
+      "Hips"
+    ],
+    "description": "Hip internal and external rotation stretch."
+  },
+  {
+    "name": "Smith Machine Bench Press",
+    "category": "Machine",
+    "muscleGroups": [
+      "Chest",
+      "Triceps"
+    ],
+    "description": "Bench press using a Smith machine."
+  },
+  {
+    "name": "Smith Machine Incline Press",
+    "category": "Machine",
+    "muscleGroups": [
+      "Chest",
+      "Shoulders"
+    ],
+    "description": "Incline bench press using a Smith machine."
+  },
+  {
+    "name": "Smith Machine Squat",
+    "category": "Machine",
+    "muscleGroups": [
+      "Legs",
+      "Glutes"
+    ],
+    "description": "Squat using a Smith machine."
+  },
+  {
+    "name": "Band Pull-Apart",
+    "category": "Resistance Bands",
+    "muscleGroups": [
+      "Shoulders",
+      "Back"
+    ],
+    "description": "Rear delt and upper back activation."
+  },
+  {
+    "name": "Banded Hip Thrust",
+    "category": "Resistance Bands",
+    "muscleGroups": [
+      "Glutes"
+    ],
+    "description": "Hip thrust with resistance band."
+  },
+  {
+    "name": "TRX Row",
+    "category": "Bodyweight",
+    "muscleGroups": [
+      "Back",
+      "Biceps"
+    ],
+    "description": "Suspension trainer row."
+  },
+  {
+    "name": "TRX Push-Up",
+    "category": "Bodyweight",
+    "muscleGroups": [
+      "Chest",
+      "Core"
+    ],
+    "description": "Suspension trainer push-up."
+  },
+  {
+    "name": "Medicine Ball Russian Twist",
+    "category": "Medicine Ball",
+    "muscleGroups": [
+      "Core"
+    ],
+    "description": "Russian twist holding a medicine ball."
+  },
+  {
+    "name": "Landmine Press",
+    "category": "Barbell",
+    "muscleGroups": [
+      "Shoulders",
+      "Chest"
+    ],
+    "description": "Unilateral or bilateral landmine press."
+  },
+  {
+    "name": "Landmine Squat",
+    "category": "Barbell",
+    "muscleGroups": [
+      "Legs",
+      "Core"
+    ],
+    "description": "Front-loaded landmine squat."
+  },
+  {
+    "name": "Jefferson Curl",
+    "category": "Barbell",
+    "muscleGroups": [
+      "Back",
+      "Hamstrings",
+      "Mobility"
+    ],
+    "description": "Loaded spinal flexion."
+  },
+  {
+    "name": "Sissy Squat",
+    "category": "Bodyweight",
+    "muscleGroups": [
+      "Legs"
+    ],
+    "description": "Quad isolation bodyweight squat."
+  },
+  {
+    "name": "Pistol Squat",
+    "category": "Bodyweight",
+    "muscleGroups": [
+      "Legs",
+      "Core"
+    ],
+    "description": "Single leg squat."
+  },
+  {
+    "name": "Shrimp Squat",
+    "category": "Bodyweight",
+    "muscleGroups": [
+      "Legs"
+    ],
+    "description": "Single leg squat variation."
+  },
+  {
+    "name": "Copenhagen Plank",
+    "category": "Bodyweight",
+    "muscleGroups": [
+      "Core",
+      "Legs"
+    ],
+    "description": "Adductor focused side plank."
+  },
+  {
+    "name": "Dragon Flag",
+    "category": "Bodyweight",
+    "muscleGroups": [
+      "Core"
+    ],
+    "description": "Advanced core movement."
+  },
+  {
+    "name": "L-Sit",
+    "category": "Bodyweight",
+    "muscleGroups": [
+      "Core"
+    ],
+    "description": "Isometric core hold."
+  },
+  {
+    "name": "Front Lever",
+    "category": "Bodyweight",
+    "muscleGroups": [
+      "Back",
+      "Core"
+    ],
+    "description": "Straight arm isometric pull."
+  },
+  {
+    "name": "Back Lever",
+    "category": "Bodyweight",
+    "muscleGroups": [
+      "Chest",
+      "Core",
+      "Shoulders"
+    ],
+    "description": "Straight arm isometric hold."
+  },
+  {
+    "name": "Planche",
+    "category": "Bodyweight",
+    "muscleGroups": [
+      "Shoulders",
+      "Core"
+    ],
+    "description": "Straight arm isometric press."
+  },
+  {
+    "name": "Muscle-Up",
+    "category": "Bodyweight",
+    "muscleGroups": [
+      "Back",
+      "Triceps",
+      "Chest"
+    ],
+    "description": "Pull-up into a dip."
+  },
+  {
+    "name": "Kettlebell Clean",
+    "category": "Kettlebell",
+    "muscleGroups": [
+      "Full Body"
+    ],
+    "description": "Explosive pull."
+  },
+  {
+    "name": "Kettlebell Snatch",
+    "category": "Kettlebell",
+    "muscleGroups": [
+      "Full Body"
+    ],
+    "description": "Explosive overhead movement."
+  },
+  {
+    "name": "Suitcase Carry",
+    "category": "Dumbbell",
+    "muscleGroups": [
+      "Core",
+      "Forearms"
+    ],
+    "description": "Unilateral loaded carry."
+  },
+  {
+    "name": "Zercher Carry",
+    "category": "Barbell",
+    "muscleGroups": [
+      "Core",
+      "Back"
+    ],
+    "description": "Barbell held in crooks of elbows while walking."
+  },
+  {
+    "name": "Deficit Push-Up",
+    "category": "Bodyweight",
+    "muscleGroups": [
+      "Chest"
+    ],
+    "description": "Increased ROM push-up."
+  },
+  {
+    "name": "Archer Push-Up",
+    "category": "Bodyweight",
+    "muscleGroups": [
+      "Chest",
+      "Triceps"
+    ],
+    "description": "Unilateral focus push-up."
+  },
+  {
+    "name": "Handstand Push-Up",
+    "category": "Bodyweight",
+    "muscleGroups": [
+      "Shoulders",
+      "Triceps"
+    ],
+    "description": "Vertical pressing bodyweight movement."
+  },
+  {
+    "name": "Wall Walk",
+    "category": "Bodyweight",
+    "muscleGroups": [
+      "Shoulders",
+      "Core"
+    ],
+    "description": "Walking up a wall into a handstand."
+  },
+  {
+    "name": "Strict Muscle-Up",
+    "category": "Bodyweight",
+    "muscleGroups": [
+      "Back",
+      "Triceps",
+      "Chest"
+    ],
+    "description": "No kip muscle-up."
+  },
+  {
+    "name": "Kettlebell Windmill",
+    "category": "Kettlebell",
+    "muscleGroups": [
+      "Core",
+      "Shoulders"
+    ],
+    "description": "Rotational stability exercise."
+  },
+  {
+    "name": "Mace Swing",
+    "category": "Functional Training",
+    "muscleGroups": [
+      "Shoulders",
+      "Core"
+    ],
+    "description": "Rotational functional movement."
+  },
+  {
+    "name": "Indian Club Swings",
+    "category": "Functional Training",
+    "muscleGroups": [
+      "Shoulders",
+      "Mobility"
+    ],
+    "description": "Shoulder mobility and strength."
+  },
+  {
+    "name": "Neck Harness Extension",
+    "category": "Machine",
+    "muscleGroups": [
+      "Neck"
+    ],
+    "description": "Neck extensor strength."
+  },
+  {
+    "name": "Neck Curl",
+    "category": "Bodyweight",
+    "muscleGroups": [
+      "Neck"
+    ],
+    "description": "Neck flexor strength."
+  },
+  {
+    "name": "Tibialis Raise",
+    "category": "Bodyweight",
+    "muscleGroups": [
+      "Calves"
+    ],
+    "description": "Anterior tibialis isolation."
+  }
+]
