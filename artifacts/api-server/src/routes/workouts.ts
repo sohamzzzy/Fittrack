@@ -3,11 +3,12 @@ import { getSingleValue } from "../lib/getSingleValue";
 import { requireAuth, getAuthUser } from "../lib/auth";
 import { sendServerError } from "../lib/http-error";
 import { db, workoutsTable, workoutExercisesTable, workoutSetsTable, exercisesTable, routinesTable, routineExercisesTable } from "@workspace/db";
-import { eq, and, count, sql } from "drizzle-orm";
+import { eq, and, count, sql, inArray } from "drizzle-orm";
 
 const router = Router();
 
 async function formatWorkoutDetail(workout: typeof workoutsTable.$inferSelect) {
+  // Query 1: Get all exercises for this workout (with exercise names)
   const exRows = await db
     .select({ we: workoutExercisesTable, ex: exercisesTable })
     .from(workoutExercisesTable)
@@ -15,38 +16,82 @@ async function formatWorkoutDetail(workout: typeof workoutsTable.$inferSelect) {
     .where(eq(workoutExercisesTable.workoutId, workout.id))
     .orderBy(workoutExercisesTable.order);
 
-  const exercises = await Promise.all(
-    exRows.map(async (row) => {
-      const sets = await db.select().from(workoutSetsTable).where(eq(workoutSetsTable.workoutExerciseId, row.we.id)).orderBy(workoutSetsTable.setNumber);
-      const prevSets = await db
-        .select({ weight: workoutSetsTable.weight, reps: workoutSetsTable.reps })
-        .from(workoutSetsTable)
-        .innerJoin(workoutExercisesTable, eq(workoutSetsTable.workoutExerciseId, workoutExercisesTable.id))
-        .innerJoin(workoutsTable, eq(workoutExercisesTable.workoutId, workoutsTable.id))
-        .where(and(
-          eq(workoutExercisesTable.exerciseId, row.we.exerciseId),
-          eq(workoutsTable.userId, workout.userId),
-          eq(workoutSetsTable.completed, true),
-          sql`${workoutsTable.id} != ${workout.id}`,
-        ))
-        .orderBy(sql`${workoutsTable.startedAt} desc`)
-        .limit(20);
+  if (exRows.length === 0) {
+    const duration = workout.finishedAt ? Math.round((new Date(workout.finishedAt).getTime() - new Date(workout.startedAt).getTime()) / 60000) : null;
+    return { ...workout, durationMinutes: duration, totalVolume: 0, totalSets: 0, exerciseCount: 0, exercises: [] };
+  }
 
-      return {
-        id: row.we.id,
-        exerciseId: row.we.exerciseId,
-        exerciseName: row.ex.name,
-        order: row.we.order,
-        notes: row.we.notes,
-        sets: sets.map((s, idx) => ({
-          ...s,
-          weight: s.weight ? parseFloat(s.weight) : null,
-          previousWeight: prevSets[idx] ? parseFloat(prevSets[idx].weight ?? "0") : null,
-          previousReps: prevSets[idx] ? prevSets[idx].reps : null,
-        })),
-      };
+  const weIds = exRows.map((r) => r.we.id);
+  const exerciseIds = exRows.map((r) => r.we.exerciseId);
+
+  // Query 2: Batch-load ALL sets for all exercises in this workout (1 query instead of N)
+  const allSets = await db
+    .select()
+    .from(workoutSetsTable)
+    .where(inArray(workoutSetsTable.workoutExerciseId, weIds))
+    .orderBy(workoutSetsTable.workoutExerciseId, workoutSetsTable.setNumber);
+
+  // Group sets by workoutExerciseId in memory
+  const setsByWeId = new Map<number, typeof allSets>();
+  for (const s of allSets) {
+    let arr = setsByWeId.get(s.workoutExerciseId);
+    if (!arr) { arr = []; setsByWeId.set(s.workoutExerciseId, arr); }
+    arr.push(s);
+  }
+
+  // Query 3: Batch-load previous-set data for ALL exercises at once (1 query instead of N)
+  // Gets completed sets from the most recent OTHER workout for each exercise
+  const prevSetsRaw = await db
+    .select({
+      exerciseId: workoutExercisesTable.exerciseId,
+      weight: workoutSetsTable.weight,
+      reps: workoutSetsTable.reps,
+      setNumber: workoutSetsTable.setNumber,
+      workoutStartedAt: workoutsTable.startedAt,
     })
-  );
+    .from(workoutSetsTable)
+    .innerJoin(workoutExercisesTable, eq(workoutSetsTable.workoutExerciseId, workoutExercisesTable.id))
+    .innerJoin(workoutsTable, eq(workoutExercisesTable.workoutId, workoutsTable.id))
+    .where(and(
+      inArray(workoutExercisesTable.exerciseId, exerciseIds),
+      eq(workoutsTable.userId, workout.userId),
+      eq(workoutSetsTable.completed, true),
+      sql`${workoutsTable.id} != ${workout.id}`,
+    ))
+    .orderBy(sql`${workoutsTable.startedAt} desc`, workoutSetsTable.setNumber);
+
+  // Group previous sets by exerciseId, keeping only from the most recent workout
+  const prevByExercise = new Map<number, Array<{ weight: string | null; reps: number | null }>>();
+  const seenExerciseWorkout = new Map<number, string>();
+  for (const ps of prevSetsRaw) {
+    const startedStr = ps.workoutStartedAt.toISOString();
+    const seen = seenExerciseWorkout.get(ps.exerciseId);
+    if (seen && seen !== startedStr) continue; // Only keep sets from the most recent workout
+    seenExerciseWorkout.set(ps.exerciseId, startedStr);
+    let arr = prevByExercise.get(ps.exerciseId);
+    if (!arr) { arr = []; prevByExercise.set(ps.exerciseId, arr); }
+    arr.push({ weight: ps.weight, reps: ps.reps });
+  }
+
+  // Assemble exercises with their sets and previous data (pure in-memory, no queries)
+  const exercises = exRows.map((row) => {
+    const sets = setsByWeId.get(row.we.id) ?? [];
+    const prevSets = prevByExercise.get(row.we.exerciseId) ?? [];
+
+    return {
+      id: row.we.id,
+      exerciseId: row.we.exerciseId,
+      exerciseName: row.ex.name,
+      order: row.we.order,
+      notes: row.we.notes,
+      sets: sets.map((s, idx) => ({
+        ...s,
+        weight: s.weight ? parseFloat(s.weight) : null,
+        previousWeight: prevSets[idx] ? parseFloat(prevSets[idx].weight ?? "0") : null,
+        previousReps: prevSets[idx] ? prevSets[idx].reps : null,
+      })),
+    };
+  });
 
   const totalSets = exercises.reduce((acc, e) => acc + e.sets.filter((s) => s.completed).length, 0);
   const totalVolume = exercises.reduce((acc, e) => acc + e.sets.filter((s) => s.completed && s.weight && s.reps).reduce((a, s) => a + (s.weight! * s.reps!), 0), 0);

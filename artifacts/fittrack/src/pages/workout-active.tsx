@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useState, useEffect, useRef, useCallback, useMemo } from "react";
 import { useLocation, useSearch } from "wouter";
 import { useAuth } from "@clerk/react";
 import {
@@ -61,6 +61,10 @@ export default function ActiveWorkout() {
         workoutId != null && workoutId > 0
           ? getGetWorkoutQueryKey(workoutId)
           : (["/api/workouts", "pending"] as const),
+      // The active workout is only modified by the user through mutations.
+      // We handle those via optimistic cache updates, so there's no need
+      // for TanStack Query to auto-refetch in the background.
+      staleTime: Infinity,
       refetchInterval: false,
     },
   });
@@ -181,6 +185,7 @@ export default function ActiveWorkout() {
       { workoutId, data: { isFinished: true } },
       {
         onSuccess: () => {
+          // Only invalidate list/summary when finishing (not on every set edit)
           invalidate(workoutId);
           toast({ title: "Workout complete!", description: `Duration: ${formatDuration(elapsed)}` });
           setLocation("/workouts");
@@ -199,7 +204,12 @@ export default function ActiveWorkout() {
     );
   };
 
-  const { totalSets, totalVol } = workout ? computeWorkoutStats(workout) : { totalSets: 0, totalVol: 0 };
+  // Memoize stats computation — only recompute when the workout object changes
+  const { totalSets, totalVol } = useMemo(
+    () => (workout ? computeWorkoutStats(workout) : { totalSets: 0, totalVol: 0 }),
+    [workout],
+  );
+
   const isStarting =
     createWorkout.isPending ||
     (Number.isFinite(routineId) && routineId > 0 && routineLoading && workoutId == null);

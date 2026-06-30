@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback, useMemo, useRef, memo } from "react";
 import {
   useUpdateWorkout,
   useAddWorkoutExercise,
@@ -7,8 +7,10 @@ import {
   useUpdateSet,
   useDeleteSet,
   useListExercises,
+  getListExercisesQueryKey,
   type WorkoutDetail,
   type WorkoutSet,
+  type WorkoutExercise,
 } from "@workspace/api-client-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -18,7 +20,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/u
 import { Check, Plus, Trash2, Dumbbell } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
-import { useInvalidateWorkoutQueries } from "@/hooks/use-workout-cache";
+import { useWorkoutOptimisticCache, useInvalidateWorkoutDetail } from "@/hooks/use-workout-cache";
 import { CreateExerciseDialog } from "@/components/exercises/create-exercise-dialog";
 import { Badge } from "@/components/ui/badge";
 
@@ -35,13 +37,21 @@ export function WorkoutEditor({
   showPreviousColumn = true,
   allowDurationEdit = false,
 }: WorkoutEditorProps) {
-  const invalidate = useInvalidateWorkoutQueries();
+  const invalidateDetail = useInvalidateWorkoutDetail();
   const updateWorkout = useUpdateWorkout();
   const addExercise = useAddWorkoutExercise();
   const removeExercise = useRemoveWorkoutExercise();
   const addSet = useAddSet();
   const updateSet = useUpdateSet();
   const deleteSet = useDeleteSet();
+
+  const {
+    addSetOptimistic,
+    replaceSetInCache,
+    updateSetOptimistic,
+    deleteSetOptimistic,
+    removeExerciseOptimistic,
+  } = useWorkoutOptimisticCache(workoutId);
 
   const [showExerciseDialog, setShowExerciseDialog] = useState(false);
   const [showCreateExerciseDialog, setShowCreateExerciseDialog] = useState(false);
@@ -51,7 +61,12 @@ export function WorkoutEditor({
     workout.durationMinutes?.toString() ?? "",
   );
 
-  const { data: exercises } = useListExercises({ q: exerciseSearch || undefined });
+  // Only fetch exercises when the dialog is open (avoid unnecessary network requests)
+  const exerciseParams = { q: exerciseSearch || undefined };
+  const { data: exercises } = useListExercises(
+    exerciseParams,
+    { query: { queryKey: getListExercisesQueryKey(exerciseParams), enabled: showExerciseDialog } },
+  );
 
   useEffect(() => {
     setNotes(workout.notes ?? "");
@@ -61,18 +76,21 @@ export function WorkoutEditor({
     setDurationMinutes(workout.durationMinutes?.toString() ?? "");
   }, [workout.durationMinutes]);
 
-  const onSuccess = () => invalidate(workoutId);
+  // Targeted invalidation: only refetch this specific workout detail
+  const onMutationSettled = useCallback(() => {
+    invalidateDetail(workoutId);
+  }, [invalidateDetail, workoutId]);
 
-  const handleSaveNotes = () => {
+  const handleSaveNotes = useCallback(() => {
     const trimmed = notes.trim();
     if (trimmed === (workout.notes ?? "")) return;
     updateWorkout.mutate(
       { workoutId, data: { notes: trimmed || undefined } },
-      { onSuccess },
+      { onSettled: onMutationSettled },
     );
-  };
+  }, [notes, workout.notes, workoutId, updateWorkout, onMutationSettled]);
 
-  const handleSaveDuration = () => {
+  const handleSaveDuration = useCallback(() => {
     if (!workout.isFinished || !workout.startedAt) return;
     const mins = parseInt(durationMinutes, 10);
     if (isNaN(mins) || mins < 0) return;
@@ -81,57 +99,135 @@ export function WorkoutEditor({
     if (workout.finishedAt && new Date(workout.finishedAt).getTime() === new Date(newFinished).getTime()) return;
     updateWorkout.mutate(
       { workoutId, data: { finishedAt: newFinished } },
-      { onSuccess },
+      { onSettled: onMutationSettled },
     );
-  };
+  }, [workout.isFinished, workout.startedAt, workout.finishedAt, durationMinutes, workoutId, updateWorkout, onMutationSettled]);
 
-  const handleAddExercise = (exerciseId: number) => {
+  const handleAddExercise = useCallback((exerciseId: number) => {
     addExercise.mutate(
       { workoutId, data: { exerciseId } },
-      { onSuccess: () => { onSuccess(); setShowExerciseDialog(false); } },
+      {
+        onSuccess: () => {
+          // Refetch to get the server-created exercise with correct id + previous data
+          invalidateDetail(workoutId);
+          setShowExerciseDialog(false);
+        },
+      },
     );
-  };
+  }, [addExercise, workoutId, invalidateDetail]);
 
-  const handleAddSet = (weId: number) => {
+  const handleAddSet = useCallback((weId: number) => {
     const ex = workout.exercises?.find((e) => e.id === weId);
     const nextNum = (ex?.sets?.length ?? 0) + 1;
+
+    // Optimistic: immediately show the new set
+    const rollback = addSetOptimistic(weId, { setNumber: nextNum });
+
     addSet.mutate(
       { workoutId, workoutExerciseId: weId, data: { setNumber: nextNum, completed: false } },
-      { onSuccess },
+      {
+        onSuccess: (serverSet) => {
+          // Replace the temp set with the real one
+          replaceSetInCache(weId, nextNum, serverSet);
+        },
+        onError: () => {
+          rollback();
+        },
+      },
     );
-  };
+  }, [workout.exercises, workoutId, addSet, addSetOptimistic, replaceSetInCache]);
 
-  const handleToggleComplete = (
+  const handleToggleComplete = useCallback((
     weId: number,
     setId: number,
     completed: boolean,
     weight?: number | null,
     reps?: number | null,
   ) => {
+    const newCompleted = !completed;
+
+    // Optimistic: immediately toggle the completed state
+    const rollback = updateSetOptimistic(weId, setId, { completed: newCompleted });
+
     updateSet.mutate(
       {
         workoutId,
         workoutExerciseId: weId,
         setId,
-        data: { completed: !completed, weight: weight ?? undefined, reps: reps ?? undefined },
+        data: { completed: newCompleted, weight: weight ?? undefined, reps: reps ?? undefined },
       },
-      { onSuccess },
+      {
+        onError: () => {
+          rollback();
+        },
+        // No onSettled invalidation — the optimistic update is the source of truth
+        // until the cache is invalidated elsewhere
+      },
     );
-  };
+  }, [workoutId, updateSet, updateSetOptimistic]);
 
-  const handleUpdateSet = (weId: number, setId: number, field: "weight" | "reps", value: string) => {
+  // Debounce timer ref for set updates
+  const debounceTimers = useRef<Map<string, ReturnType<typeof setTimeout>>>(new Map());
+
+  const handleUpdateSet = useCallback((weId: number, setId: number, field: "weight" | "reps", value: string) => {
     if (value.trim() === "") return;
     const num = parseFloat(value);
     if (isNaN(num)) return;
-    updateSet.mutate(
-      { workoutId, workoutExerciseId: weId, setId, data: field === "weight" ? { weight: num } : { reps: num } },
-      { onSuccess },
-    );
-  };
 
-  const handleDeleteSet = (weId: number, setId: number) => {
-    deleteSet.mutate({ workoutId, workoutExerciseId: weId, setId }, { onSuccess });
-  };
+    // Debounce: coalesce rapid updates (e.g., fast tabbing between inputs)
+    const key = `${setId}-${field}`;
+    const existing = debounceTimers.current.get(key);
+    if (existing) clearTimeout(existing);
+
+    // Optimistic: update cache immediately
+    const updateData = field === "weight" ? { weight: num } : { reps: num };
+    updateSetOptimistic(weId, setId, updateData);
+
+    debounceTimers.current.set(
+      key,
+      setTimeout(() => {
+        debounceTimers.current.delete(key);
+        updateSet.mutate(
+          { workoutId, workoutExerciseId: weId, setId, data: updateData },
+          {
+            // Silent — optimistic update already applied.
+            // Only refetch on error to reconcile.
+            onError: () => {
+              invalidateDetail(workoutId);
+            },
+          },
+        );
+      }, 300),
+    );
+  }, [workoutId, updateSet, updateSetOptimistic, invalidateDetail]);
+
+  const handleDeleteSet = useCallback((weId: number, setId: number) => {
+    // Optimistic: immediately remove the set
+    const rollback = deleteSetOptimistic(weId, setId);
+
+    deleteSet.mutate(
+      { workoutId, workoutExerciseId: weId, setId },
+      {
+        onError: () => {
+          rollback();
+        },
+      },
+    );
+  }, [workoutId, deleteSet, deleteSetOptimistic]);
+
+  const handleRemoveExercise = useCallback((weId: number) => {
+    // Optimistic: immediately remove the exercise
+    const rollback = removeExerciseOptimistic(weId);
+
+    removeExercise.mutate(
+      { workoutId, workoutExerciseId: weId },
+      {
+        onError: () => {
+          rollback();
+        },
+      },
+    );
+  }, [workoutId, removeExercise, removeExerciseOptimistic]);
 
   const gridCols = showPreviousColumn
     ? "grid-cols-[32px_1fr_80px_64px_40px_32px]"
@@ -176,67 +272,17 @@ export function WorkoutEditor({
 
       <AnimatePresence>
         {workout.exercises?.map((we) => (
-          <motion.div
+          <ExerciseCard
             key={we.id}
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.95 }}
-          >
-            <Card className="bg-card border-card-border overflow-hidden">
-              <div className="flex items-center justify-between px-4 pt-4 pb-2">
-                <h3 className="font-bold text-primary">{we.exerciseName}</h3>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className="text-muted-foreground w-8 h-8"
-                  onClick={() =>
-                    removeExercise.mutate(
-                      { workoutId, workoutExerciseId: we.id },
-                      { onSuccess },
-                    )
-                  }
-                  data-testid={`button-remove-exercise-${we.id}`}
-                >
-                  <Trash2 className="w-4 h-4" />
-                </Button>
-              </div>
-              <CardContent className="px-4 pb-4 pt-0">
-                <div
-                  className={cn(
-                    "grid gap-2 mb-2 text-[10px] text-muted-foreground font-semibold uppercase tracking-wider",
-                    gridCols,
-                  )}
-                >
-                  <span>SET</span>
-                  {showPreviousColumn && <span>PREV</span>}
-                  <span className="text-center">KG</span>
-                  <span className="text-center">REPS</span>
-                  <span></span>
-                  <span></span>
-                </div>
-                {we.sets?.map((s) => (
-                  <SetRow
-                    key={s.id}
-                    s={s}
-                    weId={we.id}
-                    showPreviousColumn={showPreviousColumn}
-                    onToggle={handleToggleComplete}
-                    onUpdate={handleUpdateSet}
-                    onDelete={handleDeleteSet}
-                  />
-                ))}
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  className="w-full mt-2 text-muted-foreground hover:text-foreground border border-dashed border-border"
-                  onClick={() => handleAddSet(we.id)}
-                  data-testid={`button-add-set-${we.id}`}
-                >
-                  <Plus className="w-4 h-4 mr-2" /> Add Set
-                </Button>
-              </CardContent>
-            </Card>
-          </motion.div>
+            we={we}
+            showPreviousColumn={showPreviousColumn}
+            gridCols={gridCols}
+            onAddSet={handleAddSet}
+            onToggle={handleToggleComplete}
+            onUpdate={handleUpdateSet}
+            onDelete={handleDeleteSet}
+            onRemoveExercise={handleRemoveExercise}
+          />
         ))}
       </AnimatePresence>
 
@@ -309,6 +355,103 @@ export function WorkoutEditor({
   );
 }
 
+// ─────────────────────────────────────────────────────────────
+// ExerciseCard — memoized so updating Set in Exercise A
+// does NOT re-render Exercise B.
+// ─────────────────────────────────────────────────────────────
+
+interface ExerciseCardProps {
+  we: WorkoutExercise;
+  showPreviousColumn: boolean;
+  gridCols: string;
+  onAddSet: (weId: number) => void;
+  onToggle: (
+    weId: number,
+    setId: number,
+    completed: boolean,
+    weight?: number | null,
+    reps?: number | null,
+  ) => void;
+  onUpdate: (weId: number, setId: number, field: "weight" | "reps", value: string) => void;
+  onDelete: (weId: number, setId: number) => void;
+  onRemoveExercise: (weId: number) => void;
+}
+
+const ExerciseCard = memo(function ExerciseCard({
+  we,
+  showPreviousColumn,
+  gridCols,
+  onAddSet,
+  onToggle,
+  onUpdate,
+  onDelete,
+  onRemoveExercise,
+}: ExerciseCardProps) {
+  return (
+    <motion.div
+      key={we.id}
+      initial={{ opacity: 0, y: 10 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, scale: 0.95 }}
+    >
+      <Card className="bg-card border-card-border overflow-hidden">
+        <div className="flex items-center justify-between px-4 pt-4 pb-2">
+          <h3 className="font-bold text-primary">{we.exerciseName}</h3>
+          <Button
+            variant="ghost"
+            size="icon"
+            className="text-muted-foreground w-8 h-8"
+            onClick={() => onRemoveExercise(we.id)}
+            data-testid={`button-remove-exercise-${we.id}`}
+          >
+            <Trash2 className="w-4 h-4" />
+          </Button>
+        </div>
+        <CardContent className="px-4 pb-4 pt-0">
+          <div
+            className={cn(
+              "grid gap-2 mb-2 text-[10px] text-muted-foreground font-semibold uppercase tracking-wider",
+              gridCols,
+            )}
+          >
+            <span>SET</span>
+            {showPreviousColumn && <span>PREV</span>}
+            <span className="text-center">KG</span>
+            <span className="text-center">REPS</span>
+            <span></span>
+            <span></span>
+          </div>
+          {we.sets?.map((s) => (
+            <SetRow
+              key={s.id}
+              s={s}
+              weId={we.id}
+              showPreviousColumn={showPreviousColumn}
+              onToggle={onToggle}
+              onUpdate={onUpdate}
+              onDelete={onDelete}
+            />
+          ))}
+          <Button
+            variant="ghost"
+            size="sm"
+            className="w-full mt-2 text-muted-foreground hover:text-foreground border border-dashed border-border"
+            onClick={() => onAddSet(we.id)}
+            data-testid={`button-add-set-${we.id}`}
+          >
+            <Plus className="w-4 h-4 mr-2" /> Add Set
+          </Button>
+        </CardContent>
+      </Card>
+    </motion.div>
+  );
+});
+
+// ─────────────────────────────────────────────────────────────
+// SetRow — memoized so updating one set does NOT re-render
+// sibling sets within the same exercise.
+// ─────────────────────────────────────────────────────────────
+
 interface SetRowProps {
   s: WorkoutSet;
   weId: number;
@@ -324,7 +467,7 @@ interface SetRowProps {
   onDelete: (weId: number, setId: number) => void;
 }
 
-function SetRow({ s, weId, showPreviousColumn, onToggle, onUpdate, onDelete }: SetRowProps) {
+const SetRow = memo(function SetRow({ s, weId, showPreviousColumn, onToggle, onUpdate, onDelete }: SetRowProps) {
   const [weight, setWeight] = useState(s.weight?.toString() ?? "");
   const [reps, setReps] = useState(s.reps?.toString() ?? "");
   const prev =
@@ -394,7 +537,7 @@ function SetRow({ s, weId, showPreviousColumn, onToggle, onUpdate, onDelete }: S
       </button>
     </motion.div>
   );
-}
+});
 
 export function computeWorkoutStats(workout: WorkoutDetail) {
   const totalSets =
