@@ -53,9 +53,18 @@ export const waterIntakeTable = pgTable("water_intake", {
 
 export const supplementsTable = pgTable("supplements", {
   id: serial("id").primaryKey(),
-  userId: integer("user_id").notNull().references(() => usersTable.id, { onDelete: "cascade" }),
+  userId: integer("user_id").references(() => usersTable.id, { onDelete: "cascade" }),
   name: text("name").notNull(),
   dosage: text("dosage"),
+  isCustom: boolean("is_custom").notNull().default(false),
+  createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+});
+
+export const userSupplementsTable = pgTable("user_supplements", {
+  id: serial("id").primaryKey(),
+  userId: integer("user_id").notNull().references(() => usersTable.id, { onDelete: "cascade" }),
+  supplementId: integer("supplement_id").notNull().references(() => supplementsTable.id, { onDelete: "cascade" }),
+  customDosage: text("custom_dosage"),
   displayOrder: integer("display_order").notNull().default(0),
   createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
 });
@@ -77,4 +86,5 @@ export type FoodLog = typeof foodLogsTable.$inferSelect;
 export type NutritionGoals = typeof nutritionGoalsTable.$inferSelect;
 export type WaterIntake = typeof waterIntakeTable.$inferSelect;
 export type Supplement = typeof supplementsTable.$inferSelect;
+export type UserSupplement = typeof userSupplementsTable.$inferSelect;
 export type SupplementLog = typeof supplementLogsTable.$inferSelect;

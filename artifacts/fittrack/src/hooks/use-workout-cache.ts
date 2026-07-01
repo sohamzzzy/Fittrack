@@ -71,6 +71,10 @@ function updateWorkoutCache(
 export function useWorkoutOptimisticCache(workoutId: number) {
   const queryClient = useQueryClient();
 
+  const getWorkoutFromCache = useCallback(() => {
+    return queryClient.getQueryData<WorkoutDetail>(getGetWorkoutQueryKey(workoutId));
+  }, [queryClient, workoutId]);
+
   /** Optimistically add a set to a workout exercise. */
   const addSetOptimistic = useCallback(
     (weId: number, tempSet: Partial<WorkoutSet> & { setNumber: number }) => {
@@ -223,6 +227,7 @@ export function useWorkoutOptimisticCache(workoutId: number) {
   );
 
   return {
+    getWorkoutFromCache,
     addSetOptimistic,
     replaceSetInCache,
     updateSetOptimistic,

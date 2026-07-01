@@ -20,6 +20,7 @@ import type {
 } from '@tanstack/react-query';
 
 import type {
+  AddSupplementToChecklist201,
   Comment,
   CommentInput,
   DeleteExercise409,
@@ -52,14 +53,17 @@ import type {
   Routine,
   RoutineInput,
   RoutineUpdate,
+  SearchSupplementsParams,
   SearchUsersParams,
   SetInput,
   SetUpdate,
   Supplement,
+  SupplementChecklistInput,
   SupplementInput,
   SupplementLogInput,
   SupplementUpdate,
   SupplementWithStatus,
+  UpdateSupplement200,
   User,
   UserStats,
   UserUpdate,
@@ -4611,6 +4615,90 @@ export const useDeleteWaterEntry = <TError = ErrorType<unknown>,
       return useMutation(getDeleteWaterEntryMutationOptions(options));
     }
 
+export const getSearchSupplementsUrl = (params?: SearchSupplementsParams,) => {
+  const normalizedParams = new URLSearchParams();
+
+  Object.entries(params || {}).forEach(([key, value]) => {
+
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? 'null' : String(value))
+    }
+  });
+
+  const stringifiedParams = normalizedParams.toString();
+
+  return stringifiedParams.length > 0 ? `/api/nutrition/supplements/catalog?${stringifiedParams}` : `/api/nutrition/supplements/catalog`
+}
+
+/**
+ * @summary Search the global supplement catalog
+ */
+export const searchSupplements = async (params?: SearchSupplementsParams, options?: RequestInit): Promise<Supplement[]> => {
+
+  return customFetch<Supplement[]>(getSearchSupplementsUrl(params),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+
+
+export const getSearchSupplementsQueryKey = (params?: SearchSupplementsParams,) => {
+    return [
+    `/api/nutrition/supplements/catalog`, ...(params ? [params] : [])
+    ] as const;
+    }
+
+
+export const getSearchSupplementsQueryOptions = <TData = Awaited<ReturnType<typeof searchSupplements>>, TError = ErrorType<unknown>>(params?: SearchSupplementsParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof searchSupplements>>, TError, TData>, request?: SecondParameter<typeof customFetch>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getSearchSupplementsQueryKey(params);
+
+
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof searchSupplements>>> = ({ signal }) => searchSupplements(params, { signal, ...requestOptions });
+
+
+
+
+
+   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof searchSupplements>>, TError, TData> & { queryKey: QueryKey }
+}
+
+export type SearchSupplementsQueryResult = NonNullable<Awaited<ReturnType<typeof searchSupplements>>>
+export type SearchSupplementsQueryError = ErrorType<unknown>
+
+
+/**
+ * @summary Search the global supplement catalog
+ */
+
+export function useSearchSupplements<TData = Awaited<ReturnType<typeof searchSupplements>>, TError = ErrorType<unknown>>(
+ params?: SearchSupplementsParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof searchSupplements>>, TError, TData>, request?: SecondParameter<typeof customFetch>}
+
+ ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } {
+
+  const queryOptions = getSearchSupplementsQueryOptions(params,options)
+
+  const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
+
+  return { ...query, queryKey: queryOptions.queryKey };
+}
+
+
+
+
+
+
+
 export const getGetSupplementsUrl = (params: GetSupplementsParams,) => {
   const normalizedParams = new URLSearchParams();
 
@@ -4704,7 +4792,7 @@ export const getAddSupplementUrl = () => {
 }
 
 /**
- * @summary Add a new supplement
+ * @summary Add a new supplement (creates custom in catalog)
  */
 export const addSupplement = async (supplementInput: SupplementInput, options?: RequestInit): Promise<Supplement> => {
 
@@ -4752,7 +4840,7 @@ const {mutation: mutationOptions, request: requestOptions} = options ?
     export type AddSupplementMutationError = ErrorType<unknown>
 
     /**
- * @summary Add a new supplement
+ * @summary Add a new supplement (creates custom in catalog)
  */
 export const useAddSupplement = <TError = ErrorType<unknown>,
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof addSupplement>>, TError,{data: BodyType<SupplementInput>}, TContext>, request?: SecondParameter<typeof customFetch>}
@@ -4765,21 +4853,91 @@ export const useAddSupplement = <TError = ErrorType<unknown>,
       return useMutation(getAddSupplementMutationOptions(options));
     }
 
+export const getAddSupplementToChecklistUrl = () => {
+
+
+
+
+  return `/api/nutrition/supplements/checklist`
+}
+
+/**
+ * @summary Add a supplement to the user's checklist
+ */
+export const addSupplementToChecklist = async (supplementChecklistInput: SupplementChecklistInput, options?: RequestInit): Promise<AddSupplementToChecklist201> => {
+
+  return customFetch<AddSupplementToChecklist201>(getAddSupplementToChecklistUrl(),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(supplementChecklistInput)
+  }
+);}
+
+
+
+
+export const getAddSupplementToChecklistMutationOptions = <TError = ErrorType<unknown>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof addSupplementToChecklist>>, TError,{data: BodyType<SupplementChecklistInput>}, TContext>, request?: SecondParameter<typeof customFetch>}
+): UseMutationOptions<Awaited<ReturnType<typeof addSupplementToChecklist>>, TError,{data: BodyType<SupplementChecklistInput>}, TContext> => {
+
+const mutationKey = ['addSupplementToChecklist'];
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
+
+
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof addSupplementToChecklist>>, {data: BodyType<SupplementChecklistInput>}> = (props) => {
+          const {data} = props ?? {};
+
+          return  addSupplementToChecklist(data,requestOptions)
+        }
+
+
+
+
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type AddSupplementToChecklistMutationResult = NonNullable<Awaited<ReturnType<typeof addSupplementToChecklist>>>
+    export type AddSupplementToChecklistMutationBody = BodyType<SupplementChecklistInput>
+    export type AddSupplementToChecklistMutationError = ErrorType<unknown>
+
+    /**
+ * @summary Add a supplement to the user's checklist
+ */
+export const useAddSupplementToChecklist = <TError = ErrorType<unknown>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof addSupplementToChecklist>>, TError,{data: BodyType<SupplementChecklistInput>}, TContext>, request?: SecondParameter<typeof customFetch>}
+ ): UseMutationResult<
+        Awaited<ReturnType<typeof addSupplementToChecklist>>,
+        TError,
+        {data: BodyType<SupplementChecklistInput>},
+        TContext
+      > => {
+      return useMutation(getAddSupplementToChecklistMutationOptions(options));
+    }
+
 export const getUpdateSupplementUrl = (id: number,) => {
 
 
 
 
-  return `/api/nutrition/supplements/${id}`
+  return `/api/nutrition/supplements/checklist/${id}`
 }
 
 /**
- * @summary Update a supplement
+ * @summary Update a checklist item
  */
 export const updateSupplement = async (id: number,
-    supplementUpdate: SupplementUpdate, options?: RequestInit): Promise<Supplement> => {
+    supplementUpdate: SupplementUpdate, options?: RequestInit): Promise<UpdateSupplement200> => {
 
-  return customFetch<Supplement>(getUpdateSupplementUrl(id),
+  return customFetch<UpdateSupplement200>(getUpdateSupplementUrl(id),
   {
     ...options,
     method: 'PATCH',
@@ -4823,7 +4981,7 @@ const {mutation: mutationOptions, request: requestOptions} = options ?
     export type UpdateSupplementMutationError = ErrorType<unknown>
 
     /**
- * @summary Update a supplement
+ * @summary Update a checklist item
  */
 export const useUpdateSupplement = <TError = ErrorType<unknown>,
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof updateSupplement>>, TError,{id: number;data: BodyType<SupplementUpdate>}, TContext>, request?: SecondParameter<typeof customFetch>}
@@ -4841,11 +4999,11 @@ export const getDeleteSupplementUrl = (id: number,) => {
 
 
 
-  return `/api/nutrition/supplements/${id}`
+  return `/api/nutrition/supplements/checklist/${id}`
 }
 
 /**
- * @summary Delete a supplement
+ * @summary Remove from checklist
  */
 export const deleteSupplement = async (id: number, options?: RequestInit): Promise<void> => {
 
@@ -4893,7 +5051,7 @@ const {mutation: mutationOptions, request: requestOptions} = options ?
     export type DeleteSupplementMutationError = ErrorType<unknown>
 
     /**
- * @summary Delete a supplement
+ * @summary Remove from checklist
  */
 export const useDeleteSupplement = <TError = ErrorType<unknown>,
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteSupplement>>, TError,{id: number}, TContext>, request?: SecondParameter<typeof customFetch>}

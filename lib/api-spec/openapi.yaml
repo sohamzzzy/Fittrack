@@ -1196,6 +1196,27 @@ paths:
         "204":
           description: Entry deleted
 
+  /nutrition/supplements/catalog:
+    get:
+      operationId: searchSupplements
+      tags: [nutrition]
+      summary: Search the global supplement catalog
+      parameters:
+        - name: q
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Supplement catalog
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Supplement"
+
   /nutrition/supplements:
     get:
       operationId: getSupplements
@@ -1220,7 +1241,7 @@ paths:
     post:
       operationId: addSupplement
       tags: [nutrition]
-      summary: Add a new supplement
+      summary: Add a new supplement (creates custom in catalog)
       requestBody:
         required: true
         content:
@@ -1235,11 +1256,35 @@ paths:
               schema:
                 $ref: "#/components/schemas/Supplement"
 
-  /nutrition/supplements/{id}:
+  /nutrition/supplements/checklist:
+    post:
+      operationId: addSupplementToChecklist
+      tags: [nutrition]
+      summary: Add a supplement to the user's checklist
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SupplementChecklistInput"
+      responses:
+        "201":
+          description: Added
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  supplementId:
+                    type: integer
+
+  /nutrition/supplements/checklist/{id}:
     patch:
       operationId: updateSupplement
       tags: [nutrition]
-      summary: Update a supplement
+      summary: Update a checklist item
       parameters:
         - name: id
           in: path
@@ -1254,15 +1299,15 @@ paths:
               $ref: "#/components/schemas/SupplementUpdate"
       responses:
         "200":
-          description: Updated supplement
+          description: Updated checklist item
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Supplement"
+                type: object
     delete:
       operationId: deleteSupplement
       tags: [nutrition]
-      summary: Delete a supplement
+      summary: Remove from checklist
       parameters:
         - name: id
           in: path
@@ -1271,7 +1316,7 @@ paths:
             type: integer
       responses:
         "204":
-          description: Deleted
+          description: Removed
 
   /nutrition/supplements/logs:
     post:
@@ -2032,6 +2077,16 @@ components:
           type: integer
         isTaken:
           type: boolean
+
+    SupplementChecklistInput:
+      type: object
+      required: [supplementId]
+      properties:
+        supplementId:
+          type: integer
+        customDosage:
+          type: string
+
 
     SupplementInput:
       type: object

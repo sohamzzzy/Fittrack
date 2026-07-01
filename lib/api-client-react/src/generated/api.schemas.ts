@@ -484,6 +484,11 @@ export interface SupplementWithStatus {
   isTaken: boolean;
 }
 
+export interface SupplementChecklistInput {
+  supplementId: number;
+  customDosage?: string;
+}
+
 export interface SupplementInput {
   name: string;
   dosage?: string;
@@ -587,7 +592,18 @@ export type GetWaterIntakeParams = {
 date: string;
 };
 
+export type SearchSupplementsParams = {
+q?: string;
+};
+
 export type GetSupplementsParams = {
 date: string;
 };
+
+export type AddSupplementToChecklist201 = {
+  id?: number;
+  supplementId?: number;
+};
+
+export type UpdateSupplement200 = { [key: string]: unknown };
 

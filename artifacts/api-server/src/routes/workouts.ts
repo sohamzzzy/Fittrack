@@ -225,6 +225,7 @@ router.post("/workouts", requireAuth, async (req, res) => {
           .returning();
         if (!w) throw new Error("Failed to create workout");
 
+        const setsToInsert = [];
         for (const re of routineExercises) {
           const [we] = await tx
             .insert(workoutExercisesTable)
@@ -236,7 +237,7 @@ router.post("/workouts", requireAuth, async (req, res) => {
             .returning();
           const setCount = Math.max(re.defaultSets ?? 1, 1);
           for (let setNumber = 1; setNumber <= setCount; setNumber++) {
-            await tx.insert(workoutSetsTable).values({
+            setsToInsert.push({
               workoutExerciseId: we.id,
               setNumber,
               weight: re.defaultWeight?.toString() ?? null,
@@ -245,6 +246,10 @@ router.post("/workouts", requireAuth, async (req, res) => {
               setType: "normal",
             });
           }
+        }
+        
+        if (setsToInsert.length > 0) {
+          await tx.insert(workoutSetsTable).values(setsToInsert);
         }
 
         return w;

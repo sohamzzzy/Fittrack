@@ -28,10 +28,14 @@ const SYSTEM_FOOD_ITEMS = JSON.parse(
   fs.readFileSync(path.join(repoRoot(), "scripts", "src", "data", "foods.json"), "utf-8")
 );
 
+const GLOBAL_SUPPLEMENTS = JSON.parse(
+  fs.readFileSync(path.join(repoRoot(), "scripts", "src", "data", "supplements.json"), "utf-8")
+);
+
 async function main() {
   dotenv.config({ path: path.join(repoRoot(), ".env") });
 
-  const [{ db, pool }, { exercisesTable, foodItemsTable }] = await Promise.all([
+  const [{ db, pool }, { exercisesTable, foodItemsTable, supplementsTable }] = await Promise.all([
     import("@workspace/db"),
     import("@workspace/db/schema"),
   ]);
@@ -44,6 +48,7 @@ async function main() {
       console.warn("[seed] --reset-catalog: removing global exercises and system food items (user_id IS NULL)…");
       await db.delete(foodItemsTable).where(isNull(foodItemsTable.userId));
       await db.delete(exercisesTable).where(and(isNull(exercisesTable.userId), eq(exercisesTable.isCustom, false)));
+      await db.delete(supplementsTable).where(and(isNull(supplementsTable.userId), eq(supplementsTable.isCustom, false)));
     }
 
     let exercisesInserted = 0;
@@ -97,6 +102,28 @@ async function main() {
       foodsInserted++;
     }
 
+    let supplementsInserted = 0;
+    let supplementsSkipped = 0;
+
+    for (const row of GLOBAL_SUPPLEMENTS) {
+      const existing = await db
+        .select({ id: supplementsTable.id })
+        .from(supplementsTable)
+        .where(and(eq(supplementsTable.name, row.name), isNull(supplementsTable.userId)))
+        .limit(1);
+      if (existing.length > 0) {
+        supplementsSkipped++;
+        continue;
+      }
+      await db.insert(supplementsTable).values({
+        userId: null,
+        name: row.name,
+        dosage: row.dosage ?? null,
+        isCustom: false,
+      });
+      supplementsInserted++;
+    }
+
     const [{ exerciseCount }] = await db
       .select({ exerciseCount: count() })
       .from(exercisesTable)
@@ -105,12 +132,19 @@ async function main() {
       .select({ foodCount: count() })
       .from(foodItemsTable)
       .where(isNull(foodItemsTable.userId));
+    const [{ supplementCount }] = await db
+      .select({ supplementCount: count() })
+      .from(supplementsTable)
+      .where(isNull(supplementsTable.userId));
 
     console.log(
       `[seed] exercises: +${exercisesInserted} inserted, ${exercisesSkipped} already present (global total: ${Number(exerciseCount)})`,
     );
     console.log(
       `[seed] food items: +${foodsInserted} inserted, ${foodsSkipped} already present (system total: ${Number(foodCount)})`,
+    );
+    console.log(
+      `[seed] supplements: +${supplementsInserted} inserted, ${supplementsSkipped} already present (global total: ${Number(supplementCount)})`,
     );
   } finally {
     await pool.end();

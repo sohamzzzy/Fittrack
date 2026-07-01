@@ -1280,6 +1280,23 @@ export const DeleteWaterEntryParams = zod.object({
 
 
 /**
+ * @summary Search the global supplement catalog
+ */
+export const SearchSupplementsQueryParams = zod.object({
+  "q": zod.coerce.string().optional()
+})
+
+export const SearchSupplementsResponseItem = zod.object({
+  "id": zod.number(),
+  "name": zod.string(),
+  "dosage": zod.string().optional(),
+  "displayOrder": zod.number(),
+  "createdAt": zod.coerce.date()
+})
+export const SearchSupplementsResponse = zod.array(SearchSupplementsResponseItem)
+
+
+/**
  * @summary Get user supplements with daily log status
  */
 export const GetSupplementsQueryParams = zod.object({
@@ -1297,7 +1314,7 @@ export const GetSupplementsResponse = zod.array(GetSupplementsResponseItem)
 
 
 /**
- * @summary Add a new supplement
+ * @summary Add a new supplement (creates custom in catalog)
  */
 export const AddSupplementBody = zod.object({
   "name": zod.string(),
@@ -1306,7 +1323,16 @@ export const AddSupplementBody = zod.object({
 
 
 /**
- * @summary Update a supplement
+ * @summary Add a supplement to the user's checklist
+ */
+export const AddSupplementToChecklistBody = zod.object({
+  "supplementId": zod.number(),
+  "customDosage": zod.string().optional()
+})
+
+
+/**
+ * @summary Update a checklist item
  */
 export const UpdateSupplementParams = zod.object({
   "id": zod.coerce.number()
@@ -1319,16 +1345,12 @@ export const UpdateSupplementBody = zod.object({
 })
 
 export const UpdateSupplementResponse = zod.object({
-  "id": zod.number(),
-  "name": zod.string(),
-  "dosage": zod.string().optional(),
-  "displayOrder": zod.number(),
-  "createdAt": zod.coerce.date()
-})
+
+}).passthrough()
 
 
 /**
- * @summary Delete a supplement
+ * @summary Remove from checklist
  */
 export const DeleteSupplementParams = zod.object({
   "id": zod.coerce.number()

@@ -46,6 +46,7 @@ export function WorkoutEditor({
   const deleteSet = useDeleteSet();
 
   const {
+    getWorkoutFromCache,
     addSetOptimistic,
     replaceSetInCache,
     updateSetOptimistic,
@@ -117,7 +118,8 @@ export function WorkoutEditor({
   }, [addExercise, workoutId, invalidateDetail]);
 
   const handleAddSet = useCallback((weId: number) => {
-    const ex = workout.exercises?.find((e) => e.id === weId);
+    const currentWorkout = getWorkoutFromCache();
+    const ex = currentWorkout?.exercises?.find((e) => e.id === weId);
     const nextNum = (ex?.sets?.length ?? 0) + 1;
 
     // Optimistic: immediately show the new set
@@ -135,7 +137,7 @@ export function WorkoutEditor({
         },
       },
     );
-  }, [workout.exercises, workoutId, addSet, addSetOptimistic, replaceSetInCache]);
+  }, [getWorkoutFromCache, workoutId, addSet, addSetOptimistic, replaceSetInCache]);
 
   const handleToggleComplete = useCallback((
     weId: number,

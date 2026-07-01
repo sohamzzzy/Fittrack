@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { getSingleValue } from "../lib/getSingleValue";
 import { requireAuth, getAuthUser } from "../lib/auth";
-import { db, foodItemsTable, foodLogsTable, nutritionGoalsTable, waterIntakeTable, supplementsTable, supplementLogsTable } from "@workspace/db";
+import { db, foodItemsTable, foodLogsTable, nutritionGoalsTable, waterIntakeTable, supplementsTable, supplementLogsTable, userSupplementsTable } from "@workspace/db";
 import { eq, and, or, isNull, count, sql } from "drizzle-orm";
 import { DEFAULT_SUPPLEMENTS } from "../data/default-supplements";
 
@@ -400,6 +400,26 @@ router.delete("/nutrition/water/:entryId", requireAuth, async (req, res) => {
   }
 });
 
+router.get("/nutrition/supplements/catalog", requireAuth, async (req, res) => {
+  try {
+    const user = await getAuthUser(req);
+    const q = getSingleValue(req.query.q);
+    
+    let catalog = await db.select().from(supplementsTable).where(
+      or(isNull(supplementsTable.userId), eq(supplementsTable.userId, user.id))
+    );
+    
+    if (q) {
+      catalog = catalog.filter(s => s.name.toLowerCase().includes(q.toLowerCase()));
+    }
+    
+    res.json(catalog);
+  } catch (e) {
+    req.log.error(e);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
 router.get("/nutrition/supplements", requireAuth, async (req, res) => {
   try {
     const user = await getAuthUser(req);
@@ -408,31 +428,33 @@ router.get("/nutrition/supplements", requireAuth, async (req, res) => {
       res.status(400).json({ error: "Missing date" });
       return;
     }
-    let supplements = await db.select().from(supplementsTable).where(eq(supplementsTable.userId, user.id)).orderBy(supplementsTable.displayOrder, supplementsTable.createdAt);
     
-    // Auto-seed default supplements for users who have no supplements and no historical logs
-    if (supplements.length === 0) {
-      const historicalLogs = await db.select({ c: count() }).from(supplementLogsTable).where(eq(supplementLogsTable.userId, user.id));
-      if (!historicalLogs[0] || historicalLogs[0].c === 0) {
-        try {
-          const toInsert = DEFAULT_SUPPLEMENTS.map((d, idx) => ({
-            userId: user.id,
-            name: d.name,
-            dosage: d.dosage,
-            displayOrder: idx
-          }));
-          await db.insert(supplementsTable).values(toInsert);
-          supplements = await db.select().from(supplementsTable).where(eq(supplementsTable.userId, user.id)).orderBy(supplementsTable.displayOrder, supplementsTable.createdAt);
-        } catch (err) {
-          req.log.error("Failed to auto-seed supplements", err);
-        }
-      }
-    }
-
+    let checklist = await db.select({
+      checklistId: userSupplementsTable.id,
+      id: supplementsTable.id,
+      name: supplementsTable.name,
+      dosage: userSupplementsTable.customDosage,
+      defaultDosage: supplementsTable.dosage,
+      displayOrder: userSupplementsTable.displayOrder,
+      isCustom: supplementsTable.isCustom
+    })
+    .from(userSupplementsTable)
+    .innerJoin(supplementsTable, eq(userSupplementsTable.supplementId, supplementsTable.id))
+    .where(eq(userSupplementsTable.userId, user.id))
+    .orderBy(userSupplementsTable.displayOrder, userSupplementsTable.createdAt);
+    
     const logs = await db.select().from(supplementLogsTable).where(and(eq(supplementLogsTable.userId, user.id), eq(supplementLogsTable.date, date)));
-    
     const loggedIds = new Set(logs.map(l => l.supplementId));
-    const result = supplements.map(s => ({ ...s, isTaken: loggedIds.has(s.id) }));
+    
+    const result = checklist.map(s => ({
+      checklistId: s.checklistId,
+      id: s.id,
+      name: s.name,
+      dosage: s.dosage ?? s.defaultDosage,
+      displayOrder: s.displayOrder,
+      isTaken: loggedIds.has(s.id)
+    }));
+    
     res.json(result);
   } catch (e) {
     req.log.error(e);
@@ -441,10 +463,11 @@ router.get("/nutrition/supplements", requireAuth, async (req, res) => {
 });
 
 router.post("/nutrition/supplements", requireAuth, async (req, res) => {
+  // This is used to create a completely new custom supplement in the catalog
   try {
     const user = await getAuthUser(req);
     const { name, dosage } = req.body;
-    const [supplement] = await db.insert(supplementsTable).values({ userId: user.id, name, dosage }).returning();
+    const [supplement] = await db.insert(supplementsTable).values({ userId: user.id, name, dosage, isCustom: true }).returning();
     res.status(201).json(supplement);
   } catch (e) {
     req.log.error(e);
@@ -452,25 +475,67 @@ router.post("/nutrition/supplements", requireAuth, async (req, res) => {
   }
 });
 
-router.patch("/nutrition/supplements/:id", requireAuth, async (req, res) => {
+router.post("/nutrition/supplements/checklist", requireAuth, async (req, res) => {
   try {
     const user = await getAuthUser(req);
-    const id = parseInt(getSingleValue(req.params.id) ?? "");
-    const { name, dosage, displayOrder } = req.body;
-    const [supplement] = await db.update(supplementsTable).set({ name, dosage, displayOrder }).where(and(eq(supplementsTable.id, id), eq(supplementsTable.userId, user.id))).returning();
-    if (!supplement) { res.status(404).json({ error: "Not found" }); return; }
-    res.json(supplement);
+    const { supplementId, customDosage } = req.body;
+    
+    // Check if it's already in the checklist
+    const existing = await db.query.userSupplementsTable.findFirst({
+      where: and(eq(userSupplementsTable.userId, user.id), eq(userSupplementsTable.supplementId, supplementId))
+    });
+    
+    if (existing) {
+      res.status(400).json({ error: "Supplement already in checklist" });
+      return;
+    }
+    
+    // Get max display order
+    const currentItems = await db.select().from(userSupplementsTable).where(eq(userSupplementsTable.userId, user.id));
+    const maxOrder = currentItems.length > 0 ? Math.max(...currentItems.map(i => i.displayOrder)) : -1;
+    
+    const [entry] = await db.insert(userSupplementsTable).values({
+      userId: user.id,
+      supplementId,
+      customDosage,
+      displayOrder: maxOrder + 1
+    }).returning();
+    
+    res.status(201).json(entry);
   } catch (e) {
     req.log.error(e);
     res.status(500).json({ error: "Internal server error" });
   }
 });
 
-router.delete("/nutrition/supplements/:id", requireAuth, async (req, res) => {
+router.patch("/nutrition/supplements/checklist/:checklistId", requireAuth, async (req, res) => {
   try {
     const user = await getAuthUser(req);
-    const id = parseInt(getSingleValue(req.params.id) ?? "");
-    await db.delete(supplementsTable).where(and(eq(supplementsTable.id, id), eq(supplementsTable.userId, user.id)));
+    const checklistId = parseInt(getSingleValue(req.params.checklistId) ?? "");
+    const { customDosage, displayOrder } = req.body;
+    
+    const updateData: any = {};
+    if (customDosage !== undefined) updateData.customDosage = customDosage;
+    if (displayOrder !== undefined) updateData.displayOrder = displayOrder;
+    
+    const [entry] = await db.update(userSupplementsTable)
+      .set(updateData)
+      .where(and(eq(userSupplementsTable.id, checklistId), eq(userSupplementsTable.userId, user.id)))
+      .returning();
+      
+    if (!entry) { res.status(404).json({ error: "Not found" }); return; }
+    res.json(entry);
+  } catch (e) {
+    req.log.error(e);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+router.delete("/nutrition/supplements/checklist/:checklistId", requireAuth, async (req, res) => {
+  try {
+    const user = await getAuthUser(req);
+    const checklistId = parseInt(getSingleValue(req.params.checklistId) ?? "");
+    await db.delete(userSupplementsTable).where(and(eq(userSupplementsTable.id, checklistId), eq(userSupplementsTable.userId, user.id)));
     res.status(204).send();
   } catch (e) {
     req.log.error(e);
@@ -482,11 +547,6 @@ router.post("/nutrition/supplements/logs", requireAuth, async (req, res) => {
   try {
     const user = await getAuthUser(req);
     const { supplementId, date } = req.body;
-    // ensure supplement exists and belongs to user
-    const exists = await db.query.supplementsTable.findFirst({ where: and(eq(supplementsTable.id, supplementId), eq(supplementsTable.userId, user.id)) });
-    if (!exists) { res.status(404).json({ error: "Supplement not found" }); return; }
-    
-    // insert if not exists
     await db.insert(supplementLogsTable).values({ userId: user.id, supplementId, date }).onConflictDoNothing();
     res.json({ success: true });
   } catch (e) {

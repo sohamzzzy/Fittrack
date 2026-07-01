@@ -6,6 +6,7 @@
  * OpenAPI spec version: 0.1.0
  */
 
+export * from './addSupplementToChecklist201';
 export * from './comment';
 export * from './commentInput';
 export * from './deleteExercise409';
@@ -45,16 +46,19 @@ export * from './routineInput';
 export * from './routineInputExercisesItem';
 export * from './routineUpdate';
 export * from './routineUpdateExercisesItem';
+export * from './searchSupplementsParams';
 export * from './searchUsersParams';
 export * from './setInput';
 export * from './setInputSetType';
 export * from './setUpdate';
 export * from './setUpdateSetType';
 export * from './supplement';
+export * from './supplementChecklistInput';
 export * from './supplementInput';
 export * from './supplementLogInput';
 export * from './supplementUpdate';
 export * from './supplementWithStatus';
+export * from './updateSupplement200';
 export * from './user';
 export * from './userRecentActivityItem';
 export * from './userStats';
