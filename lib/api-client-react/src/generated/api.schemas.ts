@@ -18,6 +18,14 @@ export const UserTheme = {
   system: 'system',
 } as const;
 
+export type UserWeightUnit = typeof UserWeightUnit[keyof typeof UserWeightUnit];
+
+
+export const UserWeightUnit = {
+  kg: 'kg',
+  lbs: 'lbs',
+} as const;
+
 export type UserRecentActivityItem = {
   id: number;
   content: string;
@@ -31,6 +39,7 @@ export interface User {
   /** @nullable */
   displayName?: string | null;
   theme?: UserTheme;
+  weightUnit?: UserWeightUnit;
   /** @nullable */
   bio?: string | null;
   /** @nullable */
@@ -55,10 +64,19 @@ export const UserUpdateTheme = {
   system: 'system',
 } as const;
 
+export type UserUpdateWeightUnit = typeof UserUpdateWeightUnit[keyof typeof UserUpdateWeightUnit];
+
+
+export const UserUpdateWeightUnit = {
+  kg: 'kg',
+  lbs: 'lbs',
+} as const;
+
 export interface UserUpdate {
   username?: string;
   displayName?: string;
   theme?: UserUpdateTheme;
+  weightUnit?: UserUpdateWeightUnit;
   bio?: string;
   avatarUrl?: string;
 }

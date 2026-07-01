@@ -1371,6 +1371,9 @@ components:
         theme:
           type: string
           enum: [light, dark, system]
+        weightUnit:
+          type: string
+          enum: [kg, lbs]
         bio:
           type: ["string", "null"]
         avatarUrl:
@@ -1416,6 +1419,9 @@ components:
         theme:
           type: string
           enum: [light, dark, system]
+        weightUnit:
+          type: string
+          enum: [kg, lbs]
         bio:
           type: string
         avatarUrl:

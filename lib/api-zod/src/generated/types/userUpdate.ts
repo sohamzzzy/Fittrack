@@ -6,11 +6,13 @@
  * OpenAPI spec version: 0.1.0
  */
 import type { UserUpdateTheme } from './userUpdateTheme';
+import type { UserUpdateWeightUnit } from './userUpdateWeightUnit';
 
 export interface UserUpdate {
   username?: string;
   displayName?: string;
   theme?: UserUpdateTheme;
+  weightUnit?: UserUpdateWeightUnit;
   bio?: string;
   avatarUrl?: string;
 }

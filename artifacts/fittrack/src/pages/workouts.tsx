@@ -4,7 +4,10 @@ import {
   useDeleteWorkout,
   getListWorkoutsQueryKey,
   getGetWorkoutSummaryQueryKey,
+  useGetMe,
 } from "@workspace/api-client-react";
+import { formatWeightDisplay } from "@/lib/weight-unit";
+import { WeightUnitToggle } from "@/components/workout/weight-unit-toggle";
 import { useQueryClient } from "@tanstack/react-query";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -18,6 +21,8 @@ export default function Workouts() {
   const { data: workouts, isLoading } = useListWorkouts();
   const deleteWorkout = useDeleteWorkout();
   const queryClient = useQueryClient();
+  const { data: me } = useGetMe();
+  const unit = (me?.weightUnit as "kg" | "lbs") ?? "kg";
 
   const handleDelete = (id: number) => {
     deleteWorkout.mutate(
@@ -35,11 +40,14 @@ export default function Workouts() {
     <div className="space-y-4">
       <div className="flex items-center justify-between">
         <h1 className="text-2xl font-black tracking-tight">Workouts</h1>
-        <Link href="/workout">
-          <Button size="sm" className="font-bold" data-testid="button-new-workout">
-            <Plus className="w-4 h-4 mr-1" /> Start
-          </Button>
-        </Link>
+        <div className="flex items-center gap-3">
+          <WeightUnitToggle />
+          <Link href="/workout">
+            <Button size="sm" className="font-bold" data-testid="button-new-workout">
+              <Plus className="w-4 h-4 mr-1" /> Start
+            </Button>
+          </Link>
+        </div>
       </div>
 
       {isLoading ? (
@@ -98,7 +106,7 @@ export default function Workouts() {
                           {w.totalVolume != null && (
                             <span className="flex items-center gap-1">
                               <Weight className="w-3.5 h-3.5" />
-                              {Math.round(w.totalVolume as number)}kg
+                              {formatWeightDisplay(w.totalVolume as number, unit)}
                             </span>
                           )}
                           {w.totalSets != null && (

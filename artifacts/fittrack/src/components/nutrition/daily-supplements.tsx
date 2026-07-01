@@ -39,7 +39,7 @@ export function DailySupplements({ date }: { date: string }) {
   
   const { data: searchResults, isLoading: isSearching } = useSearchSupplements(
     { q: debouncedSearch },
-    { query: { enabled: openCombobox } }
+    { query: { enabled: openCombobox, queryKey: ["searchSupplements", debouncedSearch] } }
   );
 
   const [editingId, setEditingId] = useState<number | null>(null);
@@ -143,10 +143,10 @@ export function DailySupplements({ date }: { date: string }) {
                   initial={{ opacity: 0, y: 5 }} 
                   animate={{ opacity: 1, y: 0 }} 
                   exit={{ opacity: 0, scale: 0.95 }}
-                  key={supp.checklistId} 
+                  key={supp.id} 
                   className={`flex items-center justify-between p-2 rounded-lg border transition-colors ${supp.isTaken ? "bg-emerald-500/10 border-emerald-500/20" : "bg-secondary/30 border-border/50"}`}
                 >
-                  {editingId === supp.checklistId ? (
+                  {editingId === supp.id ? (
                     <div className="flex items-center gap-2 flex-1 mr-2">
                       <div className="text-xs font-medium px-1 flex-1 truncate">{supp.name}</div>
                       <Input value={editDosage} onChange={e => setEditDosage(e.target.value)} className="h-7 text-xs px-2 w-16" placeholder="Dosage" autoFocus />
@@ -166,9 +166,9 @@ export function DailySupplements({ date }: { date: string }) {
                   )}
 
                   <div className="flex items-center gap-0.5 shrink-0">
-                    {editingId === supp.checklistId ? (
+                    {editingId === supp.id ? (
                       <>
-                        <Button variant="ghost" size="icon" className="h-6 w-6 text-emerald-500" onClick={() => saveEdit(supp.checklistId)}>
+                        <Button variant="ghost" size="icon" className="h-6 w-6 text-emerald-500" onClick={() => saveEdit(supp.id)}>
                           <Check className="w-3.5 h-3.5" />
                         </Button>
                         <Button variant="ghost" size="icon" className="h-6 w-6 text-muted-foreground" onClick={() => setEditingId(null)}>
@@ -177,10 +177,10 @@ export function DailySupplements({ date }: { date: string }) {
                       </>
                     ) : (
                       <>
-                        <Button variant="ghost" size="icon" className="h-6 w-6 text-muted-foreground opacity-50 hover:opacity-100" onClick={() => startEdit(supp.checklistId, supp.name, supp.dosage)}>
+                        <Button variant="ghost" size="icon" className="h-6 w-6 text-muted-foreground opacity-50 hover:opacity-100" onClick={() => startEdit(supp.id, supp.name, supp.dosage)}>
                           <Pencil className="w-3 h-3" />
                         </Button>
-                        <Button variant="ghost" size="icon" className="h-6 w-6 text-destructive opacity-50 hover:opacity-100 hover:bg-destructive/10" onClick={() => handleDelete(supp.checklistId)}>
+                        <Button variant="ghost" size="icon" className="h-6 w-6 text-destructive opacity-50 hover:opacity-100 hover:bg-destructive/10" onClick={() => handleDelete(supp.id)}>
                           <Trash2 className="w-3 h-3" />
                         </Button>
                       </>

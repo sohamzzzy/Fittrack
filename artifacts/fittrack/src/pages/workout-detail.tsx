@@ -8,12 +8,14 @@ import { ArrowLeft, Clock, Weight, Dumbbell, Check, Pencil, X } from "lucide-rea
 import { format } from "date-fns";
 import { cn } from "@/lib/utils";
 import { WorkoutEditor, computeWorkoutStats } from "@/components/workout/workout-editor";
+import { formatWeightDisplay } from "@/lib/weight-unit";
 
 export default function WorkoutDetail() {
   const params = useParams<{ id: string }>();
   const workoutId = parseInt(params.id);
   const [editing, setEditing] = useState(false);
   const { data: me } = useGetMe();
+  const unit = (me?.weightUnit as "kg" | "lbs") ?? "kg";
 
   const { data: workout, isLoading } = useGetWorkout(workoutId, {
     query: { enabled: !!workoutId, queryKey: getGetWorkoutQueryKey(workoutId) },
@@ -97,7 +99,7 @@ export default function WorkoutDetail() {
               <CardContent className="pt-3 pb-3 flex flex-col items-center">
                 <Weight className="w-4 h-4 text-primary mb-1" />
                 <span className="text-lg font-black">
-                  {Math.round(workout.totalVolume ?? stats.totalVol)}kg
+                  {workout.totalVolume ?? stats.totalVol != null ? formatWeightDisplay(workout.totalVolume ?? stats.totalVol, unit) : "—"}
                 </span>
                 <span className="text-[10px] text-muted-foreground">Volume</span>
               </CardContent>
@@ -127,7 +129,7 @@ export default function WorkoutDetail() {
               <CardContent className="pt-0 pb-4">
                 <div className="grid grid-cols-[32px_80px_64px_40px] gap-2 mb-2 text-[10px] text-muted-foreground font-semibold uppercase tracking-wider">
                   <span>SET</span>
-                  <span className="text-center">KG</span>
+                  <span className="text-center">{unit.toUpperCase()}</span>
                   <span className="text-center">REPS</span>
                   <span className="text-center">DONE</span>
                 </div>
@@ -141,7 +143,7 @@ export default function WorkoutDetail() {
                   >
                     <span className="text-sm font-bold text-center text-muted-foreground">{s.setNumber}</span>
                     <span className="text-sm font-bold text-center">
-                      {s.weight != null ? `${s.weight}kg` : "—"}
+                      {s.weight != null ? formatWeightDisplay(s.weight, unit) : "—"}
                     </span>
                     <span className="text-sm font-bold text-center">{s.reps ?? "—"}</span>
                     <div className="flex justify-center">

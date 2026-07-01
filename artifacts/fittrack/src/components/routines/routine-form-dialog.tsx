@@ -3,10 +3,12 @@ import {
   useCreateRoutine,
   useUpdateRoutine,
   useListExercises,
+  useGetMe,
   type Routine,
   type RoutineInput,
   type RoutineUpdate,
 } from "@workspace/api-client-react";
+import { formatWeight, parseWeightToKg } from "@/lib/weight-unit";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -66,6 +68,8 @@ export function RoutineFormDialog({ open, onOpenChange, routine, onSaved }: Rout
   const invalidate = useInvalidateRoutines();
   const createRoutine = useCreateRoutine();
   const updateRoutine = useUpdateRoutine();
+  const { data: me } = useGetMe();
+  const unit = (me?.weightUnit as "kg" | "lbs") ?? "kg";
   const { data: exerciseList } = useListExercises({ q: exerciseSearch || undefined });
 
   useEffect(() => {
@@ -296,16 +300,16 @@ export function RoutineFormDialog({ open, onOpenChange, routine, onSaved }: Rout
                         />
                       </div>
                       <div>
-                        <label className="text-[10px] text-muted-foreground uppercase">Weight (kg)</label>
+                        <label className="text-[10px] text-muted-foreground uppercase">Weight ({unit})</label>
                         <Input
                           type="number"
                           min={0}
                           className="h-8 mt-0.5 bg-secondary border-0"
                           placeholder="—"
-                          value={ex.defaultWeight ?? ""}
+                          value={formatWeight(ex.defaultWeight, unit) ?? ""}
                           onChange={(e) =>
                             updateExercise(index, {
-                              defaultWeight: e.target.value ? parseFloat(e.target.value) : undefined,
+                              defaultWeight: e.target.value ? (parseWeightToKg(e.target.value, unit) ?? undefined) : undefined,
                             })
                           }
                         />

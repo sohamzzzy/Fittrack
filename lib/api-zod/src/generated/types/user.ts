@@ -7,6 +7,7 @@
  */
 import type { UserRecentActivityItem } from './userRecentActivityItem';
 import type { UserTheme } from './userTheme';
+import type { UserWeightUnit } from './userWeightUnit';
 
 export interface User {
   id: number;
@@ -15,6 +16,7 @@ export interface User {
   /** @nullable */
   displayName?: string | null;
   theme?: UserTheme;
+  weightUnit?: UserWeightUnit;
   /** @nullable */
   bio?: string | null;
   /** @nullable */

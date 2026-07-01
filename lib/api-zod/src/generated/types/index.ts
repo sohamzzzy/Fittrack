@@ -65,6 +65,8 @@ export * from './userStats';
 export * from './userTheme';
 export * from './userUpdate';
 export * from './userUpdateTheme';
+export * from './userUpdateWeightUnit';
+export * from './userWeightUnit';
 export * from './waterEntry';
 export * from './waterEntryInput';
 export * from './waterEntryUpdate';

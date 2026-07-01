@@ -8,7 +8,9 @@ import {
   useUpdateWorkout,
   getGetWorkoutQueryKey,
   getGetRoutineQueryKey,
+  useGetMe,
 } from "@workspace/api-client-react";
+import { formatWeightDisplay } from "@/lib/weight-unit";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Clock, Weight, Dumbbell } from "lucide-react";
@@ -41,6 +43,8 @@ export default function ActiveWorkout() {
   const { toast } = useToast();
   const invalidate = useInvalidateWorkoutQueries();
   const { isLoaded: authLoaded, isSignedIn } = useAuth();
+  const { data: me } = useGetMe();
+  const unit = (me?.weightUnit as "kg" | "lbs") ?? "kg";
   const startRequestedRef = useRef(false);
 
   const createWorkout = useCreateWorkout();
@@ -224,7 +228,7 @@ export default function ActiveWorkout() {
           </div>
           <div className="flex items-center gap-1 text-muted-foreground text-sm">
             <Weight className="w-4 h-4" />
-            <span className="font-semibold">{Math.round(totalVol)}kg</span>
+            <span className="font-semibold">{formatWeightDisplay(totalVol, unit)}</span>
           </div>
           <div className="flex items-center gap-1 text-muted-foreground text-sm">
             <Dumbbell className="w-4 h-4" />

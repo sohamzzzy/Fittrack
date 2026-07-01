@@ -10,6 +10,7 @@ export const usersTable = pgTable("users", {
   bio: text("bio"),
   avatarUrl: text("avatar_url"),
   theme: text("theme").notNull().default("system"),
+  weightUnit: text("weight_unit").notNull().default("kg"),
   createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
   updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow().$onUpdate(() => new Date()),
 });

@@ -8,10 +8,12 @@ import {
   useDeleteSet,
   useListExercises,
   getListExercisesQueryKey,
+  useGetMe,
   type WorkoutDetail,
   type WorkoutSet,
   type WorkoutExercise,
 } from "@workspace/api-client-react";
+import { formatWeight, parseWeightToKg, formatWeightDisplay } from "@/lib/weight-unit";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -53,6 +55,9 @@ export function WorkoutEditor({
     deleteSetOptimistic,
     removeExerciseOptimistic,
   } = useWorkoutOptimisticCache(workoutId);
+
+  const { data: me } = useGetMe();
+  const unit = (me?.weightUnit as "kg" | "lbs") ?? "kg";
 
   const [showExerciseDialog, setShowExerciseDialog] = useState(false);
   const [showCreateExerciseDialog, setShowCreateExerciseDialog] = useState(false);
@@ -173,8 +178,8 @@ export function WorkoutEditor({
 
   const handleUpdateSet = useCallback((weId: number, setId: number, field: "weight" | "reps", value: string) => {
     if (value.trim() === "") return;
-    const num = parseFloat(value);
-    if (isNaN(num)) return;
+    const num = field === "weight" ? parseWeightToKg(value, unit) : parseFloat(value);
+    if (num == null || isNaN(num)) return;
 
     // Debounce: coalesce rapid updates (e.g., fast tabbing between inputs)
     const key = `${setId}-${field}`;
@@ -201,7 +206,7 @@ export function WorkoutEditor({
         );
       }, 300),
     );
-  }, [workoutId, updateSet, updateSetOptimistic, invalidateDetail]);
+  }, [workoutId, updateSet, updateSetOptimistic, invalidateDetail, unit]);
 
   const handleDeleteSet = useCallback((weId: number, setId: number) => {
     // Optimistic: immediately remove the set
@@ -279,6 +284,7 @@ export function WorkoutEditor({
             we={we}
             showPreviousColumn={showPreviousColumn}
             gridCols={gridCols}
+            unit={unit}
             onAddSet={handleAddSet}
             onToggle={handleToggleComplete}
             onUpdate={handleUpdateSet}
@@ -366,6 +372,7 @@ interface ExerciseCardProps {
   we: WorkoutExercise;
   showPreviousColumn: boolean;
   gridCols: string;
+  unit: "kg" | "lbs";
   onAddSet: (weId: number) => void;
   onToggle: (
     weId: number,
@@ -383,6 +390,7 @@ const ExerciseCard = memo(function ExerciseCard({
   we,
   showPreviousColumn,
   gridCols,
+  unit,
   onAddSet,
   onToggle,
   onUpdate,
@@ -418,7 +426,7 @@ const ExerciseCard = memo(function ExerciseCard({
           >
             <span>SET</span>
             {showPreviousColumn && <span>PREV</span>}
-            <span className="text-center">KG</span>
+            <span className="text-center">{unit.toUpperCase()}</span>
             <span className="text-center">REPS</span>
             <span></span>
             <span></span>
@@ -429,6 +437,7 @@ const ExerciseCard = memo(function ExerciseCard({
               s={s}
               weId={we.id}
               showPreviousColumn={showPreviousColumn}
+              unit={unit}
               onToggle={onToggle}
               onUpdate={onUpdate}
               onDelete={onDelete}
@@ -458,6 +467,7 @@ interface SetRowProps {
   s: WorkoutSet;
   weId: number;
   showPreviousColumn?: boolean;
+  unit: "kg" | "lbs";
   onToggle: (
     weId: number,
     setId: number,
@@ -469,16 +479,16 @@ interface SetRowProps {
   onDelete: (weId: number, setId: number) => void;
 }
 
-const SetRow = memo(function SetRow({ s, weId, showPreviousColumn, onToggle, onUpdate, onDelete }: SetRowProps) {
-  const [weight, setWeight] = useState(s.weight?.toString() ?? "");
+const SetRow = memo(function SetRow({ s, weId, showPreviousColumn, unit, onToggle, onUpdate, onDelete }: SetRowProps) {
+  const [weight, setWeight] = useState(formatWeight(s.weight, unit)?.toString() ?? "");
   const [reps, setReps] = useState(s.reps?.toString() ?? "");
   const prev =
-    s.previousWeight != null ? `${s.previousWeight}kg × ${s.previousReps ?? "?"}` : "—";
+    s.previousWeight != null ? `${formatWeightDisplay(s.previousWeight, unit)} × ${s.previousReps ?? "?"}` : "—";
 
   useEffect(() => {
-    setWeight(s.weight?.toString() ?? "");
+    setWeight(formatWeight(s.weight, unit)?.toString() ?? "");
     setReps(s.reps?.toString() ?? "");
-  }, [s.weight, s.reps]);
+  }, [s.weight, s.reps, unit]);
 
   const gridCols = showPreviousColumn
     ? "grid-cols-[32px_1fr_80px_64px_40px_32px]"
@@ -523,9 +533,10 @@ const SetRow = memo(function SetRow({ s, weId, showPreviousColumn, onToggle, onU
           "w-8 h-8 rounded-full flex items-center justify-center border-2 transition-all",
           s.completed ? "bg-primary border-primary text-white" : "border-border text-muted-foreground",
         )}
-        onClick={() =>
-          onToggle(weId, s.id, s.completed, parseFloat(weight) || null, parseInt(reps, 10) || null)
-        }
+        onClick={() => {
+          const numWeight = parseWeightToKg(weight, unit);
+          onToggle(weId, s.id, s.completed, numWeight || null, parseInt(reps, 10) || null);
+        }}
         data-testid={`button-complete-set-${s.id}`}
       >
         {s.completed && <Check className="w-4 h-4" />}
