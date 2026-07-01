@@ -73,6 +73,13 @@ paths:
       operationId: getMyStats
       tags: [users]
       summary: Get current user stats summary
+      parameters:
+        - name: timezone
+          in: query
+          required: false
+          schema:
+            type: string
+          description: User timezone for streak calculation (e.g. America/New_York)
       responses:
         "200":
           description: User stats

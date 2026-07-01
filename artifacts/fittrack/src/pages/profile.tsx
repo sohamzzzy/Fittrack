@@ -16,7 +16,7 @@ import { useToast } from "@/hooks/use-toast";
 
 export default function Profile() {
   const { data: me, isLoading } = useGetMe();
-  const { data: stats } = useGetMyStats();
+  const { data: stats } = useGetMyStats({ timezone: Intl.DateTimeFormat().resolvedOptions().timeZone });
   const { data: workouts } = useListWorkouts();
   const updateMe = useUpdateMe();
   const qc = useQueryClient();

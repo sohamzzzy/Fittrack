@@ -144,10 +144,50 @@ meRouter.get("/stats", requireAuth, async (req, res) => {
     const monthAgo = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
     const [weekCount] = await db.select({ c: count() }).from(workoutsTable).where(and(eq(workoutsTable.userId, user.id), eq(workoutsTable.isFinished, true), sql`${workoutsTable.startedAt} > ${weekAgo}`));
     const [monthCount] = await db.select({ c: count() }).from(workoutsTable).where(and(eq(workoutsTable.userId, user.id), eq(workoutsTable.isFinished, true), sql`${workoutsTable.startedAt} > ${monthAgo}`));
+    const userTimezone = getSingleValue(req.query.timezone) || "UTC";
+    const allWorkouts = await db
+      .select({ finishedAt: workoutsTable.finishedAt })
+      .from(workoutsTable)
+      .where(and(eq(workoutsTable.userId, user.id), eq(workoutsTable.isFinished, true)))
+      .orderBy(desc(workoutsTable.finishedAt));
+
+    const completedDays = new Set<string>();
+    const safeFormat = (date: Date, tz: string) => {
+      try {
+        return new Intl.DateTimeFormat("en-CA", { timeZone: tz, year: "numeric", month: "2-digit", day: "2-digit" }).format(date);
+      } catch (e) {
+        return new Intl.DateTimeFormat("en-CA", { timeZone: "UTC", year: "numeric", month: "2-digit", day: "2-digit" }).format(date);
+      }
+    };
+
+    for (const w of allWorkouts) {
+      if (w.finishedAt) {
+        completedDays.add(safeFormat(w.finishedAt, userTimezone));
+      }
+    }
+
+    let currentStreak = 0;
+    const todayStr = safeFormat(new Date(), userTimezone);
+    let expectedNoon = new Date(`${todayStr}T12:00:00Z`);
+
+    if (!completedDays.has(todayStr)) {
+      expectedNoon = new Date(expectedNoon.getTime() - 86400000);
+    }
+
+    while (true) {
+      const expectedStr = expectedNoon.toISOString().split("T")[0];
+      if (completedDays.has(expectedStr)) {
+        currentStreak++;
+        expectedNoon = new Date(expectedNoon.getTime() - 86400000);
+      } else {
+        break;
+      }
+    }
+
     res.json({
       totalWorkouts: Number(wCount.c),
       totalVolume: 0,
-      currentStreak: 0,
+      currentStreak,
       totalFollowers: Number(followers.c),
       totalFollowing: Number(following.c),
       thisWeekWorkouts: Number(weekCount.c),

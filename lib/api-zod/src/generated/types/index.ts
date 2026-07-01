@@ -25,6 +25,7 @@ export * from './foodLogInputMealType';
 export * from './foodLogMealType';
 export * from './foodLogUpdate';
 export * from './foodLogUpdateMealType';
+export * from './getMyStatsParams';
 export * from './getNutritionSummaryParams';
 export * from './getSocialFeedParams';
 export * from './getSupplementsParams';

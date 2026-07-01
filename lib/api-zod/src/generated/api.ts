@@ -84,6 +84,10 @@ export const UpdateMeResponse = zod.object({
 /**
  * @summary Get current user stats summary
  */
+export const GetMyStatsQueryParams = zod.object({
+  "timezone": zod.coerce.string().optional().describe('User timezone for streak calculation (e.g. America\/New_York)')
+})
+
 export const GetMyStatsResponse = zod.object({
   "totalWorkouts": zod.number(),
   "totalVolume": zod.number(),

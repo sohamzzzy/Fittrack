@@ -565,6 +565,13 @@ export interface FollowResult {
   followersCount: number;
 }
 
+export type GetMyStatsParams = {
+/**
+ * User timezone for streak calculation (e.g. America/New_York)
+ */
+timezone?: string;
+};
+
 export type SearchUsersParams = {
 q: string;
 };
