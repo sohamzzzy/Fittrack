@@ -3,6 +3,9 @@ import { getSingleValue } from "../lib/getSingleValue";
 import { requireAuth, getAuthUser } from "../lib/auth";
 import { db, foodItemsTable, foodLogsTable, nutritionGoalsTable, waterIntakeTable, supplementsTable, supplementLogsTable } from "@workspace/db";
 import { eq, and, or, isNull, count, sql } from "drizzle-orm";
+import fs from "node:fs";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
 
 const router = Router();
 
@@ -407,7 +410,34 @@ router.get("/nutrition/supplements", requireAuth, async (req, res) => {
       res.status(400).json({ error: "Missing date" });
       return;
     }
-    const supplements = await db.select().from(supplementsTable).where(eq(supplementsTable.userId, user.id)).orderBy(supplementsTable.displayOrder, supplementsTable.createdAt);
+    let supplements = await db.select().from(supplementsTable).where(eq(supplementsTable.userId, user.id)).orderBy(supplementsTable.displayOrder, supplementsTable.createdAt);
+    
+    // Auto-seed default supplements for users who have no supplements and no historical logs
+    if (supplements.length === 0) {
+      const historicalLogs = await db.select({ c: count() }).from(supplementLogsTable).where(eq(supplementLogsTable.userId, user.id));
+      if (!historicalLogs[0] || historicalLogs[0].c === 0) {
+        const __filename = fileURLToPath(import.meta.url);
+        const dataPath = path.resolve(__filename, "../../../../../scripts/src/data/supplements.json");
+        try {
+          if (fs.existsSync(dataPath)) {
+            const defaults = JSON.parse(fs.readFileSync(dataPath, "utf-8"));
+            if (defaults && defaults.length > 0) {
+              const toInsert = defaults.map((d: any, idx: number) => ({
+                userId: user.id,
+                name: d.name,
+                dosage: d.dosage || null,
+                displayOrder: idx
+              }));
+              await db.insert(supplementsTable).values(toInsert);
+              supplements = await db.select().from(supplementsTable).where(eq(supplementsTable.userId, user.id)).orderBy(supplementsTable.displayOrder, supplementsTable.createdAt);
+            }
+          }
+        } catch (err) {
+          req.log.error("Failed to auto-seed supplements", err);
+        }
+      }
+    }
+
     const logs = await db.select().from(supplementLogsTable).where(and(eq(supplementLogsTable.userId, user.id), eq(supplementLogsTable.date, date)));
     
     const loggedIds = new Set(logs.map(l => l.supplementId));
