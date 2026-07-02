@@ -427,6 +427,31 @@ paths:
         "204":
           description: Deleted
 
+  /workouts/{workoutId}/save-as-routine:
+    post:
+      operationId: saveWorkoutAsRoutine
+      tags: [workouts]
+      summary: Save a completed workout as a reusable routine
+      parameters:
+        - name: workoutId
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SaveWorkoutAsRoutineInput"
+      responses:
+        "201":
+          description: Created routine
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Routine"
+
   /workouts/{workoutId}/exercises:
     post:
       operationId: addWorkoutExercise
@@ -1615,6 +1640,17 @@ components:
                 type: number
               restSeconds:
                 type: integer
+
+    SaveWorkoutAsRoutineInput:
+      type: object
+      required: [name]
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        overwriteRoutineId:
+          type: integer
 
     # ─── Workouts ──────────────────────────────────────────────────────────────
     Workout:

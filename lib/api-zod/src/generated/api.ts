@@ -473,6 +473,20 @@ export const DeleteWorkoutParams = zod.object({
 
 
 /**
+ * @summary Save a completed workout as a reusable routine
+ */
+export const SaveWorkoutAsRoutineParams = zod.object({
+  "workoutId": zod.coerce.number()
+})
+
+export const SaveWorkoutAsRoutineBody = zod.object({
+  "name": zod.string(),
+  "description": zod.string().optional(),
+  "overwriteRoutineId": zod.number().optional()
+})
+
+
+/**
  * @summary Add an exercise to a workout
  */
 export const AddWorkoutExerciseParams = zod.object({

@@ -4,16 +4,18 @@ import { useGetWorkout, getGetWorkoutQueryKey, useGetMe } from "@workspace/api-c
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, Clock, Weight, Dumbbell, Check, Pencil, X } from "lucide-react";
+import { ArrowLeft, Clock, Weight, Dumbbell, Check, Pencil, X, Save } from "lucide-react";
 import { format } from "date-fns";
 import { cn } from "@/lib/utils";
 import { WorkoutEditor, computeWorkoutStats } from "@/components/workout/workout-editor";
 import { formatWeightDisplay } from "@/lib/weight-unit";
+import { SaveAsRoutineDialog } from "@/components/workout/save-as-routine-dialog";
 
 export default function WorkoutDetail() {
   const params = useParams<{ id: string }>();
   const workoutId = parseInt(params.id);
   const [editing, setEditing] = useState(false);
+  const [saveAsRoutineOpen, setSaveAsRoutineOpen] = useState(false);
   const { data: me } = useGetMe();
   const unit = (me?.weightUnit as "kg" | "lbs") ?? "kg";
 
@@ -56,23 +58,43 @@ export default function WorkoutDetail() {
           </div>
         </div>
         {me?.id === workout.userId && (
-          <Button
-            variant={editing ? "secondary" : "outline"}
-            size="sm"
-            className="shrink-0 font-semibold"
-            onClick={() => setEditing((v) => !v)}
-            data-testid="button-toggle-edit"
-          >
-            {editing ? (
-              <>
-                <X className="w-4 h-4 mr-1" /> Done
-              </>
-            ) : (
-              <>
-                <Pencil className="w-4 h-4 mr-1" /> Edit
-              </>
-            )}
-          </Button>
+          <div className="flex gap-2">
+            <Button
+              variant="outline"
+              size="sm"
+              className="shrink-0 font-semibold hidden sm:flex"
+              onClick={() => setSaveAsRoutineOpen(true)}
+              data-testid="button-save-routine"
+            >
+              <Save className="w-4 h-4 mr-1" /> Save as Routine
+            </Button>
+            <Button
+              variant="outline"
+              size="icon"
+              className="shrink-0 font-semibold sm:hidden"
+              onClick={() => setSaveAsRoutineOpen(true)}
+              data-testid="button-save-routine-mobile"
+            >
+              <Save className="w-4 h-4" />
+            </Button>
+            <Button
+              variant={editing ? "secondary" : "outline"}
+              size="sm"
+              className="shrink-0 font-semibold"
+              onClick={() => setEditing((v) => !v)}
+              data-testid="button-toggle-edit"
+            >
+              {editing ? (
+                <>
+                  <X className="w-4 h-4 mr-1" /> Done
+                </>
+              ) : (
+                <>
+                  <Pencil className="w-4 h-4 mr-1" /> Edit
+                </>
+              )}
+            </Button>
+          </div>
         )}
       </div>
 
@@ -163,6 +185,14 @@ export default function WorkoutDetail() {
           ))}
         </>
       )}
+      
+      <SaveAsRoutineDialog 
+        workoutId={workoutId} 
+        workoutName={workout.name} 
+        workoutStartedAt={workout.startedAt}
+        open={saveAsRoutineOpen} 
+        onOpenChange={setSaveAsRoutineOpen} 
+      />
     </div>
   );
 }

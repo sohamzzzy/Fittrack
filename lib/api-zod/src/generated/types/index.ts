@@ -47,6 +47,7 @@ export * from './routineInput';
 export * from './routineInputExercisesItem';
 export * from './routineUpdate';
 export * from './routineUpdateExercisesItem';
+export * from './saveWorkoutAsRoutineInput';
 export * from './searchSupplementsParams';
 export * from './searchUsersParams';
 export * from './setInput';

@@ -179,6 +179,12 @@ export interface RoutineUpdate {
   exercises?: RoutineUpdateExercisesItem[];
 }
 
+export interface SaveWorkoutAsRoutineInput {
+  name: string;
+  description?: string;
+  overwriteRoutineId?: number;
+}
+
 export interface Workout {
   id: number;
   name: string;

@@ -480,4 +480,135 @@ router.delete("/workouts/:workoutId/exercises/:workoutExerciseId/sets/:setId", r
   }
 });
 
+router.post("/workouts/:workoutId/save-as-routine", requireAuth, async (req, res) => {
+  try {
+    const user = await getAuthUser(req);
+    const workoutIdParam = getSingleValue(req.params.workoutId);
+    if (!workoutIdParam) { res.status(400).json({ error: "Missing workout id" }); return; }
+    const workoutId = parseInt(workoutIdParam);
+    const [w] = await db.select().from(workoutsTable).where(eq(workoutsTable.id, workoutId)).limit(1);
+    if (!w) { res.status(404).json({ error: "Workout not found" }); return; }
+    if (w.userId !== user.id) { res.status(403).json({ error: "Forbidden" }); return; }
+
+    const { name, description, overwriteRoutineId } = req.body;
+    if (!name || typeof name !== "string") {
+      res.status(400).json({ error: "Routine name is required" });
+      return;
+    }
+    const trimmedName = name.trim();
+    if (!trimmedName) {
+      res.status(400).json({ error: "Routine name is required" });
+      return;
+    }
+
+    const exRows = await db
+      .select({ we: workoutExercisesTable })
+      .from(workoutExercisesTable)
+      .where(eq(workoutExercisesTable.workoutId, workoutId))
+      .orderBy(workoutExercisesTable.order);
+      
+    if (exRows.length === 0) {
+      res.status(400).json({ error: "Workout has no exercises to save" });
+      return;
+    }
+
+    const weIds = exRows.map(r => r.we.id);
+    const allSets = await db
+      .select()
+      .from(workoutSetsTable)
+      .where(inArray(workoutSetsTable.workoutExerciseId, weIds));
+      
+    const setsByWeId = new Map<number, typeof allSets>();
+    for (const s of allSets) {
+      let arr = setsByWeId.get(s.workoutExerciseId);
+      if (!arr) { arr = []; setsByWeId.set(s.workoutExerciseId, arr); }
+      arr.push(s);
+    }
+
+    const resultRoutine = await db.transaction(async (tx) => {
+      let routineId: number;
+      if (overwriteRoutineId != null) {
+        const parsedOverwriteId = parseInt(String(overwriteRoutineId), 10);
+        const [existing] = await tx
+          .select()
+          .from(routinesTable)
+          .where(and(eq(routinesTable.id, parsedOverwriteId), eq(routinesTable.userId, user.id)))
+          .limit(1);
+        if (!existing) {
+          throw new Error("Routine to overwrite not found");
+        }
+        routineId = existing.id;
+        await tx.update(routinesTable).set({ name: trimmedName, description: description?.trim() || null }).where(eq(routinesTable.id, routineId));
+        await tx.delete(routineExercisesTable).where(eq(routineExercisesTable.routineId, routineId));
+      } else {
+        const [inserted] = await tx
+          .insert(routinesTable)
+          .values({ userId: user.id, name: trimmedName, description: description?.trim() || null })
+          .returning();
+        routineId = inserted.id;
+      }
+      
+      const routineExercisesToInsert = exRows.map((row, idx) => {
+        const sets = setsByWeId.get(row.we.id) || [];
+        const completedSets = sets.filter(s => s.completed);
+        const refSets = completedSets.length > 0 ? completedSets : sets;
+        
+        let defaultWeight = null;
+        let defaultReps = null;
+        
+        if (refSets.length > 0) {
+           defaultWeight = refSets[0].weight;
+           defaultReps = refSets[0].reps;
+        }
+
+        return {
+          routineId,
+          exerciseId: row.we.exerciseId,
+          order: row.we.order ?? idx,
+          defaultSets: sets.length > 0 ? sets.length : 1,
+          defaultReps: defaultReps,
+          defaultWeight: defaultWeight,
+          restSeconds: null,
+        };
+      });
+
+      if (routineExercisesToInsert.length > 0) {
+         await tx.insert(routineExercisesTable).values(routineExercisesToInsert);
+      }
+      
+      const [finalRoutine] = await tx.select().from(routinesTable).where(eq(routinesTable.id, routineId)).limit(1);
+      
+      const savedExRows = await tx
+        .select({ re: routineExercisesTable, ex: exercisesTable })
+        .from(routineExercisesTable)
+        .innerJoin(exercisesTable, eq(routineExercisesTable.exerciseId, exercisesTable.id))
+        .where(eq(routineExercisesTable.routineId, routineId))
+        .orderBy(routineExercisesTable.order);
+        
+      return {
+        ...finalRoutine,
+        exerciseCount: savedExRows.length,
+        exercises: savedExRows.map((r) => ({
+          id: r.re.id,
+          exerciseId: r.re.exerciseId,
+          exerciseName: r.ex.name,
+          order: r.re.order,
+          defaultSets: r.re.defaultSets,
+          defaultReps: r.re.defaultReps,
+          defaultWeight: r.re.defaultWeight ? parseFloat(r.re.defaultWeight) : null,
+          restSeconds: r.re.restSeconds,
+        })),
+      };
+    });
+
+    res.status(201).json(resultRoutine);
+  } catch (e) {
+    if (e instanceof Error && e.message === "Routine to overwrite not found") {
+      res.status(404).json({ error: e.message });
+      return;
+    }
+    sendServerError(req, res, e);
+  }
+});
+
 export default router;

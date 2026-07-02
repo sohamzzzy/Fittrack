@@ -54,6 +54,7 @@ import type {
   Routine,
   RoutineInput,
   RoutineUpdate,
+  SaveWorkoutAsRoutineInput,
   SearchSupplementsParams,
   SearchUsersParams,
   SetInput,
@@ -1676,6 +1677,77 @@ export const useDeleteWorkout = <TError = ErrorType<unknown>,
         TContext
       > => {
       return useMutation(getDeleteWorkoutMutationOptions(options));
+    }
+
+export const getSaveWorkoutAsRoutineUrl = (workoutId: number,) => {
+
+
+
+
+  return `/api/workouts/${workoutId}/save-as-routine`
+}
+
+/**
+ * @summary Save a completed workout as a reusable routine
+ */
+export const saveWorkoutAsRoutine = async (workoutId: number,
+    saveWorkoutAsRoutineInput: SaveWorkoutAsRoutineInput, options?: RequestInit): Promise<Routine> => {
+
+  return customFetch<Routine>(getSaveWorkoutAsRoutineUrl(workoutId),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(saveWorkoutAsRoutineInput)
+  }
+);}
+
+
+
+
+export const getSaveWorkoutAsRoutineMutationOptions = <TError = ErrorType<unknown>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof saveWorkoutAsRoutine>>, TError,{workoutId: number;data: BodyType<SaveWorkoutAsRoutineInput>}, TContext>, request?: SecondParameter<typeof customFetch>}
+): UseMutationOptions<Awaited<ReturnType<typeof saveWorkoutAsRoutine>>, TError,{workoutId: number;data: BodyType<SaveWorkoutAsRoutineInput>}, TContext> => {
+
+const mutationKey = ['saveWorkoutAsRoutine'];
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
+
+
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof saveWorkoutAsRoutine>>, {workoutId: number;data: BodyType<SaveWorkoutAsRoutineInput>}> = (props) => {
+          const {workoutId,data} = props ?? {};
+
+          return  saveWorkoutAsRoutine(workoutId,data,requestOptions)
+        }
+
+
+
+
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type SaveWorkoutAsRoutineMutationResult = NonNullable<Awaited<ReturnType<typeof saveWorkoutAsRoutine>>>
+    export type SaveWorkoutAsRoutineMutationBody = BodyType<SaveWorkoutAsRoutineInput>
+    export type SaveWorkoutAsRoutineMutationError = ErrorType<unknown>
+
+    /**
+ * @summary Save a completed workout as a reusable routine
+ */
+export const useSaveWorkoutAsRoutine = <TError = ErrorType<unknown>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof saveWorkoutAsRoutine>>, TError,{workoutId: number;data: BodyType<SaveWorkoutAsRoutineInput>}, TContext>, request?: SecondParameter<typeof customFetch>}
+ ): UseMutationResult<
+        Awaited<ReturnType<typeof saveWorkoutAsRoutine>>,
+        TError,
+        {workoutId: number;data: BodyType<SaveWorkoutAsRoutineInput>},
+        TContext
+      > => {
+      return useMutation(getSaveWorkoutAsRoutineMutationOptions(options));
     }
 
 export const getAddWorkoutExerciseUrl = (workoutId: number,) => {
