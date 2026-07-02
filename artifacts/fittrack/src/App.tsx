@@ -51,6 +51,7 @@ import Search from "@/pages/search";
 import Notifications from "@/pages/notifications";
 import CalendarPage from "@/pages/calendar";
 import { StatsPage } from "./pages/stats";
+import { GoalsPage } from "./pages/goals";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -163,6 +164,7 @@ function AppShell() {
         <Route path="/notifications" component={Notifications} />
         <Route path="/calendar" component={CalendarPage} />
         <Route path="/stats" component={StatsPage} />
+        <Route path="/goals" component={GoalsPage} />
 
         <Route component={NotFound} />
       </Switch>

@@ -1530,3 +1530,83 @@ export const GetCalendarDetailResponse = zod.object({
 })
 
 
+/**
+ * @summary Get all user goals
+ */
+export const GetGoalsResponseItem = zod.object({
+  "id": zod.number(),
+  "title": zod.string(),
+  "description": zod.string().nullish(),
+  "category": zod.enum(['WORKOUT', 'STRENGTH', 'VOLUME', 'NUTRITION', 'HYDRATION', 'SUPPLEMENT', 'CUSTOM']),
+  "metric": zod.string(),
+  "targetValue": zod.number(),
+  "currentValue": zod.number(),
+  "smartGoalType": zod.string().nullish(),
+  "smartExerciseId": zod.number().nullish(),
+  "startDate": zod.coerce.date().nullish(),
+  "deadline": zod.coerce.date().nullish(),
+  "status": zod.enum(['ACTIVE', 'COMPLETED', 'PAUSED', 'ARCHIVED']),
+  "createdAt": zod.coerce.date(),
+  "completedAt": zod.coerce.date().nullish()
+})
+export const GetGoalsResponse = zod.array(GetGoalsResponseItem)
+
+
+/**
+ * @summary Create a new goal
+ */
+export const CreateGoalBody = zod.object({
+  "title": zod.string(),
+  "description": zod.string().nullish(),
+  "category": zod.enum(['WORKOUT', 'STRENGTH', 'VOLUME', 'NUTRITION', 'HYDRATION', 'SUPPLEMENT', 'CUSTOM']),
+  "metric": zod.string(),
+  "targetValue": zod.number(),
+  "smartGoalType": zod.string().nullish(),
+  "smartExerciseId": zod.number().nullish(),
+  "startDate": zod.coerce.date().nullish(),
+  "deadline": zod.coerce.date().nullish()
+})
+
+
+/**
+ * @summary Update a goal
+ */
+export const UpdateGoalParams = zod.object({
+  "id": zod.coerce.number()
+})
+
+export const UpdateGoalBody = zod.object({
+  "title": zod.string().optional(),
+  "description": zod.string().nullish(),
+  "targetValue": zod.number().optional(),
+  "currentValue": zod.number().optional(),
+  "deadline": zod.coerce.date().nullish(),
+  "status": zod.enum(['ACTIVE', 'COMPLETED', 'PAUSED', 'ARCHIVED']).optional()
+})
+
+export const UpdateGoalResponse = zod.object({
+  "id": zod.number(),
+  "title": zod.string(),
+  "description": zod.string().nullish(),
+  "category": zod.enum(['WORKOUT', 'STRENGTH', 'VOLUME', 'NUTRITION', 'HYDRATION', 'SUPPLEMENT', 'CUSTOM']),
+  "metric": zod.string(),
+  "targetValue": zod.number(),
+  "currentValue": zod.number(),
+  "smartGoalType": zod.string().nullish(),
+  "smartExerciseId": zod.number().nullish(),
+  "startDate": zod.coerce.date().nullish(),
+  "deadline": zod.coerce.date().nullish(),
+  "status": zod.enum(['ACTIVE', 'COMPLETED', 'PAUSED', 'ARCHIVED']),
+  "createdAt": zod.coerce.date(),
+  "completedAt": zod.coerce.date().nullish()
+})
+
+
+/**
+ * @summary Delete a goal
+ */
+export const DeleteGoalParams = zod.object({
+  "id": zod.coerce.number()
+})
+
+

@@ -22,6 +22,8 @@ tags:
     description: Food and nutrition tracking
   - name: social
     description: Social feed and interactions
+  - name: goals
+    description: User fitness goals
 
 paths:
   /healthz:
@@ -1475,6 +1477,77 @@ paths:
               schema:
                 $ref: "#/components/schemas/CalendarDetail"
 
+  # ─── Goals ───────────────────────────────────────────────────────────────────
+  /goals:
+    get:
+      operationId: getGoals
+      tags: [goals]
+      summary: Get all user goals
+      responses:
+        "200":
+          description: List of goals
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Goal"
+    post:
+      operationId: createGoal
+      tags: [goals]
+      summary: Create a new goal
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateGoalRequest"
+      responses:
+        "201":
+          description: Created goal
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Goal"
+
+  /goals/{id}:
+    put:
+      operationId: updateGoal
+      tags: [goals]
+      summary: Update a goal
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateGoalRequest"
+      responses:
+        "200":
+          description: Updated goal
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Goal"
+    delete:
+      operationId: deleteGoal
+      tags: [goals]
+      summary: Delete a goal
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "204":
+          description: Deleted successfully
+
 components:
   schemas:
     HealthStatus:
@@ -2529,3 +2602,111 @@ components:
                 type: string
               count:
                 type: integer
+
+    Goal:
+      type: object
+      required:
+        - id
+        - title
+        - category
+        - metric
+        - targetValue
+        - currentValue
+        - status
+        - createdAt
+      properties:
+        id:
+          type: integer
+        title:
+          type: string
+        description:
+          type: string
+          nullable: true
+        category:
+          type: string
+          enum: [WORKOUT, STRENGTH, VOLUME, NUTRITION, HYDRATION, SUPPLEMENT, CUSTOM]
+        metric:
+          type: string
+        targetValue:
+          type: integer
+        currentValue:
+          type: integer
+        smartGoalType:
+          type: string
+          nullable: true
+        smartExerciseId:
+          type: integer
+          nullable: true
+        startDate:
+          type: string
+          format: date-time
+          nullable: true
+        deadline:
+          type: string
+          format: date-time
+          nullable: true
+        status:
+          type: string
+          enum: [ACTIVE, COMPLETED, PAUSED, ARCHIVED]
+        createdAt:
+          type: string
+          format: date-time
+        completedAt:
+          type: string
+          format: date-time
+          nullable: true
+
+    CreateGoalRequest:
+      type: object
+      required:
+        - title
+        - category
+        - metric
+        - targetValue
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+          nullable: true
+        category:
+          type: string
+          enum: [WORKOUT, STRENGTH, VOLUME, NUTRITION, HYDRATION, SUPPLEMENT, CUSTOM]
+        metric:
+          type: string
+        targetValue:
+          type: integer
+        smartGoalType:
+          type: string
+          nullable: true
+        smartExerciseId:
+          type: integer
+          nullable: true
+        startDate:
+          type: string
+          format: date-time
+          nullable: true
+        deadline:
+          type: string
+          format: date-time
+          nullable: true
+
+    UpdateGoalRequest:
+      type: object
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+          nullable: true
+        targetValue:
+          type: integer
+        currentValue:
+          type: integer
+        deadline:
+          type: string
+          format: date-time
+          nullable: true
+        status:
+          type: string
+          enum: [ACTIVE, COMPLETED, PAUSED, ARCHIVED]

@@ -682,6 +682,90 @@ export interface StatsAnalytics {
   topExercises: StatsAnalyticsTopExercisesItem[];
 }
 
+export type GoalCategory = typeof GoalCategory[keyof typeof GoalCategory];
+
+
+export const GoalCategory = {
+  WORKOUT: 'WORKOUT',
+  STRENGTH: 'STRENGTH',
+  VOLUME: 'VOLUME',
+  NUTRITION: 'NUTRITION',
+  HYDRATION: 'HYDRATION',
+  SUPPLEMENT: 'SUPPLEMENT',
+  CUSTOM: 'CUSTOM',
+} as const;
+
+export type GoalStatus = typeof GoalStatus[keyof typeof GoalStatus];
+
+
+export const GoalStatus = {
+  ACTIVE: 'ACTIVE',
+  COMPLETED: 'COMPLETED',
+  PAUSED: 'PAUSED',
+  ARCHIVED: 'ARCHIVED',
+} as const;
+
+export interface Goal {
+  id: number;
+  title: string;
+  description?: string | null;
+  category: GoalCategory;
+  metric: string;
+  targetValue: number;
+  currentValue: number;
+  smartGoalType?: string | null;
+  smartExerciseId?: number | null;
+  startDate?: string | null;
+  deadline?: string | null;
+  status: GoalStatus;
+  createdAt: string;
+  completedAt?: string | null;
+}
+
+export type CreateGoalRequestCategory = typeof CreateGoalRequestCategory[keyof typeof CreateGoalRequestCategory];
+
+
+export const CreateGoalRequestCategory = {
+  WORKOUT: 'WORKOUT',
+  STRENGTH: 'STRENGTH',
+  VOLUME: 'VOLUME',
+  NUTRITION: 'NUTRITION',
+  HYDRATION: 'HYDRATION',
+  SUPPLEMENT: 'SUPPLEMENT',
+  CUSTOM: 'CUSTOM',
+} as const;
+
+export interface CreateGoalRequest {
+  title: string;
+  description?: string | null;
+  category: CreateGoalRequestCategory;
+  metric: string;
+  targetValue: number;
+  smartGoalType?: string | null;
+  smartExerciseId?: number | null;
+  startDate?: string | null;
+  deadline?: string | null;
+}
+
+export type UpdateGoalRequestStatus = typeof UpdateGoalRequestStatus[keyof typeof UpdateGoalRequestStatus];
+
+
+export const UpdateGoalRequestStatus = {
+  ACTIVE: 'ACTIVE',
+  COMPLETED: 'COMPLETED',
+  PAUSED: 'PAUSED',
+  ARCHIVED: 'ARCHIVED',
+} as const;
+
+export interface UpdateGoalRequest {
+  title?: string;
+  description?: string | null;
+  targetValue?: number;
+  currentValue?: number;
+  deadline?: string | null;
+  status?: UpdateGoalRequestStatus;
+}
+
 export type GetMyStatsParams = {
 /**
  * User timezone for streak calculation (e.g. America/New_York)

@@ -10,6 +10,7 @@ import socialRouter from "./social";
 import notificationsRouter from "./notifications";
 import calendarRouter from "./calendar";
 import statsRouter from "./stats";
+import goalsRouter from "./goals";
 
 const router: IRouter = Router();
 
@@ -23,5 +24,6 @@ router.use(socialRouter);
 router.use(notificationsRouter);
 router.use(calendarRouter);
 router.use(statsRouter);
+router.use(goalsRouter);
 
 export default router;
