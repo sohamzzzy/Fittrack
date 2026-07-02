@@ -9,7 +9,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
-import { Dumbbell, TrendingUp, Users, Zap, LogOut, Pencil } from "lucide-react";
+import { Dumbbell, TrendingUp, Users, Zap, LogOut, Pencil, ChevronRight, Settings, CalendarDays, Target, BarChart2, Shield } from "lucide-react";
 import { motion } from "framer-motion";
 import { formatDistanceToNow } from "date-fns";
 import { useToast } from "@/hooks/use-toast";
@@ -174,6 +174,36 @@ export default function Profile() {
           </div>
         </div>
       )}
+
+      {/* Account Hub Navigation */}
+      <div className="pt-2">
+        <h3 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-3">Account Hub</h3>
+        <div className="space-y-2">
+          {[
+            { label: "Statistics", icon: BarChart2, href: "/stats", color: "text-indigo-500", bg: "bg-indigo-500/10" },
+            { label: "Calendar", icon: CalendarDays, href: "/calendar", color: "text-orange-500", bg: "bg-orange-500/10" },
+            { label: "Goals", icon: Target, href: "/goals", color: "text-rose-500", bg: "bg-rose-500/10" },
+            { label: "Settings", icon: Settings, href: "/settings", color: "text-slate-500", bg: "bg-slate-500/10" },
+            { label: "Account Preferences", icon: Shield, href: "/account", color: "text-blue-500", bg: "bg-blue-500/10" },
+          ].map((item, i) => (
+            <motion.div key={item.label} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.05 + 0.2 }}>
+              <Link href={item.href}>
+                <Card className="bg-card border-card-border hover:bg-white/5 transition-colors cursor-pointer">
+                  <CardContent className="p-3 px-4 flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <div className={`w-8 h-8 rounded-full ${item.bg} ${item.color} flex items-center justify-center`}>
+                        <item.icon className="w-4 h-4" />
+                      </div>
+                      <span className="font-semibold text-sm">{item.label}</span>
+                    </div>
+                    <ChevronRight className="w-4 h-4 text-muted-foreground" />
+                  </CardContent>
+                </Card>
+              </Link>
+            </motion.div>
+          ))}
+        </div>
+      </div>
 
       <Dialog open={editOpen} onOpenChange={setEditOpen}>
         <DialogContent className="bg-card border-card-border">

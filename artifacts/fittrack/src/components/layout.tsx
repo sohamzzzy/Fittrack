@@ -1,6 +1,6 @@
 import React from "react";
 import { Link, useLocation } from "wouter";
-import { Dumbbell, Utensils, LayoutDashboard, Search, UserCircle, Activity, Bell, CalendarDays, BarChart2, Target } from "lucide-react";
+import { Dumbbell, Utensils, LayoutDashboard, Search, UserCircle, Activity, Bell, CalendarDays, BarChart2, Target, Plus, Droplets, Pill } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useLiveUnreadCount } from "@/hooks/use-live-notifications";
 import { ThemeToggle } from "@/components/theme-toggle";
@@ -39,6 +39,53 @@ function ProfileAvatarShortcut() {
   );
 }
 
+import { Drawer, DrawerContent, DrawerHeader, DrawerTitle, DrawerTrigger, DrawerClose } from "@/components/ui/drawer";
+
+function QuickActionSheet() {
+  const actions = [
+    { href: "/workout", label: "Start Workout", icon: Dumbbell, color: "text-primary", bg: "bg-primary/10" },
+    { href: "/nutrition/log", label: "Log Food", icon: Utensils, color: "text-green-500", bg: "bg-green-500/10" },
+    { href: "/nutrition/log?type=water", label: "Log Water", icon: Droplets, color: "text-blue-500", bg: "bg-blue-500/10" },
+    { href: "/nutrition/log?type=supplements", label: "Supplements", icon: Pill, color: "text-purple-500", bg: "bg-purple-500/10" },
+    { href: "/calendar", label: "Calendar", icon: CalendarDays, color: "text-orange-500", bg: "bg-orange-500/10" },
+    { href: "/stats", label: "Stats", icon: BarChart2, color: "text-indigo-500", bg: "bg-indigo-500/10" },
+    { href: "/goals", label: "Goals", icon: Target, color: "text-rose-500", bg: "bg-rose-500/10" },
+  ];
+
+  return (
+    <Drawer>
+      <DrawerTrigger asChild>
+        <div className="flex flex-col items-center justify-center relative cursor-pointer -mt-6">
+          <div className="w-14 h-14 bg-primary text-primary-foreground rounded-full flex items-center justify-center shadow-lg shadow-primary/40 hover:scale-105 active:scale-95 transition-all border-4 border-background">
+            <Plus className="w-7 h-7" />
+          </div>
+        </div>
+      </DrawerTrigger>
+      <DrawerContent>
+        <div className="max-w-md w-full mx-auto pb-8">
+          <DrawerHeader>
+            <DrawerTitle className="text-center">Quick Actions</DrawerTitle>
+          </DrawerHeader>
+          <div className="grid grid-cols-4 gap-4 px-4 mt-4">
+            {actions.map((action) => (
+              <DrawerClose asChild key={action.label}>
+                <Link href={action.href} className="flex flex-col items-center gap-2">
+                  <div className={cn("w-14 h-14 rounded-2xl flex items-center justify-center transition-transform active:scale-95", action.bg, action.color)}>
+                    <action.icon className="w-6 h-6" />
+                  </div>
+                  <span className="text-[10px] font-medium text-center leading-tight">
+                    {action.label}
+                  </span>
+                </Link>
+              </DrawerClose>
+            ))}
+          </div>
+        </div>
+      </DrawerContent>
+    </Drawer>
+  );
+}
+
 export function Layout({ children }: { children: React.ReactNode }) {
   const [location] = useLocation();
 
@@ -51,6 +98,14 @@ export function Layout({ children }: { children: React.ReactNode }) {
     { href: "/stats", label: "Stats", icon: BarChart2 },
     { href: "/goals", label: "Goals", icon: Target },
     { href: "/search", label: "Discover", icon: Search },
+    { href: "/profile", label: "Profile", icon: UserCircle },
+  ];
+
+  const mobileNavItems = [
+    { href: "/dashboard", label: "Home", icon: LayoutDashboard },
+    { href: "/workouts", label: "Workout", icon: Dumbbell },
+    { isFab: true },
+    { href: "/feed", label: "Feed", icon: Activity },
     { href: "/profile", label: "Profile", icon: UserCircle },
   ];
 
@@ -122,16 +177,24 @@ export function Layout({ children }: { children: React.ReactNode }) {
 
       {/* Mobile Bottom Nav */}
       <nav className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-card/90 backdrop-blur-xl border-t border-border pb-safe">
-        <div className="flex items-center justify-around p-2">
-          {navItems.map((item) => {
+        <div className="flex items-end justify-around px-2 pb-2 pt-1 h-16">
+          {mobileNavItems.map((item, i) => {
+            if (item.isFab) {
+              return (
+                <div key="fab" className="flex-1 flex justify-center h-full items-end">
+                  <QuickActionSheet />
+                </div>
+              );
+            }
+            
             const isActive =
               location === item.href ||
-              (item.href !== "/" &&
+              (item.href !== "/" && item.href &&
                 (location.startsWith(item.href) ||
                   (item.href === "/workouts" && location === "/workout")));
             return (
-              <Link key={item.href} href={item.href} className="flex-1">
-                <div className="flex flex-col items-center justify-center py-2 gap-1 relative">
+              <Link key={item.href} href={item.href!} className="flex-1 h-full">
+                <div className="flex flex-col items-center justify-end h-full gap-1 relative pb-1">
                   {isActive && (
                     <div className="absolute top-0 w-8 h-1 bg-primary rounded-b-full shadow-[0_0_8px_rgba(255,90,0,0.8)]" />
                   )}

@@ -1,7 +1,8 @@
 import { useState } from "react";
 import {
   useGetSocialFeed, useCreatePost, useLikePost, useUnlikePost,
-  useListComments, useCreateComment, getGetSocialFeedQueryKey
+  useListComments, useCreateComment, getGetSocialFeedQueryKey,
+  useSearchUsers, useFollowUser, useUnfollowUser, getSearchUsersQueryKey
 } from "@workspace/api-client-react";
 import { useQueryClient } from "@tanstack/react-query";
 import { Card, CardContent } from "@/components/ui/card";
@@ -11,11 +12,13 @@ import { Textarea } from "@/components/ui/textarea";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
-import { Heart, MessageCircle, Dumbbell, Plus, Send } from "lucide-react";
+import { Heart, MessageCircle, Dumbbell, Plus, Send, Search as SearchIcon, UserPlus, UserMinus } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { formatDistanceToNow } from "date-fns";
 import { cn } from "@/lib/utils";
 import { useToast } from "@/hooks/use-toast";
+import { useDebounce } from "use-debounce";
+import { Link } from "wouter";
 
 function PostCard({ post, onLike }: { post: any; onLike: (id: number, liked: boolean) => void }) {
   const [showComments, setShowComments] = useState(false);
@@ -113,6 +116,36 @@ export default function Feed() {
   const { toast } = useToast();
   const [open, setOpen] = useState(false);
   const [content, setContent] = useState("");
+  
+  // Search state
+  const [q, setQ] = useState("");
+  const [debouncedQ] = useDebounce(q, 300);
+  const searchQ = debouncedQ.trim();
+  const { data: users = [], isLoading: searchLoading } = useSearchUsers(
+    { q: searchQ },
+    { query: { enabled: searchQ.length > 0, queryKey: getSearchUsersQueryKey({ q: searchQ }) } },
+  );
+  const followUser = useFollowUser();
+  const unfollowUser = useUnfollowUser();
+
+  const handleFollowToggle = (userId: number, isFollowing: boolean) => {
+    const fn = isFollowing ? unfollowUser : followUser;
+    qc.setQueriesData({ queryKey: ["/api/users/search"] }, (old: any) =>
+      Array.isArray(old) ? old.map((user) => user.id === userId ? {
+        ...user,
+        isFollowing: !isFollowing,
+        followersCount: Math.max(0, (user.followersCount ?? 0) + (isFollowing ? -1 : 1)),
+      } : user) : old
+    );
+    fn.mutate({ userId }, {
+      onSuccess: () => {
+        qc.invalidateQueries({ queryKey: ["/api/users/search"] });
+        qc.invalidateQueries({ queryKey: getGetSocialFeedQueryKey({ limit: 20, offset: 0 }) });
+        qc.invalidateQueries({ queryKey: ["/api/users", userId] });
+      },
+      onError: () => qc.invalidateQueries({ queryKey: ["/api/users/search"] }),
+    });
+  };
 
   const handleLike = (id: number, liked: boolean) => {
     const fn = liked ? unlikePost : likePost;
@@ -139,6 +172,62 @@ export default function Feed() {
         </Button>
       </div>
 
+      <div className="relative mb-4">
+        <SearchIcon className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+        <Input className="pl-9 bg-card border-card-border" placeholder="Search people..." value={q} onChange={(e) => setQ(e.target.value)} />
+      </div>
+
+      {searchQ ? (
+        // Search Results
+        <div className="space-y-4">
+          {searchLoading ? (
+            <div className="space-y-2">{[0,1,2].map(i => <Skeleton key={i} className="h-16" />)}</div>
+          ) : users.length > 0 ? (
+            <div className="space-y-2">
+              <h2 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-2">People</h2>
+              {users.map((u, i) => (
+                <motion.div key={u.id} initial={{ opacity: 0, x: -8 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: i * 0.04 }}>
+                  <Card className="bg-card border-card-border hover:border-primary/30 transition-colors">
+                    <CardContent className="py-3 px-4">
+                      <div className="flex items-center gap-3">
+                        <Link href={`/profile/${u.id}`}>
+                          <Avatar className="w-10 h-10 cursor-pointer shrink-0">
+                            <AvatarImage src={u.avatarUrl ?? undefined} />
+                            <AvatarFallback className="bg-primary/20 text-primary font-bold">{(u.username ?? "U")[0].toUpperCase()}</AvatarFallback>
+                          </Avatar>
+                        </Link>
+                        <Link href={`/profile/${u.id}`} className="flex-1 min-w-0 cursor-pointer">
+                          <p className="font-semibold text-sm">{u.displayName ?? u.username}</p>
+                          <p className="text-xs text-muted-foreground">@{u.username} · {u.followersCount ?? 0} followers</p>
+                        </Link>
+                        <Button
+                          size="sm"
+                          variant={u.isFollowing ? "outline" : "default"}
+                          className="font-bold shrink-0"
+                          onClick={() => handleFollowToggle(u.id, !!u.isFollowing)}
+                          disabled={followUser.isPending || unfollowUser.isPending}
+                        >
+                          {u.isFollowing ? (<><UserMinus className="w-3.5 h-3.5 mr-1" />Unfollow</>) : (<><UserPlus className="w-3.5 h-3.5 mr-1" />Follow</>)}
+                        </Button>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </motion.div>
+              ))}
+            </div>
+          ) : (
+            <Card className="bg-card border-card-border">
+              <CardContent className="py-12 text-center text-muted-foreground">
+                No users found for "{q}"
+              </CardContent>
+            </Card>
+          )}
+        </div>
+      ) : (
+        // Regular Feed
+        <>
+
+
       {isLoading ? (
         <div className="space-y-4">{[0,1,2].map(i => <Skeleton key={i} className="h-28" />)}</div>
       ) : posts && posts.length > 0 ? (
@@ -150,18 +239,20 @@ export default function Feed() {
           ))}
         </div>
       ) : (
-        <Card className="bg-card border-card-border">
-          <CardContent className="py-16 flex flex-col items-center text-center gap-4">
-            <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center">
-              <Heart className="w-8 h-8 text-primary" />
-            </div>
-            <div>
-              <h3 className="font-bold text-lg mb-1">Your feed is empty</h3>
-              <p className="text-sm text-muted-foreground">Follow others or post a workout to get started.</p>
-            </div>
-            <Button onClick={() => setOpen(true)} className="font-bold">Share Update</Button>
-          </CardContent>
-        </Card>
+          <Card className="bg-card border-card-border">
+            <CardContent className="py-16 flex flex-col items-center text-center gap-4">
+              <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center">
+                <Heart className="w-8 h-8 text-primary" />
+              </div>
+              <div>
+                <h3 className="font-bold text-lg mb-1">Your feed is empty</h3>
+                <p className="text-sm text-muted-foreground">Follow others or post a workout to get started.</p>
+              </div>
+              <Button onClick={() => setOpen(true)} className="font-bold">Share Update</Button>
+            </CardContent>
+          </Card>
+        )}
+        </>
       )}
 
       <Dialog open={open} onOpenChange={setOpen}>

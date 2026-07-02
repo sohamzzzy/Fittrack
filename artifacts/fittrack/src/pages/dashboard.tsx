@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Dumbbell, Flame, Heart, Clock, TrendingUp, Plus, ChevronRight } from "lucide-react";
+import { Dumbbell, Flame, Heart, Clock, TrendingUp, Plus, ChevronRight, CalendarDays, BarChart2, Target } from "lucide-react";
 import { motion } from "framer-motion";
 import { format } from "date-fns";
 
@@ -125,6 +125,43 @@ export default function Dashboard() {
             </Link>
           </CardContent>
         </Card>
+      </motion.div>
+
+      {/* Quick Access */}
+      <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4, delay: 0.15 }}>
+        <h2 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-3">Quick Access</h2>
+        <div className="grid grid-cols-3 gap-4">
+          <Link href="/stats" className="block">
+            <Card className="bg-card border-card-border hover:bg-white/5 transition-colors cursor-pointer active:scale-95">
+              <CardContent className="p-4 flex flex-col items-center justify-center gap-2">
+                <div className="w-10 h-10 rounded-full bg-indigo-500/10 text-indigo-500 flex items-center justify-center">
+                  <BarChart2 className="w-5 h-5" />
+                </div>
+                <span className="text-xs font-semibold">Stats</span>
+              </CardContent>
+            </Card>
+          </Link>
+          <Link href="/calendar" className="block">
+            <Card className="bg-card border-card-border hover:bg-white/5 transition-colors cursor-pointer active:scale-95">
+              <CardContent className="p-4 flex flex-col items-center justify-center gap-2">
+                <div className="w-10 h-10 rounded-full bg-orange-500/10 text-orange-500 flex items-center justify-center">
+                  <CalendarDays className="w-5 h-5" />
+                </div>
+                <span className="text-xs font-semibold">Calendar</span>
+              </CardContent>
+            </Card>
+          </Link>
+          <Link href="/goals" className="block">
+            <Card className="bg-card border-card-border hover:bg-white/5 transition-colors cursor-pointer active:scale-95">
+              <CardContent className="p-4 flex flex-col items-center justify-center gap-2">
+                <div className="w-10 h-10 rounded-full bg-rose-500/10 text-rose-500 flex items-center justify-center">
+                  <Target className="w-5 h-5" />
+                </div>
+                <span className="text-xs font-semibold">Goals</span>
+              </CardContent>
+            </Card>
+          </Link>
+        </div>
       </motion.div>
 
       {/* Recent Feed */}
