@@ -1378,6 +1378,55 @@ paths:
         "204":
           description: Unlogged
 
+  /stats/overview:
+    get:
+      operationId: getStatsOverview
+      tags: [stats]
+      summary: Get high-level fitness KPIs
+      responses:
+        "200":
+          description: Overview metrics
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/StatsOverview"
+
+  /stats/personal-records:
+    get:
+      operationId: getPersonalRecords
+      tags: [stats]
+      summary: Get automatically detected personal bests for weighted exercises
+      responses:
+        "200":
+          description: List of personal records
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/PersonalRecord"
+
+  /stats/analytics:
+    get:
+      operationId: getStatsAnalytics
+      tags: [stats]
+      summary: Get time-series analytics for charts
+      parameters:
+        - name: timeRange
+          in: query
+          required: false
+          schema:
+            type: string
+            enum: ["7", "30", "90", "180", "365", "all_time"]
+            default: "30"
+      responses:
+        "200":
+          description: Analytics data for charts
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/StatsAnalytics"
+
   /calendar/summary:
     get:
       operationId: getCalendarSummary
@@ -2393,3 +2442,90 @@ components:
                   isTaken:
                     type: boolean
           required: [completedCount, totalCount, items]
+
+    # ─── Stats ─────────────────────────────────────────────────────────────────
+    StatsOverview:
+      type: object
+      required: [totalWorkouts, currentWorkoutStreak, longestStreak, totalWorkoutTime, totalExercisesCompleted, totalSetsCompleted, totalRepsCompleted, totalWeightLifted, averageWorkoutDuration, daysActive, accountAge, perfectDays]
+      properties:
+        totalWorkouts:
+          type: integer
+        currentWorkoutStreak:
+          type: integer
+        longestStreak:
+          type: integer
+        totalWorkoutTime:
+          type: integer
+        totalExercisesCompleted:
+          type: integer
+        totalSetsCompleted:
+          type: integer
+        totalRepsCompleted:
+          type: integer
+        totalWeightLifted:
+          type: string
+        averageWorkoutDuration:
+          type: integer
+        daysActive:
+          type: integer
+        accountAge:
+          type: integer
+        perfectDays:
+          type: integer
+
+    PersonalRecord:
+      type: object
+      required: [exerciseId, exerciseName, maxWeight, maxReps, dateAchieved]
+      properties:
+        exerciseId:
+          type: integer
+        exerciseName:
+          type: string
+        maxWeight:
+          type: string
+        maxReps:
+          type: integer
+        dateAchieved:
+          type: string
+          format: date
+
+    StatsAnalytics:
+      type: object
+      required: [volumeChartData, frequencyChartData, muscleGroupDistribution, topExercises]
+      properties:
+        volumeChartData:
+          type: array
+          items:
+            type: object
+            properties:
+              date:
+                type: string
+              volume:
+                type: integer
+        frequencyChartData:
+          type: array
+          items:
+            type: object
+            properties:
+              date:
+                type: string
+              count:
+                type: integer
+        muscleGroupDistribution:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+              value:
+                type: integer
+        topExercises:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+              count:
+                type: integer

@@ -42,6 +42,7 @@ import type {
   GetMyStatsParams,
   GetNutritionSummaryParams,
   GetSocialFeedParams,
+  GetStatsAnalyticsParams,
   GetSupplementsParams,
   GetWaterIntakeParams,
   HealthStatus,
@@ -53,6 +54,7 @@ import type {
   NutritionGoals,
   NutritionGoalsInput,
   NutritionSummary,
+  PersonalRecord,
   Post,
   PostInput,
   Routine,
@@ -63,6 +65,8 @@ import type {
   SearchUsersParams,
   SetInput,
   SetUpdate,
+  StatsAnalytics,
+  StatsOverview,
   Supplement,
   SupplementChecklistInput,
   SupplementInput,
@@ -5287,6 +5291,244 @@ export const useUnlogSupplement = <TError = ErrorType<unknown>,
       > => {
       return useMutation(getUnlogSupplementMutationOptions(options));
     }
+
+export const getGetStatsOverviewUrl = () => {
+
+
+
+
+  return `/api/stats/overview`
+}
+
+/**
+ * @summary Get high-level fitness KPIs
+ */
+export const getStatsOverview = async ( options?: RequestInit): Promise<StatsOverview> => {
+
+  return customFetch<StatsOverview>(getGetStatsOverviewUrl(),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+
+
+export const getGetStatsOverviewQueryKey = () => {
+    return [
+    `/api/stats/overview`
+    ] as const;
+    }
+
+
+export const getGetStatsOverviewQueryOptions = <TData = Awaited<ReturnType<typeof getStatsOverview>>, TError = ErrorType<unknown>>( options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getStatsOverview>>, TError, TData>, request?: SecondParameter<typeof customFetch>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetStatsOverviewQueryKey();
+
+
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getStatsOverview>>> = ({ signal }) => getStatsOverview({ signal, ...requestOptions });
+
+
+
+
+
+   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getStatsOverview>>, TError, TData> & { queryKey: QueryKey }
+}
+
+export type GetStatsOverviewQueryResult = NonNullable<Awaited<ReturnType<typeof getStatsOverview>>>
+export type GetStatsOverviewQueryError = ErrorType<unknown>
+
+
+/**
+ * @summary Get high-level fitness KPIs
+ */
+
+export function useGetStatsOverview<TData = Awaited<ReturnType<typeof getStatsOverview>>, TError = ErrorType<unknown>>(
+  options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getStatsOverview>>, TError, TData>, request?: SecondParameter<typeof customFetch>}
+
+ ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } {
+
+  const queryOptions = getGetStatsOverviewQueryOptions(options)
+
+  const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
+
+  return { ...query, queryKey: queryOptions.queryKey };
+}
+
+
+
+
+
+
+
+export const getGetPersonalRecordsUrl = () => {
+
+
+
+
+  return `/api/stats/personal-records`
+}
+
+/**
+ * @summary Get automatically detected personal bests for weighted exercises
+ */
+export const getPersonalRecords = async ( options?: RequestInit): Promise<PersonalRecord[]> => {
+
+  return customFetch<PersonalRecord[]>(getGetPersonalRecordsUrl(),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+
+
+export const getGetPersonalRecordsQueryKey = () => {
+    return [
+    `/api/stats/personal-records`
+    ] as const;
+    }
+
+
+export const getGetPersonalRecordsQueryOptions = <TData = Awaited<ReturnType<typeof getPersonalRecords>>, TError = ErrorType<unknown>>( options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getPersonalRecords>>, TError, TData>, request?: SecondParameter<typeof customFetch>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetPersonalRecordsQueryKey();
+
+
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getPersonalRecords>>> = ({ signal }) => getPersonalRecords({ signal, ...requestOptions });
+
+
+
+
+
+   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getPersonalRecords>>, TError, TData> & { queryKey: QueryKey }
+}
+
+export type GetPersonalRecordsQueryResult = NonNullable<Awaited<ReturnType<typeof getPersonalRecords>>>
+export type GetPersonalRecordsQueryError = ErrorType<unknown>
+
+
+/**
+ * @summary Get automatically detected personal bests for weighted exercises
+ */
+
+export function useGetPersonalRecords<TData = Awaited<ReturnType<typeof getPersonalRecords>>, TError = ErrorType<unknown>>(
+  options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getPersonalRecords>>, TError, TData>, request?: SecondParameter<typeof customFetch>}
+
+ ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } {
+
+  const queryOptions = getGetPersonalRecordsQueryOptions(options)
+
+  const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
+
+  return { ...query, queryKey: queryOptions.queryKey };
+}
+
+
+
+
+
+
+
+export const getGetStatsAnalyticsUrl = (params?: GetStatsAnalyticsParams,) => {
+  const normalizedParams = new URLSearchParams();
+
+  Object.entries(params || {}).forEach(([key, value]) => {
+
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? 'null' : String(value))
+    }
+  });
+
+  const stringifiedParams = normalizedParams.toString();
+
+  return stringifiedParams.length > 0 ? `/api/stats/analytics?${stringifiedParams}` : `/api/stats/analytics`
+}
+
+/**
+ * @summary Get time-series analytics for charts
+ */
+export const getStatsAnalytics = async (params?: GetStatsAnalyticsParams, options?: RequestInit): Promise<StatsAnalytics> => {
+
+  return customFetch<StatsAnalytics>(getGetStatsAnalyticsUrl(params),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+
+
+export const getGetStatsAnalyticsQueryKey = (params?: GetStatsAnalyticsParams,) => {
+    return [
+    `/api/stats/analytics`, ...(params ? [params] : [])
+    ] as const;
+    }
+
+
+export const getGetStatsAnalyticsQueryOptions = <TData = Awaited<ReturnType<typeof getStatsAnalytics>>, TError = ErrorType<unknown>>(params?: GetStatsAnalyticsParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getStatsAnalytics>>, TError, TData>, request?: SecondParameter<typeof customFetch>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetStatsAnalyticsQueryKey(params);
+
+
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getStatsAnalytics>>> = ({ signal }) => getStatsAnalytics(params, { signal, ...requestOptions });
+
+
+
+
+
+   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getStatsAnalytics>>, TError, TData> & { queryKey: QueryKey }
+}
+
+export type GetStatsAnalyticsQueryResult = NonNullable<Awaited<ReturnType<typeof getStatsAnalytics>>>
+export type GetStatsAnalyticsQueryError = ErrorType<unknown>
+
+
+/**
+ * @summary Get time-series analytics for charts
+ */
+
+export function useGetStatsAnalytics<TData = Awaited<ReturnType<typeof getStatsAnalytics>>, TError = ErrorType<unknown>>(
+ params?: GetStatsAnalyticsParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getStatsAnalytics>>, TError, TData>, request?: SecondParameter<typeof customFetch>}
+
+ ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } {
+
+  const queryOptions = getGetStatsAnalyticsQueryOptions(params,options)
+
+  const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
+
+  return { ...query, queryKey: queryOptions.queryKey };
+}
+
+
+
+
+
+
 
 export const getGetCalendarSummaryUrl = (params: GetCalendarSummaryParams,) => {
   const normalizedParams = new URLSearchParams();

@@ -9,6 +9,7 @@ import nutritionRouter from "./nutrition";
 import socialRouter from "./social";
 import notificationsRouter from "./notifications";
 import calendarRouter from "./calendar";
+import statsRouter from "./stats";
 
 const router: IRouter = Router();
 
@@ -21,5 +22,6 @@ router.use(nutritionRouter);
 router.use(socialRouter);
 router.use(notificationsRouter);
 router.use(calendarRouter);
+router.use(statsRouter);
 
 export default router;

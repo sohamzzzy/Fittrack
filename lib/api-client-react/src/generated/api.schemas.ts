@@ -632,6 +632,56 @@ export interface CalendarDetail {
   supplements: CalendarDetailSupplements;
 }
 
+export interface StatsOverview {
+  totalWorkouts: number;
+  currentWorkoutStreak: number;
+  longestStreak: number;
+  totalWorkoutTime: number;
+  totalExercisesCompleted: number;
+  totalSetsCompleted: number;
+  totalRepsCompleted: number;
+  totalWeightLifted: string;
+  averageWorkoutDuration: number;
+  daysActive: number;
+  accountAge: number;
+  perfectDays: number;
+}
+
+export interface PersonalRecord {
+  exerciseId: number;
+  exerciseName: string;
+  maxWeight: string;
+  maxReps: number;
+  dateAchieved: string;
+}
+
+export type StatsAnalyticsVolumeChartDataItem = {
+  date?: string;
+  volume?: number;
+};
+
+export type StatsAnalyticsFrequencyChartDataItem = {
+  date?: string;
+  count?: number;
+};
+
+export type StatsAnalyticsMuscleGroupDistributionItem = {
+  name?: string;
+  value?: number;
+};
+
+export type StatsAnalyticsTopExercisesItem = {
+  name?: string;
+  count?: number;
+};
+
+export interface StatsAnalytics {
+  volumeChartData: StatsAnalyticsVolumeChartDataItem[];
+  frequencyChartData: StatsAnalyticsFrequencyChartDataItem[];
+  muscleGroupDistribution: StatsAnalyticsMuscleGroupDistributionItem[];
+  topExercises: StatsAnalyticsTopExercisesItem[];
+}
+
 export type GetMyStatsParams = {
 /**
  * User timezone for streak calculation (e.g. America/New_York)
@@ -698,6 +748,22 @@ export type AddSupplementToChecklist201 = {
 };
 
 export type UpdateSupplement200 = { [key: string]: unknown };
+
+export type GetStatsAnalyticsParams = {
+timeRange?: GetStatsAnalyticsTimeRange;
+};
+
+export type GetStatsAnalyticsTimeRange = typeof GetStatsAnalyticsTimeRange[keyof typeof GetStatsAnalyticsTimeRange];
+
+
+export const GetStatsAnalyticsTimeRange = {
+  NUMBER_7: '7',
+  NUMBER_30: '30',
+  NUMBER_90: '90',
+  NUMBER_180: '180',
+  NUMBER_365: '365',
+  all_time: 'all_time',
+} as const;
 
 export type GetCalendarSummaryParams = {
 startDate: string;

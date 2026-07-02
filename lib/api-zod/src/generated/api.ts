@@ -1405,6 +1405,67 @@ export const UnlogSupplementBody = zod.object({
 
 
 /**
+ * @summary Get high-level fitness KPIs
+ */
+export const GetStatsOverviewResponse = zod.object({
+  "totalWorkouts": zod.number(),
+  "currentWorkoutStreak": zod.number(),
+  "longestStreak": zod.number(),
+  "totalWorkoutTime": zod.number(),
+  "totalExercisesCompleted": zod.number(),
+  "totalSetsCompleted": zod.number(),
+  "totalRepsCompleted": zod.number(),
+  "totalWeightLifted": zod.string(),
+  "averageWorkoutDuration": zod.number(),
+  "daysActive": zod.number(),
+  "accountAge": zod.number(),
+  "perfectDays": zod.number()
+})
+
+
+/**
+ * @summary Get automatically detected personal bests for weighted exercises
+ */
+export const GetPersonalRecordsResponseItem = zod.object({
+  "exerciseId": zod.number(),
+  "exerciseName": zod.string(),
+  "maxWeight": zod.string(),
+  "maxReps": zod.number(),
+  "dateAchieved": zod.coerce.date()
+})
+export const GetPersonalRecordsResponse = zod.array(GetPersonalRecordsResponseItem)
+
+
+/**
+ * @summary Get time-series analytics for charts
+ */
+export const getStatsAnalyticsQueryTimeRangeDefault = `30`;
+
+export const GetStatsAnalyticsQueryParams = zod.object({
+  "timeRange": zod.enum(['7', '30', '90', '180', '365', 'all_time']).default(getStatsAnalyticsQueryTimeRangeDefault)
+})
+
+export const GetStatsAnalyticsResponse = zod.object({
+  "volumeChartData": zod.array(zod.object({
+  "date": zod.string().optional(),
+  "volume": zod.number().optional()
+})),
+  "frequencyChartData": zod.array(zod.object({
+  "date": zod.string().optional(),
+  "count": zod.number().optional()
+})),
+  "muscleGroupDistribution": zod.array(zod.object({
+  "name": zod.string().optional(),
+  "value": zod.number().optional()
+})),
+  "topExercises": zod.array(zod.object({
+  "name": zod.string().optional(),
+  "count": zod.number().optional()
+}))
+})
+
+
+/**
  * @summary Get a monthly calendar summary
  */
 export const GetCalendarSummaryQueryParams = zod.object({

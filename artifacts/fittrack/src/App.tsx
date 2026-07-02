@@ -50,6 +50,7 @@ import UserWorkouts from "@/pages/user-workouts";
 import Search from "@/pages/search";
 import Notifications from "@/pages/notifications";
 import CalendarPage from "@/pages/calendar";
+import { StatsPage } from "./pages/stats";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -161,6 +162,7 @@ function AppShell() {
 
         <Route path="/notifications" component={Notifications} />
         <Route path="/calendar" component={CalendarPage} />
+        <Route path="/stats" component={StatsPage} />
 
         <Route component={NotFound} />
       </Switch>
