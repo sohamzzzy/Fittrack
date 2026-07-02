@@ -54,7 +54,10 @@ export default function Dashboard() {
       <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4 }}>
         <Card className="bg-card border-card-border">
           <CardContent className="pt-6">
-            <div className="flex items-center gap-6">
+            <div className="w-full sm:hidden text-center mb-6">
+              <p className="text-xs text-muted-foreground font-medium uppercase tracking-wider">Today's Macros</p>
+            </div>
+            <div className="flex flex-col sm:flex-row items-center gap-6">
               <div className="relative w-32 h-32 shrink-0">
                 <svg className="w-full h-full -rotate-90" viewBox="0 0 128 128">
                   <circle cx="64" cy="64" r={r} fill="none" stroke="hsl(220 10% 12%)" strokeWidth="12" />
@@ -66,12 +69,16 @@ export default function Dashboard() {
                   <span className="text-[10px] text-muted-foreground">kcal left</span>
                 </div>
               </div>
-              <div className="flex-1">
-                <p className="text-xs text-muted-foreground mb-3 font-medium uppercase tracking-wider">Today's Macros</p>
+              <div className="flex-1 w-full flex flex-col items-center sm:items-start">
+                <p className="text-xs text-muted-foreground mb-3 font-medium uppercase tracking-wider hidden sm:block">Today's Macros</p>
                 {nLoading ? (
-                  <div className="flex gap-4"><Skeleton className="w-16 h-16 rounded-full" /><Skeleton className="w-16 h-16 rounded-full" /><Skeleton className="w-16 h-16 rounded-full" /></div>
+                  <div className="flex gap-4 justify-center sm:justify-start w-full">
+                    <Skeleton className="w-16 h-16 rounded-full" />
+                    <Skeleton className="w-16 h-16 rounded-full" />
+                    <Skeleton className="w-16 h-16 rounded-full" />
+                  </div>
                 ) : (
-                  <div className="flex gap-3">
+                  <div className="flex gap-3 justify-center sm:justify-start w-full">
                     <MacroRing value={nutrition?.totalProtein ?? 0} goal={nutrition?.goalProtein ?? 150} color="hsl(0 80% 60%)" label="Protein" />
                     <MacroRing value={nutrition?.totalCarbs ?? 0} goal={nutrition?.goalCarbs ?? 200} color="hsl(40 90% 55%)" label="Carbs" />
                     <MacroRing value={nutrition?.totalFats ?? 0} goal={nutrition?.goalFats ?? 65} color="hsl(200 80% 55%)" label="Fats" />
