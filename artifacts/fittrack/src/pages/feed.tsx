@@ -13,6 +13,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
 import { Heart, MessageCircle, Dumbbell, Plus, Send, Search as SearchIcon, UserPlus, UserMinus } from "lucide-react";
+import { CreatePostDialog } from "@/components/create-post-dialog";
 import { motion, AnimatePresence } from "framer-motion";
 import { formatDistanceToNow } from "date-fns";
 import { cn } from "@/lib/utils";
@@ -152,17 +153,6 @@ export default function Feed() {
     fn.mutate({ postId: id }, { onSuccess: () => qc.invalidateQueries({ queryKey: getGetSocialFeedQueryKey({ limit: 20, offset: 0 }) }) });
   };
 
-  const handlePost = () => {
-    if (!content.trim()) return;
-    createPost.mutate({ data: { content } }, {
-      onSuccess: () => {
-        qc.invalidateQueries({ queryKey: getGetSocialFeedQueryKey({ limit: 20, offset: 0 }) });
-        setOpen(false); setContent("");
-        toast({ title: "Posted!" });
-      },
-    });
-  };
-
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between">
@@ -255,18 +245,7 @@ export default function Feed() {
         </>
       )}
 
-      <Dialog open={open} onOpenChange={setOpen}>
-        <DialogContent className="bg-card border-card-border">
-          <DialogHeader><DialogTitle>New Post</DialogTitle></DialogHeader>
-          <Textarea placeholder="Share your workout, progress, or thoughts..." value={content} onChange={(e) => setContent(e.target.value)} rows={4} data-testid="textarea-post-content" className="resize-none" />
-          <DialogFooter>
-            <Button variant="ghost" onClick={() => setOpen(false)}>Cancel</Button>
-            <Button onClick={handlePost} disabled={!content.trim() || createPost.isPending} className="font-bold" data-testid="button-submit-post">
-              {createPost.isPending ? "Posting..." : "Post"}
-            </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
+      <CreatePostDialog open={open} setOpen={setOpen} />
     </div>
   );
 }

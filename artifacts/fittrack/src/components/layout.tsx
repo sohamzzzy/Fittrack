@@ -40,13 +40,17 @@ function ProfileAvatarShortcut() {
 }
 
 import { Drawer, DrawerContent, DrawerHeader, DrawerTitle, DrawerTrigger, DrawerClose } from "@/components/ui/drawer";
+import { CreatePostDialog } from "@/components/create-post-dialog";
+import { useState } from "react";
+import { Pencil } from "lucide-react";
 
-function QuickActionSheet() {
+function QuickActionSheet({ onNewPost }: { onNewPost: () => void }) {
   const actions = [
     { href: "/workout", label: "Start Workout", icon: Dumbbell, color: "text-primary", bg: "bg-primary/10" },
     { href: "/nutrition/log", label: "Log Food", icon: Utensils, color: "text-green-500", bg: "bg-green-500/10" },
     { href: "/nutrition/log?type=water", label: "Log Water", icon: Droplets, color: "text-blue-500", bg: "bg-blue-500/10" },
     { href: "/nutrition/log?type=supplements", label: "Supplements", icon: Pill, color: "text-purple-500", bg: "bg-purple-500/10" },
+    { onClick: onNewPost, label: "New Post", icon: Pencil, color: "text-teal-500", bg: "bg-teal-500/10" },
     { href: "/calendar", label: "Calendar", icon: CalendarDays, color: "text-orange-500", bg: "bg-orange-500/10" },
     { href: "/stats", label: "Stats", icon: BarChart2, color: "text-indigo-500", bg: "bg-indigo-500/10" },
     { href: "/goals", label: "Goals", icon: Target, color: "text-rose-500", bg: "bg-rose-500/10" },
@@ -69,14 +73,25 @@ function QuickActionSheet() {
           <div className="grid grid-cols-4 gap-4 px-4 mt-4">
             {actions.map((action) => (
               <DrawerClose asChild key={action.label}>
-                <Link href={action.href} className="flex flex-col items-center gap-2">
-                  <div className={cn("w-14 h-14 rounded-2xl flex items-center justify-center transition-transform active:scale-95", action.bg, action.color)}>
-                    <action.icon className="w-6 h-6" />
-                  </div>
-                  <span className="text-[10px] font-medium text-center leading-tight">
-                    {action.label}
-                  </span>
-                </Link>
+                {action.onClick ? (
+                  <button onClick={action.onClick} className="flex flex-col items-center gap-2" aria-label={action.label}>
+                    <div className={cn("w-14 h-14 rounded-2xl flex items-center justify-center transition-transform active:scale-95", action.bg, action.color)}>
+                      <action.icon className="w-6 h-6" />
+                    </div>
+                    <span className="text-[10px] font-medium text-center leading-tight">
+                      {action.label}
+                    </span>
+                  </button>
+                ) : (
+                  <Link href={action.href!} className="flex flex-col items-center gap-2">
+                    <div className={cn("w-14 h-14 rounded-2xl flex items-center justify-center transition-transform active:scale-95", action.bg, action.color)}>
+                      <action.icon className="w-6 h-6" />
+                    </div>
+                    <span className="text-[10px] font-medium text-center leading-tight">
+                      {action.label}
+                    </span>
+                  </Link>
+                )}
               </DrawerClose>
             ))}
           </div>
@@ -88,6 +103,7 @@ function QuickActionSheet() {
 
 export function Layout({ children }: { children: React.ReactNode }) {
   const [location] = useLocation();
+  const [newPostOpen, setNewPostOpen] = useState(false);
 
   const navItems = [
     { href: "/dashboard", label: "Home", icon: LayoutDashboard },
@@ -182,7 +198,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
             if (item.isFab) {
               return (
                 <div key="fab" className="flex-1 flex justify-center h-full items-end">
-                  <QuickActionSheet />
+                  <QuickActionSheet onNewPost={() => setNewPostOpen(true)} />
                 </div>
               );
             }
@@ -218,6 +234,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
           })}
         </div>
       </nav>
+      <CreatePostDialog open={newPostOpen} setOpen={setNewPostOpen} />
     </div>
   );
 }
