@@ -21,6 +21,8 @@ import type {
 
 import type {
   AddSupplementToChecklist201,
+  CalendarDetail,
+  CalendarSummaryDay,
   Comment,
   CommentInput,
   DeleteExercise409,
@@ -35,6 +37,8 @@ import type {
   FoodLog,
   FoodLogInput,
   FoodLogUpdate,
+  GetCalendarDetailParams,
+  GetCalendarSummaryParams,
   GetMyStatsParams,
   GetNutritionSummaryParams,
   GetSocialFeedParams,
@@ -5283,4 +5287,172 @@ export const useUnlogSupplement = <TError = ErrorType<unknown>,
       > => {
       return useMutation(getUnlogSupplementMutationOptions(options));
     }
+
+export const getGetCalendarSummaryUrl = (params: GetCalendarSummaryParams,) => {
+  const normalizedParams = new URLSearchParams();
+
+  Object.entries(params || {}).forEach(([key, value]) => {
+
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? 'null' : String(value))
+    }
+  });
+
+  const stringifiedParams = normalizedParams.toString();
+
+  return stringifiedParams.length > 0 ? `/api/calendar/summary?${stringifiedParams}` : `/api/calendar/summary`
+}
+
+/**
+ * @summary Get a monthly calendar summary
+ */
+export const getCalendarSummary = async (params: GetCalendarSummaryParams, options?: RequestInit): Promise<CalendarSummaryDay[]> => {
+
+  return customFetch<CalendarSummaryDay[]>(getGetCalendarSummaryUrl(params),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+
+
+export const getGetCalendarSummaryQueryKey = (params?: GetCalendarSummaryParams,) => {
+    return [
+    `/api/calendar/summary`, ...(params ? [params] : [])
+    ] as const;
+    }
+
+
+export const getGetCalendarSummaryQueryOptions = <TData = Awaited<ReturnType<typeof getCalendarSummary>>, TError = ErrorType<unknown>>(params: GetCalendarSummaryParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getCalendarSummary>>, TError, TData>, request?: SecondParameter<typeof customFetch>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetCalendarSummaryQueryKey(params);
+
+
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getCalendarSummary>>> = ({ signal }) => getCalendarSummary(params, { signal, ...requestOptions });
+
+
+
+
+
+   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getCalendarSummary>>, TError, TData> & { queryKey: QueryKey }
+}
+
+export type GetCalendarSummaryQueryResult = NonNullable<Awaited<ReturnType<typeof getCalendarSummary>>>
+export type GetCalendarSummaryQueryError = ErrorType<unknown>
+
+
+/**
+ * @summary Get a monthly calendar summary
+ */
+
+export function useGetCalendarSummary<TData = Awaited<ReturnType<typeof getCalendarSummary>>, TError = ErrorType<unknown>>(
+ params: GetCalendarSummaryParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getCalendarSummary>>, TError, TData>, request?: SecondParameter<typeof customFetch>}
+
+ ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } {
+
+  const queryOptions = getGetCalendarSummaryQueryOptions(params,options)
+
+  const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
+
+  return { ...query, queryKey: queryOptions.queryKey };
+}
+
+
+
+
+
+
+
+export const getGetCalendarDetailUrl = (params: GetCalendarDetailParams,) => {
+  const normalizedParams = new URLSearchParams();
+
+  Object.entries(params || {}).forEach(([key, value]) => {
+
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? 'null' : String(value))
+    }
+  });
+
+  const stringifiedParams = normalizedParams.toString();
+
+  return stringifiedParams.length > 0 ? `/api/calendar/detail?${stringifiedParams}` : `/api/calendar/detail`
+}
+
+/**
+ * @summary Get detailed activities for a specific day
+ */
+export const getCalendarDetail = async (params: GetCalendarDetailParams, options?: RequestInit): Promise<CalendarDetail> => {
+
+  return customFetch<CalendarDetail>(getGetCalendarDetailUrl(params),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+
+
+export const getGetCalendarDetailQueryKey = (params?: GetCalendarDetailParams,) => {
+    return [
+    `/api/calendar/detail`, ...(params ? [params] : [])
+    ] as const;
+    }
+
+
+export const getGetCalendarDetailQueryOptions = <TData = Awaited<ReturnType<typeof getCalendarDetail>>, TError = ErrorType<unknown>>(params: GetCalendarDetailParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getCalendarDetail>>, TError, TData>, request?: SecondParameter<typeof customFetch>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetCalendarDetailQueryKey(params);
+
+
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getCalendarDetail>>> = ({ signal }) => getCalendarDetail(params, { signal, ...requestOptions });
+
+
+
+
+
+   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getCalendarDetail>>, TError, TData> & { queryKey: QueryKey }
+}
+
+export type GetCalendarDetailQueryResult = NonNullable<Awaited<ReturnType<typeof getCalendarDetail>>>
+export type GetCalendarDetailQueryError = ErrorType<unknown>
+
+
+/**
+ * @summary Get detailed activities for a specific day
+ */
+
+export function useGetCalendarDetail<TData = Awaited<ReturnType<typeof getCalendarDetail>>, TError = ErrorType<unknown>>(
+ params: GetCalendarDetailParams, options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getCalendarDetail>>, TError, TData>, request?: SecondParameter<typeof customFetch>}
+
+ ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } {
+
+  const queryOptions = getGetCalendarDetailQueryOptions(params,options)
+
+  const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
+
+  return { ...query, queryKey: queryOptions.queryKey };
+}
+
+
+
+
+
+
 

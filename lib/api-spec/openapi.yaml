@@ -1378,6 +1378,54 @@ paths:
         "204":
           description: Unlogged
 
+  /calendar/summary:
+    get:
+      operationId: getCalendarSummary
+      tags: [calendar]
+      summary: Get a monthly calendar summary
+      parameters:
+        - name: startDate
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date
+        - name: endDate
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date
+      responses:
+        "200":
+          description: Calendar summary array
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/CalendarSummaryDay"
+
+  /calendar/detail:
+    get:
+      operationId: getCalendarDetail
+      tags: [calendar]
+      summary: Get detailed activities for a specific day
+      parameters:
+        - name: date
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date
+      responses:
+        "200":
+          description: Daily details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CalendarDetail"
+
 components:
   schemas:
     HealthStatus:
@@ -2245,3 +2293,103 @@ components:
           type: boolean
         followersCount:
           type: integer
+
+    # ─── Calendar ──────────────────────────────────────────────────────────────
+    CalendarSummaryDay:
+      type: object
+      required: [date, hasWorkout, hasFood, waterGoalReached, supplementsCompleted, perfectDay]
+      properties:
+        date:
+          type: string
+          format: date
+        hasWorkout:
+          type: boolean
+        hasFood:
+          type: boolean
+        waterGoalReached:
+          type: boolean
+        supplementsCompleted:
+          type: boolean
+        perfectDay:
+          type: boolean
+
+    CalendarDetail:
+      type: object
+      required: [date, workout, nutrition, hydration, supplements]
+      properties:
+        date:
+          type: string
+          format: date
+        workout:
+          type: object
+          properties:
+            completed:
+              type: boolean
+            workouts:
+              type: array
+              items:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+                  durationMinutes:
+                    type: integer
+                    nullable: true
+                  exercisesCount:
+                    type: integer
+                  totalVolume:
+                    type: string
+                    nullable: true
+          required: [completed, workouts]
+        nutrition:
+          type: object
+          properties:
+            logged:
+              type: boolean
+            calories:
+              type: string
+            protein:
+              type: string
+            carbs:
+              type: string
+            fats:
+              type: string
+            foods:
+              type: array
+              items:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  calories:
+                    type: string
+          required: [logged, calories, protein, carbs, fats, foods]
+        hydration:
+          type: object
+          properties:
+            consumedMl:
+              type: integer
+            goalMl:
+              type: integer
+          required: [consumedMl, goalMl]
+        supplements:
+          type: object
+          properties:
+            completedCount:
+              type: integer
+            totalCount:
+              type: integer
+            items:
+              type: array
+              items:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+                  isTaken:
+                    type: boolean
+          required: [completedCount, totalCount, items]

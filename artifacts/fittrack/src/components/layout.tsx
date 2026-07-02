@@ -1,6 +1,6 @@
 import React from "react";
 import { Link, useLocation } from "wouter";
-import { Dumbbell, Utensils, LayoutDashboard, Search, UserCircle, Activity, Bell } from "lucide-react";
+import { Dumbbell, Utensils, LayoutDashboard, Search, UserCircle, Activity, Bell, CalendarDays } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useLiveUnreadCount } from "@/hooks/use-live-notifications";
 import { ThemeToggle } from "@/components/theme-toggle";
@@ -44,6 +44,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
 
   const navItems = [
     { href: "/dashboard", label: "Home", icon: LayoutDashboard },
+    { href: "/calendar", label: "Calendar", icon: CalendarDays },
     { href: "/workouts", label: "Workout", icon: Dumbbell },
     { href: "/nutrition", label: "Nutrition", icon: Utensils },
     { href: "/feed", label: "Feed", icon: Activity },

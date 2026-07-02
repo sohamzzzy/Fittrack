@@ -1404,3 +1404,68 @@ export const UnlogSupplementBody = zod.object({
 })
 
 
+/**
+ * @summary Get a monthly calendar summary
+ */
+export const GetCalendarSummaryQueryParams = zod.object({
+  "startDate": zod.date(),
+  "endDate": zod.date()
+})
+
+export const GetCalendarSummaryResponseItem = zod.object({
+  "date": zod.coerce.date(),
+  "hasWorkout": zod.boolean(),
+  "hasFood": zod.boolean(),
+  "waterGoalReached": zod.boolean(),
+  "supplementsCompleted": zod.boolean(),
+  "perfectDay": zod.boolean()
+})
+export const GetCalendarSummaryResponse = zod.array(GetCalendarSummaryResponseItem)
+
+
+/**
+ * @summary Get detailed activities for a specific day
+ */
+export const GetCalendarDetailQueryParams = zod.object({
+  "date": zod.date()
+})
+
+export const GetCalendarDetailResponse = zod.object({
+  "date": zod.coerce.date(),
+  "workout": zod.object({
+  "completed": zod.boolean(),
+  "workouts": zod.array(zod.object({
+  "id": zod.number().optional(),
+  "name": zod.string().optional(),
+  "durationMinutes": zod.number().nullish(),
+  "exercisesCount": zod.number().optional(),
+  "totalVolume": zod.string().nullish()
+}))
+}),
+  "nutrition": zod.object({
+  "logged": zod.boolean(),
+  "calories": zod.string(),
+  "protein": zod.string(),
+  "carbs": zod.string(),
+  "fats": zod.string(),
+  "foods": zod.array(zod.object({
+  "name": zod.string().optional(),
+  "calories": zod.string().optional()
+}))
+}),
+  "hydration": zod.object({
+  "consumedMl": zod.number(),
+  "goalMl": zod.number()
+}),
+  "supplements": zod.object({
+  "completedCount": zod.number(),
+  "totalCount": zod.number(),
+  "items": zod.array(zod.object({
+  "id": zod.number().optional(),
+  "name": zod.string().optional(),
+  "isTaken": zod.boolean().optional()
+}))
+})
+})
+
+

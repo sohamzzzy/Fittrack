@@ -571,6 +571,67 @@ export interface FollowResult {
   followersCount: number;
 }
 
+export interface CalendarSummaryDay {
+  date: string;
+  hasWorkout: boolean;
+  hasFood: boolean;
+  waterGoalReached: boolean;
+  supplementsCompleted: boolean;
+  perfectDay: boolean;
+}
+
+export type CalendarDetailWorkoutWorkoutsItem = {
+  id?: number;
+  name?: string;
+  durationMinutes?: number | null;
+  exercisesCount?: number;
+  totalVolume?: string | null;
+};
+
+export type CalendarDetailWorkout = {
+  completed: boolean;
+  workouts: CalendarDetailWorkoutWorkoutsItem[];
+};
+
+export type CalendarDetailNutritionFoodsItem = {
+  name?: string;
+  calories?: string;
+};
+
+export type CalendarDetailNutrition = {
+  logged: boolean;
+  calories: string;
+  protein: string;
+  carbs: string;
+  fats: string;
+  foods: CalendarDetailNutritionFoodsItem[];
+};
+
+export type CalendarDetailHydration = {
+  consumedMl: number;
+  goalMl: number;
+};
+
+export type CalendarDetailSupplementsItemsItem = {
+  id?: number;
+  name?: string;
+  isTaken?: boolean;
+};
+
+export type CalendarDetailSupplements = {
+  completedCount: number;
+  totalCount: number;
+  items: CalendarDetailSupplementsItemsItem[];
+};
+
+export interface CalendarDetail {
+  date: string;
+  workout: CalendarDetailWorkout;
+  nutrition: CalendarDetailNutrition;
+  hydration: CalendarDetailHydration;
+  supplements: CalendarDetailSupplements;
+}
+
 export type GetMyStatsParams = {
 /**
  * User timezone for streak calculation (e.g. America/New_York)
@@ -637,4 +698,13 @@ export type AddSupplementToChecklist201 = {
 };
 
 export type UpdateSupplement200 = { [key: string]: unknown };
+
+export type GetCalendarSummaryParams = {
+startDate: string;
+endDate: string;
+};
+
+export type GetCalendarDetailParams = {
+date: string;
+};
 
